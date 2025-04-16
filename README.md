@@ -5,7 +5,7 @@
     - Mandatory PoC
   - QA awards: $2,000 in USDT 
   - Judge awards: $5,800 in USDT
-  - Validator awards: $3,900 USDT
+  - Validator awards: $3,900 in USDT
   - Scout awards: $500 in USDT
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
 - Starts April 17, 2025 20:00 UTC
