@@ -1,0 +1,15 @@
+./contracts/AgentRewardV2.sol
+./contracts/AgentRewardV3.sol
+./contracts/IAgentReward.sol
+./contracts/IAgentRewardV3.sol
+./contracts/dev/BMWToken.sol
+./contracts/dev/BMWTokenChild.sol
+./contracts/dev/ERC6551BytecodeLib.sol
+./contracts/dev/ERC6551Registry.sol
+./contracts/dev/FxERC20ChildTunnel.sol
+./contracts/dev/FxERC20RootTunnel.sol
+./contracts/dev/ProxyAdmin.sol
+./contracts/dev/tba/lib/ERC6551AccountLib.sol
+./contracts/dev/tba/lib/ERC6551BytecodeLib.sol
+./contracts/token/IMinter.sol
+./contracts/token/Minter.sol
