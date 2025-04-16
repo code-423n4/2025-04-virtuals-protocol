@@ -2,7 +2,6 @@
 - Total Prize Pool: $60,000 in USDT
   - HM awards: $47,800 in USDT
     - If no valid Highs or Mediums are found, the HM pool is $0
-    - Mandatory PoC
   - QA awards: $2,000 in USDT 
   - Judge awards: $5,800 in USDT
   - Validator awards: $3,900 in USDT
