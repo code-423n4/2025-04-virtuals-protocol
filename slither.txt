@@ -1,0 +1,1399 @@
+INFO:Detectors:
+Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420) uses arbitrary from in transferFrom: agentToken.transferFrom(pairAddress,acc,balance) (contracts/fun/Bonding.sol#417)
+FRouter.sell(uint256,address,address) (contracts/fun/FRouter.sol#95-129) uses arbitrary from in transferFrom: token.safeTransferFrom(to,pairAddress,amountIn) (contracts/fun/FRouter.sol#111)
+FRouter.buy(uint256,address,address) (contracts/fun/FRouter.sol#131-163) uses arbitrary from in transferFrom: IERC20(assetToken).safeTransferFrom(to,pair,amount) (contracts/fun/FRouter.sol#148)
+FRouter.buy(uint256,address,address) (contracts/fun/FRouter.sol#131-163) uses arbitrary from in transferFrom: IERC20(assetToken).safeTransferFrom(to,feeTo,txFee) (contracts/fun/FRouter.sol#150)
+AgentMigrator.migrateAgent(uint256,string,string,bool) (contracts/virtualPersona/AgentMigrator.sol#100-136) uses arbitrary from in transferFrom: IERC20(_assetToken).transferFrom(founder,token,initialAmount) (contracts/virtualPersona/AgentMigrator.sol#110)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+INFO:Detectors:
+AgentToken.withdrawETH(uint256) (contracts/virtualPersona/AgentToken.sol#868-873) sends eth to arbitrary user
+	Dangerous calls:
+	- (success,None) = _msgSender().call{value: amount_}() (contracts/virtualPersona/AgentToken.sol#869)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#functions-that-send-ether-to-arbitrary-destinations
+INFO:Detectors:
+Bonding.launchFor(string,string,uint8[],string,string,string[4],uint256,address) (contracts/fun/Bonding.sol#190-279) ignores return value by token.transfer(msg.sender,token.balanceOf(address(this))) (contracts/fun/Bonding.sol#276)
+Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420) ignores return value by agentToken.transferFrom(pairAddress,acc,balance) (contracts/fun/Bonding.sol#417)
+Minter.mint(uint256) (contracts/token/Minter.sol#134-179) ignores return value by IAgentToken(tokenAddress).transfer(modelOwner,amount) (contracts/token/Minter.sol#166)
+Minter.mint(uint256) (contracts/token/Minter.sol#134-179) ignores return value by IAgentToken(tokenAddress).transfer(datasetOwner,dataAmount) (contracts/token/Minter.sol#172)
+Minter.mint(uint256) (contracts/token/Minter.sol#134-179) ignores return value by IAgentToken(tokenAddress).transfer(ipVault,ipAmount) (contracts/token/Minter.sol#177)
+AgentFactoryV2.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactory.sol#196-273) ignores return value by IERC20(assetToken).transfer(token,initialAmount) (contracts/virtualPersona/AgentFactory.sol#222)
+AgentMigrator.migrateAgent(uint256,string,string,bool) (contracts/virtualPersona/AgentMigrator.sol#100-136) ignores return value by IERC20(_assetToken).transferFrom(founder,token,initialAmount) (contracts/virtualPersona/AgentMigrator.sol#110)
+AgentToken._addInitialLiquidity(address) (contracts/virtualPersona/AgentToken.sol#225-263) ignores return value by IERC20(uniswapV2Pair).transfer(lpOwner,lpTokens) (contracts/virtualPersona/AgentToken.sol#262)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unchecked-transfer
+INFO:Detectors:
+AgentFactoryV2.gov (contracts/virtualPersona/AgentFactory.sol#64) is never initialized. It is used in:
+AgentFactoryV3.gov (contracts/virtualPersona/AgentFactoryV3.sol#64) is never initialized. It is used in:
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-state-variables
+INFO:Detectors:
+AgentRewardV2._distributeAgentRewards(uint256,uint32,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#184-220) performs a multiplication on the result of a division:
+	- amount = (mainReward.amount * reward.totalStaked) / mainReward.totalStaked (contracts/AgentRewardV2.sol#205)
+	- reward.contributorAmount = (amount * uint256(settings.contributorShares)) / DENOMINATOR (contracts/AgentRewardV2.sol#207)
+AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250) performs a multiplication on the result of a division:
+	- validatorRewards = (amount * votes) / totalStaked (contracts/AgentRewardV2.sol#240)
+	- participationReward = (validatorRewards * nft.validatorScore(virtualId,validator)) / totalProposals (contracts/AgentRewardV2.sol#243-245)
+AgentRewardV2._distributeContributorRewards(uint256,uint256,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#252-303) performs a multiplication on the result of a division:
+	- impactAmount = (reward.coreAmount * serviceReward_scope_1.impact) / _rewardImpacts[reward.id][serviceNftContract.getCore(serviceId)] (contracts/AgentRewardV2.sol#293-295)
+	- parentAmount = ((impactAmount * parentShares) / DENOMINATOR) (contracts/AgentRewardV2.sol#296-298)
+AgentRewardV2._getClaimableStakerRewardsAt(uint256,uint256,address,address) (contracts/AgentRewardV2.sol#308-332) performs a multiplication on the result of a division:
+	- (((validatorGroupRewards * tokens) / votes) * uint256(settings.stakerShares)) / DENOMINATOR (contracts/AgentRewardV2.sol#331)
+AgentRewardV3.getClaimableStakerRewards(address,uint256) (contracts/AgentRewardV3.sol#193-212) performs a multiplication on the result of a division:
+	- stakerReward = (agentReward.stakerAmount * stakedAmount) / agentReward.totalStaked (contracts/AgentRewardV3.sol#207)
+	- stakerReward = (stakerReward * uptime) / agentReward.totalProposals (contracts/AgentRewardV3.sol#208)
+AgentRewardV3.getClaimableValidatorRewards(address,uint256) (contracts/AgentRewardV3.sol#214-232) performs a multiplication on the result of a division:
+	- validatorReward = (agentReward.validatorAmount * votes) / agentReward.totalStaked (contracts/AgentRewardV3.sol#227)
+	- validatorReward = (validatorReward * uptime) / agentReward.totalProposals (contracts/AgentRewardV3.sol#228)
+Bonding.launchFor(string,string,uint8[],string,string,string[4],uint256,address) (contracts/fun/Bonding.sol#190-279) performs a multiplication on the result of a division:
+	- liquidity = (((k * 10000000000000000000000) / supply) * 1000000000000000000) / 10000 (contracts/fun/Bonding.sol#216)
+Bonding.launchFor(string,string,uint8[],string,string,string[4],uint256,address) (contracts/fun/Bonding.sol#190-279) performs a multiplication on the result of a division:
+	- liquidity = (((k * 10000000000000000000000) / supply) * 1000000000000000000) / 10000 (contracts/fun/Bonding.sol#216)
+	- _data = Data({token:address(token),name:string.concat(fun ,_name),_name:_name,ticker:_ticker,supply:supply,price:supply / liquidity,marketCap:liquidity,liquidity:liquidity * 2,volume:0,volume24H:0,prevPrice:supply / liquidity,lastUpdated:block.timestamp}) (contracts/fun/Bonding.sol#220-233)
+FixedPointMathLib.rpow(uint256,uint256,uint256) (contracts/libs/FixedPointMathLib.sol#63-146) performs a multiplication on the result of a division:
+	- x = xxRound_rpow_asm_0 / scalar (contracts/libs/FixedPointMathLib.sol#117)
+	- zx_rpow_asm_0 = z * x (contracts/libs/FixedPointMathLib.sol#122)
+AgentToken._autoSwap(address,address) (contracts/virtualPersona/AgentToken.sol#731-751) performs a multiplication on the result of a division:
+	- swapThresholdInTokens = (_totalSupply * swapThresholdBasisPoints) / BP_DENOM (contracts/virtualPersona/AgentToken.sol#736)
+	- swapBalance > swapThresholdInTokens * MAX_SWAP_THRESHOLD_MULTIPLE (contracts/virtualPersona/AgentToken.sol#742)
+AgentToken._autoSwap(address,address) (contracts/virtualPersona/AgentToken.sol#731-751) performs a multiplication on the result of a division:
+	- swapThresholdInTokens = (_totalSupply * swapThresholdBasisPoints) / BP_DENOM (contracts/virtualPersona/AgentToken.sol#736)
+	- swapBalance = swapThresholdInTokens * MAX_SWAP_THRESHOLD_MULTIPLE (contracts/virtualPersona/AgentToken.sol#743)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#divide-before-multiply
+INFO:Detectors:
+AgentRewardV2._claimStakerRewards(address,uint256) (contracts/AgentRewardV2.sol#402-416) uses a dangerous strict equality:
+	- amount == 0 (contracts/AgentRewardV2.sol#404)
+AgentRewardV2._claimValidatorRewards(uint256) (contracts/AgentRewardV2.sol#418-434) uses a dangerous strict equality:
+	- amount == 0 (contracts/AgentRewardV2.sol#422)
+AgentRewardV2._distributeAgentRewards(uint256,uint32,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#184-220) uses a dangerous strict equality:
+	- _rewards[virtualId].length == 0 (contracts/AgentRewardV2.sol#189)
+AgentRewardV2._getClaimableStakerRewards(address,uint256) (contracts/AgentRewardV2.sol#334-349) uses a dangerous strict equality:
+	- count == 0 (contracts/AgentRewardV2.sol#336)
+AgentRewardV2._getClaimableValidatorRewards(address,uint256) (contracts/AgentRewardV2.sol#365-378) uses a dangerous strict equality:
+	- count == 0 (contracts/AgentRewardV2.sol#367)
+AgentFactoryV3._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#199-266) uses a dangerous strict equality:
+	- require(bool,string)(_applications[id].status == ApplicationStatus.Active,Application is not active) (contracts/virtualPersona/AgentFactoryV3.sol#200)
+AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290) uses a dangerous strict equality:
+	- require(bool,string)(_applications[id].status == ApplicationStatus.Active,Application is not active) (contracts/virtualPersona/AgentFactoryV4.sol#206)
+AgentToken._pretaxValidationAndLimits(address,address,uint256) (contracts/virtualPersona/AgentToken.sol#638-671) uses a dangerous strict equality:
+	- to_ == uniswapV2Pair && from_ != address(this) && fundedDate == 0 (contracts/virtualPersona/AgentToken.sol#652)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+Reentrancy in AgentToken._autoSwap(address,address) (contracts/virtualPersona/AgentToken.sol#731-751):
+	External calls:
+	- _swapTax(swapBalance,contractBalance) (contracts/virtualPersona/AgentToken.sol#746)
+		- _uniswapRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(swapBalance_,0,path,projectTaxRecipient,block.timestamp + 600) (contracts/virtualPersona/AgentToken.sol#790-823)
+	State variables written after the call(s):
+	- _autoSwapInProgress = false (contracts/virtualPersona/AgentToken.sol#748)
+	AgentToken._autoSwapInProgress (contracts/virtualPersona/AgentToken.sol#39) can be used in cross function reentrancies:
+	- AgentToken._addInitialLiquidity(address) (contracts/virtualPersona/AgentToken.sol#225-263)
+	- AgentToken._autoSwap(address,address) (contracts/virtualPersona/AgentToken.sol#731-751)
+	- AgentToken._eligibleForSwap(address,address,uint256,uint256) (contracts/virtualPersona/AgentToken.sol#763-774)
+	- AgentToken._taxProcessing(bool,address,address,uint256) (contracts/virtualPersona/AgentToken.sol#684-720)
+	- AgentToken.initialize(address[3],bytes,bytes,bytes) (contracts/virtualPersona/AgentToken.sol#79-110)
+Reentrancy in AgentFactoryV3._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#199-266):
+	External calls:
+	- token = _createNewAgentToken(application.name,application.symbol,tokenSupplyParams_) (contracts/virtualPersona/AgentFactoryV3.sol#211)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),tokenSupplyParams_,_tokenTaxParams) (contracts/virtualPersona/AgentFactoryV3.sol#304-309)
+	- IERC20(assetToken).safeTransfer(token,initialAmount) (contracts/virtualPersona/AgentFactoryV3.sol#215)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentFactoryV3.sol#216)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,application.name),string.concat(s,application.symbol),lp,application.proposer,canStake) (contracts/virtualPersona/AgentFactoryV3.sol#219-225)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactoryV3.sol#323-331)
+	- dao = address(_createNewDAO(daoName,IVotes(veToken),application.daoVotingPeriod,application.daoThreshold)) (contracts/virtualPersona/AgentFactoryV3.sol#229-231)
+		- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactoryV3.sol#292)
+	- IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactoryV3.sol#235-244)
+	State variables written after the call(s):
+	- application.virtualId = virtualId (contracts/virtualPersona/AgentFactoryV3.sol#245)
+	AgentFactoryV3._applications (contracts/virtualPersona/AgentFactoryV3.sol#62) can be used in cross function reentrancies:
+	- AgentFactoryV3._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#199-266)
+	- AgentFactoryV3.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactoryV3.sol#268-283)
+	- AgentFactoryV3.executeBondingCurveApplication(uint256,uint256,uint256,address) (contracts/virtualPersona/AgentFactoryV3.sol#466-487)
+	- AgentFactoryV3.getApplication(uint256) (contracts/virtualPersona/AgentFactoryV3.sol#135-137)
+	- AgentFactoryV3.initFromBondingCurve(string,string,uint8[],bytes32,address,uint32,uint256,uint256,address) (contracts/virtualPersona/AgentFactoryV3.sol#422-464)
+	- AgentFactoryV3.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactoryV3.sol#139-180)
+	- AgentFactoryV3.withdraw(uint256) (contracts/virtualPersona/AgentFactoryV3.sol#182-197)
+Reentrancy in AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290):
+	External calls:
+	- token = _createNewAgentToken(application.name,application.symbol,tokenSupplyParams_) (contracts/virtualPersona/AgentFactoryV4.sol#220)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),tokenSupplyParams_,_tokenTaxParams) (contracts/virtualPersona/AgentFactoryV4.sol#328-333)
+	- IERC20(assetToken).safeTransfer(token,initialAmount) (contracts/virtualPersona/AgentFactoryV4.sol#222)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentFactoryV4.sol#223)
+	- lp = _createPair(token) (contracts/virtualPersona/AgentFactoryV4.sol#226)
+		- uniswapV2Pair_ = factory.createPair(tokenAddr,assetToken) (contracts/virtualPersona/AgentFactoryV4.sol#548)
+	- IERC20(token).forceApprove(_uniswapRouter,type()(uint256).max) (contracts/virtualPersona/AgentFactoryV4.sol#227)
+	- IERC20(assetToken).forceApprove(_uniswapRouter,initialAmount) (contracts/virtualPersona/AgentFactoryV4.sol#228)
+	- IUniswapV2Router02(_uniswapRouter).addLiquidity(token,assetToken,IERC20(token).balanceOf(address(this)),initialAmount,0,0,address(this),block.timestamp) (contracts/virtualPersona/AgentFactoryV4.sol#230-239)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,application.name),string.concat(s,application.symbol),lp,application.proposer,canStake) (contracts/virtualPersona/AgentFactoryV4.sol#243-249)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactoryV4.sol#347-355)
+	- dao = address(_createNewDAO(daoName,IVotes(veToken),application.daoVotingPeriod,application.daoThreshold)) (contracts/virtualPersona/AgentFactoryV4.sol#253-255)
+		- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactoryV4.sol#316)
+	- IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactoryV4.sol#259-268)
+	State variables written after the call(s):
+	- application.virtualId = virtualId (contracts/virtualPersona/AgentFactoryV4.sol#269)
+	AgentFactoryV4._applications (contracts/virtualPersona/AgentFactoryV4.sol#64) can be used in cross function reentrancies:
+	- AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290)
+	- AgentFactoryV4.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactoryV4.sol#292-307)
+	- AgentFactoryV4.executeTokenApplication(uint256,bool) (contracts/virtualPersona/AgentFactoryV4.sol#505-521)
+	- AgentFactoryV4.getApplication(uint256) (contracts/virtualPersona/AgentFactoryV4.sol#133-135)
+	- AgentFactoryV4.initFromToken(address,uint8[],bytes32,address,uint32,uint256,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#451-503)
+	- AgentFactoryV4.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#137-178)
+	- AgentFactoryV4.withdraw(uint256) (contracts/virtualPersona/AgentFactoryV4.sol#180-203)
+Reentrancy in Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403):
+	External calls:
+	- router.graduate(tokenAddress) (contracts/fun/Bonding.sol#375)
+	- IERC20(router.assetToken()).forceApprove(agentFactory,assetBalance) (contracts/fun/Bonding.sol#377)
+	- id = IAgentFactoryV3(agentFactory).initFromBondingCurve(string.concat(_token.data._name, by Virtuals),_token.data.ticker,_token.cores,_deployParams.tbaSalt,_deployParams.tbaImplementation,_deployParams.daoVotingPeriod,_deployParams.daoThreshold,assetBalance,_token.creator) (contracts/fun/Bonding.sol#378-388)
+	- agentToken = IAgentFactoryV3(agentFactory).executeBondingCurveApplication(id,_token.data.supply / (10 ** token_.decimals()),tokenBalance / (10 ** token_.decimals()),pairAddress) (contracts/fun/Bonding.sol#390-395)
+	State variables written after the call(s):
+	- _token.agentToken = agentToken (contracts/fun/Bonding.sol#396)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+Reentrancy in AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253):
+	External calls:
+	- amounts = router.swapExactTokensForTokens(amountToSwap,minOutput,path,address(this),block.timestamp + 300) (contracts/tax/AgentTax.sol#226-252)
+	- IERC20(assetToken).safeTransfer(taxRecipient.creator,creatorFee) (contracts/tax/AgentTax.sol#236)
+	- tbaBonus.distributeBonus(agentId,taxRecipient.creator,creatorFee) (contracts/tax/AgentTax.sol#238)
+	- IERC20(assetToken).safeTransfer(treasury,feeAmount) (contracts/tax/AgentTax.sol#243)
+	State variables written after the call(s):
+	- agentAmounts.amountSwapped += amountToSwap (contracts/tax/AgentTax.sol#246)
+	AgentTax.agentTaxAmounts (contracts/tax/AgentTax.sol#52) can be used in cross function reentrancies:
+	- AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253)
+	- AgentTax.agentTaxAmounts (contracts/tax/AgentTax.sol#52)
+	- AgentTax.dcaSell(uint256[],uint256,uint256) (contracts/tax/AgentTax.sol#269-285)
+	- AgentTax.handleAgentTaxes(uint256,bytes32[],uint256[],uint256) (contracts/tax/AgentTax.sol#168-188)
+Reentrancy in AgentToken._transfer(address,address,uint256,bool) (contracts/virtualPersona/AgentToken.sol#609-627):
+	External calls:
+	- _autoSwap(from,to) (contracts/virtualPersona/AgentToken.sol#616)
+		- _uniswapRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(swapBalance_,0,path,projectTaxRecipient,block.timestamp + 600) (contracts/virtualPersona/AgentToken.sol#790-823)
+	State variables written after the call(s):
+	- amountMinusTax = _taxProcessing(applyTax,to,from,amount) (contracts/virtualPersona/AgentToken.sol#619)
+		- _balances[address(this)] += tax (contracts/virtualPersona/AgentToken.sol#713)
+	AgentToken._balances (contracts/virtualPersona/AgentToken.sol#50) can be used in cross function reentrancies:
+	- AgentToken._burn(address,uint256) (contracts/virtualPersona/AgentToken.sol#935-956)
+	- AgentToken._mint(address,uint256) (contracts/virtualPersona/AgentToken.sol#907-922)
+	- AgentToken._pretaxValidationAndLimits(address,address,uint256) (contracts/virtualPersona/AgentToken.sol#638-671)
+	- AgentToken._taxProcessing(bool,address,address,uint256) (contracts/virtualPersona/AgentToken.sol#684-720)
+	- AgentToken._transfer(address,address,uint256,bool) (contracts/virtualPersona/AgentToken.sol#609-627)
+	- AgentToken.balanceOf(address) (contracts/virtualPersona/AgentToken.sol#486-488)
+	- _balances[from] = fromBalance - amount (contracts/virtualPersona/AgentToken.sol#621)
+	AgentToken._balances (contracts/virtualPersona/AgentToken.sol#50) can be used in cross function reentrancies:
+	- AgentToken._burn(address,uint256) (contracts/virtualPersona/AgentToken.sol#935-956)
+	- AgentToken._mint(address,uint256) (contracts/virtualPersona/AgentToken.sol#907-922)
+	- AgentToken._pretaxValidationAndLimits(address,address,uint256) (contracts/virtualPersona/AgentToken.sol#638-671)
+	- AgentToken._taxProcessing(bool,address,address,uint256) (contracts/virtualPersona/AgentToken.sol#684-720)
+	- AgentToken._transfer(address,address,uint256,bool) (contracts/virtualPersona/AgentToken.sol#609-627)
+	- AgentToken.balanceOf(address) (contracts/virtualPersona/AgentToken.sol#486-488)
+	- _balances[to] += amountMinusTax (contracts/virtualPersona/AgentToken.sol#622)
+	AgentToken._balances (contracts/virtualPersona/AgentToken.sol#50) can be used in cross function reentrancies:
+	- AgentToken._burn(address,uint256) (contracts/virtualPersona/AgentToken.sol#935-956)
+	- AgentToken._mint(address,uint256) (contracts/virtualPersona/AgentToken.sol#907-922)
+	- AgentToken._pretaxValidationAndLimits(address,address,uint256) (contracts/virtualPersona/AgentToken.sol#638-671)
+	- AgentToken._taxProcessing(bool,address,address,uint256) (contracts/virtualPersona/AgentToken.sol#684-720)
+	- AgentToken._transfer(address,address,uint256,bool) (contracts/virtualPersona/AgentToken.sol#609-627)
+	- AgentToken.balanceOf(address) (contracts/virtualPersona/AgentToken.sol#486-488)
+	- amountMinusTax = _taxProcessing(applyTax,to,from,amount) (contracts/virtualPersona/AgentToken.sol#619)
+		- projectTaxPendingSwap += uint128(projectTax) (contracts/virtualPersona/AgentToken.sol#699)
+		- projectTaxPendingSwap += uint128(projectTax_scope_0) (contracts/virtualPersona/AgentToken.sol#707)
+	AgentToken.projectTaxPendingSwap (contracts/virtualPersona/AgentToken.sol#42) can be used in cross function reentrancies:
+	- AgentToken._swapTax(uint256,uint256) (contracts/virtualPersona/AgentToken.sol#784-824)
+	- AgentToken._taxProcessing(bool,address,address,uint256) (contracts/virtualPersona/AgentToken.sol#684-720)
+	- AgentToken.distributeTaxTokens() (contracts/virtualPersona/AgentToken.sol#846-852)
+	- AgentToken.projectTaxPendingSwap (contracts/virtualPersona/AgentToken.sol#42)
+Reentrancy in Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355):
+	External calls:
+	- (amount1In,amount0Out) = router.buy(amountIn,tokenAddress,msg.sender) (contracts/fun/Bonding.sol#327)
+	State variables written after the call(s):
+	- tokenInfo[tokenAddress].data.price = price (contracts/fun/Bonding.sol#339)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.marketCap = mCap (contracts/fun/Bonding.sol#340)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.liquidity = liquidity (contracts/fun/Bonding.sol#341)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.volume = tokenInfo[tokenAddress].data.volume + amount1In (contracts/fun/Bonding.sol#342)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.volume24H = volume (contracts/fun/Bonding.sol#343)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.prevPrice = _price (contracts/fun/Bonding.sol#344)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.lastUpdated = block.timestamp (contracts/fun/Bonding.sol#347)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+Reentrancy in AgentFactoryV2.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactory.sol#196-273):
+	External calls:
+	- token = _createNewAgentToken(application.name,application.symbol) (contracts/virtualPersona/AgentFactory.sol#218)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),_tokenSupplyParams,_tokenTaxParams) (contracts/virtualPersona/AgentFactory.sol#290-295)
+	- IERC20(assetToken).transfer(token,initialAmount) (contracts/virtualPersona/AgentFactory.sol#222)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentFactory.sol#223)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,application.name),string.concat(s,application.symbol),lp,application.proposer,canStake) (contracts/virtualPersona/AgentFactory.sol#226-232)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactory.sol#309-317)
+	- dao = address(_createNewDAO(daoName,IVotes(veToken),application.daoVotingPeriod,application.daoThreshold)) (contracts/virtualPersona/AgentFactory.sol#236-238)
+		- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactory.sol#282)
+	- IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactory.sol#242-251)
+	State variables written after the call(s):
+	- application.virtualId = virtualId (contracts/virtualPersona/AgentFactory.sol#252)
+	AgentFactoryV2._applications (contracts/virtualPersona/AgentFactory.sol#62) can be used in cross function reentrancies:
+	- AgentFactoryV2.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactory.sol#196-273)
+	- AgentFactoryV2.getApplication(uint256) (contracts/virtualPersona/AgentFactory.sol#132-134)
+	- AgentFactoryV2.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactory.sol#136-177)
+	- AgentFactoryV2.withdraw(uint256) (contracts/virtualPersona/AgentFactory.sol#179-194)
+Reentrancy in AgentFactoryV4.initFromToken(address,uint8[],bytes32,address,uint32,uint256,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#451-503):
+	External calls:
+	- IERC20(tokenAddr).safeTransferFrom(sender,address(this),initialLP) (contracts/virtualPersona/AgentFactoryV4.sol#476)
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactoryV4.sol#478)
+	State variables written after the call(s):
+	- _tokenApplication[tokenAddr] = id (contracts/virtualPersona/AgentFactoryV4.sol#481)
+	AgentFactoryV4._tokenApplication (contracts/virtualPersona/AgentFactoryV4.sol#98) can be used in cross function reentrancies:
+	- AgentFactoryV4.initFromToken(address,uint8[],bytes32,address,uint32,uint256,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#451-503)
+	- AgentFactoryV4.withdraw(uint256) (contracts/virtualPersona/AgentFactoryV4.sol#180-203)
+Reentrancy in AgentMigrator.migrateAgent(uint256,string,string,bool) (contracts/virtualPersona/AgentMigrator.sol#100-136):
+	External calls:
+	- token = _createNewAgentToken(name,symbol) (contracts/virtualPersona/AgentMigrator.sol#108)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,_assetToken),abi.encode(name,symbol),_tokenSupplyParams,_tokenTaxParams) (contracts/virtualPersona/AgentMigrator.sol#173-178)
+	- IERC20(_assetToken).transferFrom(founder,token,initialAmount) (contracts/virtualPersona/AgentMigrator.sol#110)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentMigrator.sol#111)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,name),string.concat(s,symbol),lp,founder,canStake) (contracts/virtualPersona/AgentMigrator.sol#114-120)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(_nft),canStake) (contracts/virtualPersona/AgentMigrator.sol#158-166)
+	- dao = address(_createNewDAO(oldDAO.name(),IVotes(veToken),uint32(oldDAO.votingPeriod()),oldDAO.proposalThreshold())) (contracts/virtualPersona/AgentMigrator.sol#124-126)
+		- IAgentDAO(instance).initialize(name,token,address(_nft),daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentMigrator.sol#145)
+	- _nft.migrateVirtual(id,dao,token,lp,veToken) (contracts/virtualPersona/AgentMigrator.sol#128)
+	- IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentMigrator.sol#130)
+	- IAgentVeToken(veToken).stake(IERC20(lp).balanceOf(address(this)),founder,founder) (contracts/virtualPersona/AgentMigrator.sol#131)
+	State variables written after the call(s):
+	- migratedAgents[id] = true (contracts/virtualPersona/AgentMigrator.sol#133)
+	AgentMigrator.migratedAgents (contracts/virtualPersona/AgentMigrator.sol#29) can be used in cross function reentrancies:
+	- AgentMigrator.migrateAgent(uint256,string,string,bool) (contracts/virtualPersona/AgentMigrator.sol#100-136)
+	- AgentMigrator.migratedAgents (contracts/virtualPersona/AgentMigrator.sol#29)
+	- AgentMigrator.reset(uint256) (contracts/virtualPersona/AgentMigrator.sol#191-193)
+Reentrancy in Genesis.onGenesisFailed(uint256[]) (contracts/genesis/Genesis.sol#324-347):
+	External calls:
+	- IERC20(virtualTokenAddress).safeTransfer(participant,virtualsAmt) (contracts/genesis/Genesis.sol#337)
+	State variables written after the call(s):
+	- isFailed = true (contracts/genesis/Genesis.sol#344)
+	Genesis.isFailed (contracts/genesis/Genesis.sol#46) can be used in cross function reentrancies:
+	- Genesis.getGenesisInfo() (contracts/genesis/Genesis.sol#422-446)
+	- Genesis.isFailed (contracts/genesis/Genesis.sol#46)
+	- mapAddrToVirtuals[participant] = 0 (contracts/genesis/Genesis.sol#335)
+	Genesis.mapAddrToVirtuals (contracts/genesis/Genesis.sol#18) can be used in cross function reentrancies:
+	- Genesis.getParticipantsInfo(uint256[]) (contracts/genesis/Genesis.sol#382-397)
+	- Genesis.mapAddrToVirtuals (contracts/genesis/Genesis.sol#18)
+	- refundUserCountForFailed ++ (contracts/genesis/Genesis.sol#333)
+	Genesis.refundUserCountForFailed (contracts/genesis/Genesis.sol#21) can be used in cross function reentrancies:
+	- Genesis.refundUserCountForFailed (contracts/genesis/Genesis.sol#21)
+Reentrancy in Genesis.onGenesisSuccess(address[],uint256[],address[],uint256[],address) (contracts/genesis/Genesis.sol#205-304):
+	External calls:
+	- IERC20(virtualTokenAddress).approve(agentFactoryAddress,reserveAmount) (contracts/genesis/Genesis.sol#246)
+	- id = IAgentFactoryV3(agentFactoryAddress).initFromBondingCurve(string.concat(genesisName, by Virtuals),genesisTicker,genesisCores,tbaSalt,tbaImplementation,daoVotingPeriod,daoThreshold,reserveAmount,creator) (contracts/genesis/Genesis.sol#249-259)
+	- agentToken = IAgentFactoryV3(agentFactoryAddress).executeBondingCurveApplication(id,agentTokenTotalSupply,agentTokenLpSupply,address(this)) (contracts/genesis/Genesis.sol#261-266)
+	State variables written after the call(s):
+	- agentTokenAddress = agentToken (contracts/genesis/Genesis.sol#271)
+	Genesis.agentTokenAddress (contracts/genesis/Genesis.sol#45) can be used in cross function reentrancies:
+	- Genesis.agentTokenAddress (contracts/genesis/Genesis.sol#45)
+	- Genesis.getGenesisInfo() (contracts/genesis/Genesis.sol#422-446)
+Reentrancy in Genesis.onGenesisSuccess(address[],uint256[],address[],uint256[],address) (contracts/genesis/Genesis.sol#205-304):
+	External calls:
+	- IERC20(virtualTokenAddress).approve(agentFactoryAddress,reserveAmount) (contracts/genesis/Genesis.sol#246)
+	- id = IAgentFactoryV3(agentFactoryAddress).initFromBondingCurve(string.concat(genesisName, by Virtuals),genesisTicker,genesisCores,tbaSalt,tbaImplementation,daoVotingPeriod,daoThreshold,reserveAmount,creator) (contracts/genesis/Genesis.sol#249-259)
+	- agentToken = IAgentFactoryV3(agentFactoryAddress).executeBondingCurveApplication(id,agentTokenTotalSupply,agentTokenLpSupply,address(this)) (contracts/genesis/Genesis.sol#261-266)
+	- IERC20(virtualTokenAddress).safeTransfer(refundVirtualsTokenUserAddresses[i_scope_1],refundVirtualsTokenUserAmounts[i_scope_1]) (contracts/genesis/Genesis.sol#290-293)
+	State variables written after the call(s):
+	- mapAddrToVirtuals[refundVirtualsTokenUserAddresses[i_scope_1]] -= refundVirtualsTokenUserAmounts[i_scope_1] (contracts/genesis/Genesis.sol#288)
+	Genesis.mapAddrToVirtuals (contracts/genesis/Genesis.sol#18) can be used in cross function reentrancies:
+	- Genesis.getParticipantsInfo(uint256[]) (contracts/genesis/Genesis.sol#382-397)
+	- Genesis.mapAddrToVirtuals (contracts/genesis/Genesis.sol#18)
+Reentrancy in AgentInference.prompt(bytes32,uint256[],uint256[],uint8[][]) (contracts/AgentInference.sol#35-60):
+	External calls:
+	- token.safeTransferFrom(sender,agentTba,amounts[i_scope_0]) (contracts/AgentInference.sol#55)
+	State variables written after the call(s):
+	- inferenceCount[agentId] ++ (contracts/AgentInference.sol#57)
+	AgentInference.inferenceCount (contracts/AgentInference.sol#17) can be used in cross function reentrancies:
+	- AgentInference.inferenceCount (contracts/AgentInference.sol#17)
+Reentrancy in AgentInference.promptMulti(bytes32[],uint256[],uint256[],uint8[][]) (contracts/AgentInference.sol#62-92):
+	External calls:
+	- token.safeTransferFrom(sender,agentTba,amounts[i_scope_0]) (contracts/AgentInference.sol#87)
+	State variables written after the call(s):
+	- inferenceCount[agentId] ++ (contracts/AgentInference.sol#89)
+	AgentInference.inferenceCount (contracts/AgentInference.sol#17) can be used in cross function reentrancies:
+	- AgentInference.inferenceCount (contracts/AgentInference.sol#17)
+Reentrancy in Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316):
+	External calls:
+	- (amount0In,amount1Out) = router.sell(amountIn,tokenAddress,msg.sender) (contracts/fun/Bonding.sol#290)
+	State variables written after the call(s):
+	- tokenInfo[tokenAddress].data.price = price (contracts/fun/Bonding.sol#304)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.marketCap = mCap (contracts/fun/Bonding.sol#305)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.liquidity = liquidity (contracts/fun/Bonding.sol#306)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.volume = tokenInfo[tokenAddress].data.volume + amount1Out (contracts/fun/Bonding.sol#307)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.volume24H = volume (contracts/fun/Bonding.sol#308)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.prevPrice = prevPrice (contracts/fun/Bonding.sol#309)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+	- tokenInfo[tokenAddress].data.lastUpdated = block.timestamp (contracts/fun/Bonding.sol#312)
+	Bonding.tokenInfo (contracts/fun/Bonding.sol#81) can be used in cross function reentrancies:
+	- Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403)
+	- Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355)
+	- Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316)
+	- Bonding.tokenInfo (contracts/fun/Bonding.sol#81)
+	- Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420)
+Reentrancy in AgentFactoryV4.withdraw(uint256) (contracts/virtualPersona/AgentFactoryV4.sol#180-203):
+	External calls:
+	- IERC20(assetToken).safeTransfer(application.proposer,withdrawableAmount) (contracts/virtualPersona/AgentFactoryV4.sol#194)
+	- IERC20(customToken).safeTransfer(application.proposer,IERC20(customToken).balanceOf(address(this))) (contracts/virtualPersona/AgentFactoryV4.sol#198)
+	State variables written after the call(s):
+	- _applicationToken[id] = address(0) (contracts/virtualPersona/AgentFactoryV4.sol#201)
+	AgentFactoryV4._applicationToken (contracts/virtualPersona/AgentFactoryV4.sol#99) can be used in cross function reentrancies:
+	- AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290)
+	- AgentFactoryV4.executeTokenApplication(uint256,bool) (contracts/virtualPersona/AgentFactoryV4.sol#505-521)
+	- AgentFactoryV4.initFromToken(address,uint8[],bytes32,address,uint32,uint256,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#451-503)
+	- AgentFactoryV4.withdraw(uint256) (contracts/virtualPersona/AgentFactoryV4.sol#180-203)
+Reentrancy in AgentRewardV2.withdrawProtocolRewards(address) (contracts/AgentRewardV2.sol#436-440):
+	External calls:
+	- IERC20(rewardToken).safeTransfer(recipient,protocolRewards) (contracts/AgentRewardV2.sol#438)
+	State variables written after the call(s):
+	- protocolRewards = 0 (contracts/AgentRewardV2.sol#439)
+	AgentRewardV2.protocolRewards (contracts/AgentRewardV2.sol#42) can be used in cross function reentrancies:
+	- AgentRewardV2._distributeProtocolRewards(uint256) (contracts/AgentRewardV2.sol#138-143)
+	- AgentRewardV2.protocolRewards (contracts/AgentRewardV2.sol#42)
+	- AgentRewardV2.withdrawProtocolRewards(address) (contracts/AgentRewardV2.sol#436-440)
+Reentrancy in AgentRewardV2.withdrawValidatorPoolRewards(address) (contracts/AgentRewardV2.sol#442-446):
+	External calls:
+	- IERC20(rewardToken).safeTransfer(recipient,validatorPoolRewards) (contracts/AgentRewardV2.sol#444)
+	State variables written after the call(s):
+	- validatorPoolRewards = 0 (contracts/AgentRewardV2.sol#445)
+	AgentRewardV2.validatorPoolRewards (contracts/AgentRewardV2.sol#43) can be used in cross function reentrancies:
+	- AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250)
+	- AgentRewardV2.validatorPoolRewards (contracts/AgentRewardV2.sol#43)
+	- AgentRewardV2.withdrawValidatorPoolRewards(address) (contracts/AgentRewardV2.sol#442-446)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-1
+INFO:Detectors:
+Bonding._createUserProfile(address)._tokens (contracts/fun/Bonding.sol#122) is a local variable never initialized
+AgentRewardV2._claimServiceRewards(uint256).totalChildrenAmount (contracts/AgentRewardV2.sol#464) is a local variable never initialized
+AgentToken._taxProcessing(bool,address,address,uint256).tax (contracts/virtualPersona/AgentToken.sol#693) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+INFO:Detectors:
+Bonding.launchFor(string,string,uint8[],string,string,string[4],uint256,address) (contracts/fun/Bonding.sol#190-279) ignores return value by router.addInitialLiquidity(address(token),supply,liquidity) (contracts/fun/Bonding.sol#218)
+Bonding.launchFor(string,string,uint8[],string,string,string[4],uint256,address) (contracts/fun/Bonding.sol#190-279) ignores return value by router.buy(initialPurchase,address(token),address(this)) (contracts/fun/Bonding.sol#275)
+FRouter.addInitialLiquidity(address,uint256,uint256) (contracts/fun/FRouter.sol#75-93) ignores return value by pair.mint(amountToken_,amountAsset_) (contracts/fun/FRouter.sol#90)
+FRouter.sell(uint256,address,address) (contracts/fun/FRouter.sol#95-129) ignores return value by pair.swap(amountIn,0,0,amountOut) (contracts/fun/FRouter.sol#122)
+FRouter.sell(uint256,address,address) (contracts/fun/FRouter.sol#95-129) ignores return value by IBondingTax(taxManager).swapForAsset() (contracts/fun/FRouter.sol#125)
+FRouter.buy(uint256,address,address) (contracts/fun/FRouter.sol#131-163) ignores return value by IFPair(pair).swap(0,amountOut,amount,0) (contracts/fun/FRouter.sol#156)
+FRouter.buy(uint256,address,address) (contracts/fun/FRouter.sol#131-163) ignores return value by IBondingTax(taxManager).swapForAsset() (contracts/fun/FRouter.sol#159)
+FRouter.approval(address,address,address,uint256) (contracts/fun/FRouter.sol#172-181) ignores return value by IFPair(pair).approval(spender,asset,amount) (contracts/fun/FRouter.sol#180)
+Genesis.onGenesisSuccess(address[],uint256[],address[],uint256[],address) (contracts/genesis/Genesis.sol#205-304) ignores return value by IERC20(virtualTokenAddress).approve(agentFactoryAddress,reserveAmount) (contracts/genesis/Genesis.sol#246)
+VirtualGenesisDAO.constructor(IVotes,uint48,uint32,uint256) (contracts/governance/VirtualGenesisDAO.sol#33-45) ignores return value by _quorumCheckpoints.push(0,10000e18) (contracts/governance/VirtualGenesisDAO.sol#43)
+VirtualGenesisDAO.updateQuorum(uint224) (contracts/governance/VirtualGenesisDAO.sol#128-132) ignores return value by _quorumCheckpoints.push(SafeCast.toUint32(clock()),SafeCast.toUint208(newQuorum)) (contracts/governance/VirtualGenesisDAO.sol#130)
+AgentDAO._castVote(uint256,address,uint8,string,bytes) (contracts/virtualPersona/AgentDAO.sol#124-148) ignores return value by _scores[account].push(SafeCast.toUint48(block.number),SafeCast.toUint208(scoreOf(account)) + 1) (contracts/virtualPersona/AgentDAO.sol#137)
+AgentFactoryV2.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactory.sol#196-273) ignores return value by IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactory.sol#242-251)
+AgentFactoryV2.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactory.sol#196-273) ignores return value by IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentFactory.sol#269)
+AgentFactoryV3._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#199-266) ignores return value by IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactoryV3.sol#235-244)
+AgentFactoryV3._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#199-266) ignores return value by IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentFactoryV3.sol#262)
+AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290) ignores return value by IUniswapV2Router02(_uniswapRouter).addLiquidity(token,assetToken,IERC20(token).balanceOf(address(this)),initialAmount,0,0,address(this),block.timestamp) (contracts/virtualPersona/AgentFactoryV4.sol#230-239)
+AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290) ignores return value by IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactoryV4.sol#259-268)
+AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290) ignores return value by IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentFactoryV4.sol#286)
+AgentFactoryV4.isCompatibleToken(address) (contracts/virtualPersona/AgentFactoryV4.sol#523-541) ignores return value by IAgentToken(tokenAddr).name() (contracts/virtualPersona/AgentFactoryV4.sol#524-540)
+AgentFactoryV4.isCompatibleToken(address) (contracts/virtualPersona/AgentFactoryV4.sol#523-541) ignores return value by IAgentToken(tokenAddr).symbol() (contracts/virtualPersona/AgentFactoryV4.sol#525-537)
+AgentFactoryV4.isCompatibleToken(address) (contracts/virtualPersona/AgentFactoryV4.sol#523-541) ignores return value by IAgentToken(tokenAddr).totalSupply() (contracts/virtualPersona/AgentFactoryV4.sol#526-534)
+AgentFactoryV4.isCompatibleToken(address) (contracts/virtualPersona/AgentFactoryV4.sol#523-541) ignores return value by IAgentToken(tokenAddr).balanceOf(address(this)) (contracts/virtualPersona/AgentFactoryV4.sol#527-531)
+AgentMigrator.migrateAgent(uint256,string,string,bool) (contracts/virtualPersona/AgentMigrator.sol#100-136) ignores return value by IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentMigrator.sol#130)
+AgentToken._createPair() (contracts/virtualPersona/AgentToken.sol#193-205) ignores return value by _liquidityPools.add(uniswapV2Pair_) (contracts/virtualPersona/AgentToken.sol#202)
+AgentToken._addInitialLiquidity(address) (contracts/virtualPersona/AgentToken.sol#225-263) ignores return value by IERC20(pairToken).approve(address(_uniswapRouter),type()(uint256).max) (contracts/virtualPersona/AgentToken.sol#244)
+AgentToken.addLiquidityPool(address) (contracts/virtualPersona/AgentToken.sol#300-312) ignores return value by _liquidityPools.add(newLiquidityPool_) (contracts/virtualPersona/AgentToken.sol#310)
+AgentToken.removeLiquidityPool(address) (contracts/virtualPersona/AgentToken.sol#321-325) ignores return value by _liquidityPools.remove(removedLiquidityPool_) (contracts/virtualPersona/AgentToken.sol#323)
+AgentToken.addValidCaller(bytes32) (contracts/virtualPersona/AgentToken.sol#357-360) ignores return value by _validCallerCodeHashes.add(newValidCallerHash_) (contracts/virtualPersona/AgentToken.sol#358)
+AgentToken.removeValidCaller(bytes32) (contracts/virtualPersona/AgentToken.sol#369-373) ignores return value by _validCallerCodeHashes.remove(removedValidCallerHash_) (contracts/virtualPersona/AgentToken.sol#371)
+AgentVeToken.stake(uint256,address,address) (contracts/virtualPersona/AgentVeToken.sol#59-82) ignores return value by _balanceCheckpoints[receiver].push(clock(),SafeCast.toUint208(balanceOf(receiver))) (contracts/virtualPersona/AgentVeToken.sol#81)
+AgentVeToken.withdraw(uint256) (contracts/virtualPersona/AgentVeToken.sol#95-107) ignores return value by _balanceCheckpoints[sender].push(clock(),SafeCast.toUint208(balanceOf(sender))) (contracts/virtualPersona/AgentVeToken.sol#104)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+AgentNftV2.mint(uint256,address,string,address,address,uint8[],address,address).coreTypes (contracts/virtualPersona/AgentNftV2.sol#91) shadows:
+	- CoreRegistry.coreTypes (contracts/virtualPersona/CoreRegistry.sol#7) (state variable)
+AgentNftV2.setCoreTypes(uint256,uint8[]).coreTypes (contracts/virtualPersona/AgentNftV2.sol#163) shadows:
+	- CoreRegistry.coreTypes (contracts/virtualPersona/CoreRegistry.sol#7) (state variable)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#local-variable-shadowing
+INFO:Detectors:
+Minter.setAgentFactory(address) (contracts/token/Minter.sol#108-110) should emit an event for: 
+	- agentFactory = _factory (contracts/token/Minter.sol#109) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-access-control
+INFO:Detectors:
+Bonding.initialize(address,address,address,uint256,uint256,uint256,uint256,address,uint256) (contracts/fun/Bonding.sol#93-119) should emit an event for: 
+	- fee = (fee_ * 1000000000000000000) / 1000 (contracts/fun/Bonding.sol#111) 
+	- initialSupply = initialSupply_ (contracts/fun/Bonding.sol#113) 
+	- assetRate = assetRate_ (contracts/fun/Bonding.sol#114) 
+	- maxTx = maxTx_ (contracts/fun/Bonding.sol#115) 
+	- gradThreshold = gradThreshold_ (contracts/fun/Bonding.sol#118) 
+Bonding.setInitialSupply(uint256) (contracts/fun/Bonding.sol#143-145) should emit an event for: 
+	- initialSupply = newSupply (contracts/fun/Bonding.sol#144) 
+Bonding.setGradThreshold(uint256) (contracts/fun/Bonding.sol#147-149) should emit an event for: 
+	- gradThreshold = newThreshold (contracts/fun/Bonding.sol#148) 
+Bonding.setFee(uint256,address) (contracts/fun/Bonding.sol#151-154) should emit an event for: 
+	- fee = newFee (contracts/fun/Bonding.sol#152) 
+Bonding.setMaxTx(uint256) (contracts/fun/Bonding.sol#156-158) should emit an event for: 
+	- maxTx = maxTx_ (contracts/fun/Bonding.sol#157) 
+Bonding.setAssetRate(uint256) (contracts/fun/Bonding.sol#160-164) should emit an event for: 
+	- assetRate = newRate (contracts/fun/Bonding.sol#163) 
+Minter.setMaxImpact(uint256) (contracts/token/Minter.sol#122-124) should emit an event for: 
+	- maxImpact = maxImpact_ (contracts/token/Minter.sol#123) 
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address) (contracts/virtualPersona/AgentFactory.sol#108-130) should emit an event for: 
+	- applicationThreshold = applicationThreshold_ (contracts/virtualPersona/AgentFactory.sol#126) 
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256) (contracts/virtualPersona/AgentFactoryV3.sol#110-133) should emit an event for: 
+	- applicationThreshold = applicationThreshold_ (contracts/virtualPersona/AgentFactoryV3.sol#129) 
+	- _nextId = nextId_ (contracts/virtualPersona/AgentFactoryV3.sol#130) 
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#108-131) should emit an event for: 
+	- applicationThreshold = applicationThreshold_ (contracts/virtualPersona/AgentFactoryV4.sol#127) 
+	- _nextId = nextId_ (contracts/virtualPersona/AgentFactoryV4.sol#128) 
+AgentMigrator.setInitParams(address,address,address,uint256,uint256) (contracts/virtualPersona/AgentMigrator.sol#46-58) should emit an event for: 
+	- initialAmount = initialAmount_ (contracts/virtualPersona/AgentMigrator.sol#56) 
+	- maturityDuration = maturityDuration_ (contracts/virtualPersona/AgentMigrator.sol#57) 
+EloCalculator.setK(uint256) (contracts/virtualPersona/EloCalculator.sol#57-59) should emit an event for: 
+	- k = k_ (contracts/virtualPersona/EloCalculator.sol#58) 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-events-arithmetic
+INFO:Detectors:
+AgentRewardV2.initialize(address,address,address,address,RewardSettingsCheckpoints.RewardSettings).rewardToken_ (contracts/AgentRewardV2.sol#71) lacks a zero-check on :
+		- rewardToken = rewardToken_ (contracts/AgentRewardV2.sol#77)
+AgentRewardV2.initialize(address,address,address,address,RewardSettingsCheckpoints.RewardSettings).agentNft_ (contracts/AgentRewardV2.sol#72) lacks a zero-check on :
+		- agentNft = agentNft_ (contracts/AgentRewardV2.sol#78)
+AgentRewardV2.initialize(address,address,address,address,RewardSettingsCheckpoints.RewardSettings).contributionNft_ (contracts/AgentRewardV2.sol#73) lacks a zero-check on :
+		- contributionNft = contributionNft_ (contracts/AgentRewardV2.sol#79)
+AgentRewardV2.initialize(address,address,address,address,RewardSettingsCheckpoints.RewardSettings).serviceNft_ (contracts/AgentRewardV2.sol#74) lacks a zero-check on :
+		- serviceNft = serviceNft_ (contracts/AgentRewardV2.sol#80)
+AgentRewardV2.updateRefContracts(address,address,address,address).rewardToken_ (contracts/AgentRewardV2.sol#541) lacks a zero-check on :
+		- rewardToken = rewardToken_ (contracts/AgentRewardV2.sol#546)
+AgentRewardV2.updateRefContracts(address,address,address,address).agentNft_ (contracts/AgentRewardV2.sol#542) lacks a zero-check on :
+		- agentNft = agentNft_ (contracts/AgentRewardV2.sol#547)
+AgentRewardV2.updateRefContracts(address,address,address,address).contributionNft_ (contracts/AgentRewardV2.sol#543) lacks a zero-check on :
+		- contributionNft = contributionNft_ (contracts/AgentRewardV2.sol#548)
+AgentRewardV2.updateRefContracts(address,address,address,address).serviceNft_ (contracts/AgentRewardV2.sol#544) lacks a zero-check on :
+		- serviceNft = serviceNft_ (contracts/AgentRewardV2.sol#549)
+AgentRewardV3.initialize(address,address,RewardSettingsCheckpointsV2.RewardSettings).rewardToken_ (contracts/AgentRewardV3.sol#63) lacks a zero-check on :
+		- rewardToken = rewardToken_ (contracts/AgentRewardV3.sol#67)
+AgentRewardV3.initialize(address,address,RewardSettingsCheckpointsV2.RewardSettings).agentNft_ (contracts/AgentRewardV3.sol#64) lacks a zero-check on :
+		- agentNft = agentNft_ (contracts/AgentRewardV3.sol#68)
+AgentRewardV3.updateRefContracts(address,address).rewardToken_ (contracts/AgentRewardV3.sol#339) lacks a zero-check on :
+		- rewardToken = rewardToken_ (contracts/AgentRewardV3.sol#340)
+AgentRewardV3.updateRefContracts(address,address).agentNft_ (contracts/AgentRewardV3.sol#339) lacks a zero-check on :
+		- agentNft = agentNft_ (contracts/AgentRewardV3.sol#341)
+ContributionNft.initialize(address).thePersonaAddress (contracts/contribution/ContributionNft.sol#42) lacks a zero-check on :
+		- personaNft = thePersonaAddress (contracts/contribution/ContributionNft.sol#47)
+ContributionNft.setAdmin(address).newAdmin (contracts/contribution/ContributionNft.sol#103) lacks a zero-check on :
+		- _admin = newAdmin (contracts/contribution/ContributionNft.sol#105)
+ContributionNft.setEloCalculator(address).eloCalculator_ (contracts/contribution/ContributionNft.sol#165) lacks a zero-check on :
+		- _eloCalculator = eloCalculator_ (contracts/contribution/ContributionNft.sol#167)
+ServiceNft.initialize(address,address,uint16).initialAgentNft (contracts/contribution/ServiceNft.sol#45) lacks a zero-check on :
+		- personaNft = initialAgentNft (contracts/contribution/ServiceNft.sol#53)
+ServiceNft.initialize(address,address,uint16).initialContributionNft (contracts/contribution/ServiceNft.sol#46) lacks a zero-check on :
+		- contributionNft = initialContributionNft (contracts/contribution/ServiceNft.sol#54)
+BMWTokenChild.constructor(address).fxManager (contracts/dev/BMWTokenChild.sol#11) lacks a zero-check on :
+		- _fxManager = fxManager (contracts/dev/BMWTokenChild.sol#12)
+BMWTokenChild.setFxManager(address).fxManager (contracts/dev/BMWTokenChild.sol#15) lacks a zero-check on :
+		- _fxManager = fxManager (contracts/dev/BMWTokenChild.sol#16)
+Bonding.initialize(address,address,address,uint256,uint256,uint256,uint256,address,uint256).feeTo_ (contracts/fun/Bonding.sol#96) lacks a zero-check on :
+		- _feeTo = feeTo_ (contracts/fun/Bonding.sol#110)
+Bonding.initialize(address,address,address,uint256,uint256,uint256,uint256,address,uint256).agentFactory_ (contracts/fun/Bonding.sol#101) lacks a zero-check on :
+		- agentFactory = agentFactory_ (contracts/fun/Bonding.sol#117)
+Bonding.setFee(uint256,address).newFeeTo (contracts/fun/Bonding.sol#151) lacks a zero-check on :
+		- _feeTo = newFeeTo (contracts/fun/Bonding.sol#153)
+FFactory.initialize(address,uint256,uint256).taxVault_ (contracts/fun/FFactory.sol#31) lacks a zero-check on :
+		- taxVault = taxVault_ (contracts/fun/FFactory.sol#36)
+FFactory.setRouter(address).router_ (contracts/fun/FFactory.sol#82) lacks a zero-check on :
+		- router = router_ (contracts/fun/FFactory.sol#83)
+FRouter.setTaxManager(address).newManager (contracts/fun/FRouter.sol#183) lacks a zero-check on :
+		- taxManager = newManager (contracts/fun/FRouter.sol#184)
+MockAgentFactoryV3.setMockAgentToken(address).token (contracts/genesis/MockAgentFactoryV3.sol#39) lacks a zero-check on :
+		- mockAgentToken = token (contracts/genesis/MockAgentFactoryV3.sol#40)
+AeroAdaptor.constructor(address,address,address,address).router_ (contracts/pool/AeroAdaptor.sol#35) lacks a zero-check on :
+		- router = router_ (contracts/pool/AeroAdaptor.sol#36)
+AeroAdaptor.constructor(address,address,address,address).tokenIn_ (contracts/pool/AeroAdaptor.sol#35) lacks a zero-check on :
+		- tokenIn = tokenIn_ (contracts/pool/AeroAdaptor.sol#37)
+AeroAdaptor.constructor(address,address,address,address).tokenOut_ (contracts/pool/AeroAdaptor.sol#35) lacks a zero-check on :
+		- tokenOut = tokenOut_ (contracts/pool/AeroAdaptor.sol#38)
+AeroAdaptor.constructor(address,address,address,address).factory_ (contracts/pool/AeroAdaptor.sol#35) lacks a zero-check on :
+		- factory = factory_ (contracts/pool/AeroAdaptor.sol#39)
+AgentTax.initialize(address,address,address,address,address,uint256,uint256,address).treasury_ (contracts/tax/AgentTax.sol#88) lacks a zero-check on :
+		- treasury = treasury_ (contracts/tax/AgentTax.sol#102)
+AgentTax.updateSwapParams(address,address,uint16,uint16).assetToken_ (contracts/tax/AgentTax.sol#117) lacks a zero-check on :
+		- assetToken = assetToken_ (contracts/tax/AgentTax.sol#127)
+AgentTax.updateTreasury(address).treasury_ (contracts/tax/AgentTax.sol#157) lacks a zero-check on :
+		- treasury = treasury_ (contracts/tax/AgentTax.sol#159)
+BondingTax.initialize(address,address,address,address,address,address,uint256,uint256).assetToken_ (contracts/tax/BondingTax.sol#56) lacks a zero-check on :
+		- assetToken = assetToken_ (contracts/tax/BondingTax.sol#68)
+BondingTax.initialize(address,address,address,address,address,address,uint256,uint256).taxToken_ (contracts/tax/BondingTax.sol#57) lacks a zero-check on :
+		- taxToken = taxToken_ (contracts/tax/BondingTax.sol#69)
+BondingTax.initialize(address,address,address,address,address,address,uint256,uint256).bondingRouter_ (contracts/tax/BondingTax.sol#59) lacks a zero-check on :
+		- bondingRouter = bondingRouter_ (contracts/tax/BondingTax.sol#71)
+BondingTax.initialize(address,address,address,address,address,address,uint256,uint256).treasury_ (contracts/tax/BondingTax.sol#60) lacks a zero-check on :
+		- treasury = treasury_ (contracts/tax/BondingTax.sol#72)
+BondingTax.updateSwapParams(address,address,address,uint16).assetToken_ (contracts/tax/BondingTax.sol#83) lacks a zero-check on :
+		- assetToken = assetToken_ (contracts/tax/BondingTax.sol#90)
+BondingTax.updateSwapParams(address,address,address,uint16).bondingRouter_ (contracts/tax/BondingTax.sol#82) lacks a zero-check on :
+		- bondingRouter = bondingRouter_ (contracts/tax/BondingTax.sol#92)
+BondingTax.updateTreasury(address).treasury_ (contracts/tax/BondingTax.sol#111) lacks a zero-check on :
+		- treasury = treasury_ (contracts/tax/BondingTax.sol#113)
+LPRefund.initialize(address,address).taxToken_ (contracts/tax/LPRefund.sol#27) lacks a zero-check on :
+		- taxToken = taxToken_ (contracts/tax/LPRefund.sol#33)
+Minter.initialize(address,address,address,uint256,uint256,address,address,address,uint256).serviceAddress (contracts/token/Minter.sol#59) lacks a zero-check on :
+		- serviceNft = serviceAddress (contracts/token/Minter.sol#71)
+Minter.initialize(address,address,address,uint256,uint256,address,address,address,uint256).contributionAddress (contracts/token/Minter.sol#60) lacks a zero-check on :
+		- contributionNft = contributionAddress (contracts/token/Minter.sol#72)
+Minter.initialize(address,address,address,uint256,uint256,address,address,address,uint256).agentAddress (contracts/token/Minter.sol#61) lacks a zero-check on :
+		- agentNft = agentAddress (contracts/token/Minter.sol#73)
+Minter.initialize(address,address,address,uint256,uint256,address,address,address,uint256).ipVault_ (contracts/token/Minter.sol#64) lacks a zero-check on :
+		- ipVault = ipVault_ (contracts/token/Minter.sol#76)
+Minter.initialize(address,address,address,uint256,uint256,address,address,address,uint256).agentFactory_ (contracts/token/Minter.sol#65) lacks a zero-check on :
+		- agentFactory = agentFactory_ (contracts/token/Minter.sol#77)
+Minter.setServiceNft(address).serviceAddress (contracts/token/Minter.sol#86) lacks a zero-check on :
+		- serviceNft = serviceAddress (contracts/token/Minter.sol#87)
+Minter.setContributionNft(address).contributionAddress (contracts/token/Minter.sol#90) lacks a zero-check on :
+		- contributionNft = contributionAddress (contracts/token/Minter.sol#91)
+Minter.setIPVault(address)._ipVault (contracts/token/Minter.sol#104) lacks a zero-check on :
+		- ipVault = _ipVault (contracts/token/Minter.sol#105)
+Minter.setAgentFactory(address)._factory (contracts/token/Minter.sol#108) lacks a zero-check on :
+		- agentFactory = _factory (contracts/token/Minter.sol#109)
+AgentDAO.initialize(string,IVotes,address,uint256,uint32).agentNft (contracts/virtualPersona/AgentDAO.sol#43) lacks a zero-check on :
+		- _agentNft = agentNft (contracts/virtualPersona/AgentDAO.sol#54)
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address).tokenImplementation_ (contracts/virtualPersona/AgentFactory.sol#109) lacks a zero-check on :
+		- tokenImplementation = tokenImplementation_ (contracts/virtualPersona/AgentFactory.sol#120)
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address).veTokenImplementation_ (contracts/virtualPersona/AgentFactory.sol#110) lacks a zero-check on :
+		- veTokenImplementation = veTokenImplementation_ (contracts/virtualPersona/AgentFactory.sol#121)
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address).daoImplementation_ (contracts/virtualPersona/AgentFactory.sol#111) lacks a zero-check on :
+		- daoImplementation = daoImplementation_ (contracts/virtualPersona/AgentFactory.sol#122)
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address).assetToken_ (contracts/virtualPersona/AgentFactory.sol#113) lacks a zero-check on :
+		- assetToken = assetToken_ (contracts/virtualPersona/AgentFactory.sol#123)
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address).tbaRegistry_ (contracts/virtualPersona/AgentFactory.sol#112) lacks a zero-check on :
+		- tbaRegistry = tbaRegistry_ (contracts/virtualPersona/AgentFactory.sol#124)
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address).nft_ (contracts/virtualPersona/AgentFactory.sol#114) lacks a zero-check on :
+		- nft = nft_ (contracts/virtualPersona/AgentFactory.sol#125)
+AgentFactoryV2.initialize(address,address,address,address,address,address,uint256,address).vault_ (contracts/virtualPersona/AgentFactory.sol#116) lacks a zero-check on :
+		- _vault = vault_ (contracts/virtualPersona/AgentFactory.sol#129)
+AgentFactoryV2.setVault(address).newVault (contracts/virtualPersona/AgentFactory.sol#332) lacks a zero-check on :
+		- _vault = newVault (contracts/virtualPersona/AgentFactory.sol#333)
+AgentFactoryV2.setImplementations(address,address,address).token (contracts/virtualPersona/AgentFactory.sol#336) lacks a zero-check on :
+		- tokenImplementation = token (contracts/virtualPersona/AgentFactory.sol#337)
+AgentFactoryV2.setImplementations(address,address,address).dao (contracts/virtualPersona/AgentFactory.sol#336) lacks a zero-check on :
+		- daoImplementation = dao (contracts/virtualPersona/AgentFactory.sol#338)
+AgentFactoryV2.setImplementations(address,address,address).veToken (contracts/virtualPersona/AgentFactory.sol#336) lacks a zero-check on :
+		- veTokenImplementation = veToken (contracts/virtualPersona/AgentFactory.sol#339)
+AgentFactoryV2.setUniswapRouter(address).router (contracts/virtualPersona/AgentFactory.sol#346) lacks a zero-check on :
+		- _uniswapRouter = router (contracts/virtualPersona/AgentFactory.sol#347)
+AgentFactoryV2.setTokenAdmin(address).newTokenAdmin (contracts/virtualPersona/AgentFactory.sol#350) lacks a zero-check on :
+		- _tokenAdmin = newTokenAdmin (contracts/virtualPersona/AgentFactory.sol#351)
+AgentFactoryV2.setAssetToken(address).newToken (contracts/virtualPersona/AgentFactory.sol#388) lacks a zero-check on :
+		- assetToken = newToken (contracts/virtualPersona/AgentFactory.sol#389)
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256).tokenImplementation_ (contracts/virtualPersona/AgentFactoryV3.sol#111) lacks a zero-check on :
+		- tokenImplementation = tokenImplementation_ (contracts/virtualPersona/AgentFactoryV3.sol#123)
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256).veTokenImplementation_ (contracts/virtualPersona/AgentFactoryV3.sol#112) lacks a zero-check on :
+		- veTokenImplementation = veTokenImplementation_ (contracts/virtualPersona/AgentFactoryV3.sol#124)
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256).daoImplementation_ (contracts/virtualPersona/AgentFactoryV3.sol#113) lacks a zero-check on :
+		- daoImplementation = daoImplementation_ (contracts/virtualPersona/AgentFactoryV3.sol#125)
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256).assetToken_ (contracts/virtualPersona/AgentFactoryV3.sol#115) lacks a zero-check on :
+		- assetToken = assetToken_ (contracts/virtualPersona/AgentFactoryV3.sol#126)
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256).tbaRegistry_ (contracts/virtualPersona/AgentFactoryV3.sol#114) lacks a zero-check on :
+		- tbaRegistry = tbaRegistry_ (contracts/virtualPersona/AgentFactoryV3.sol#127)
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256).nft_ (contracts/virtualPersona/AgentFactoryV3.sol#116) lacks a zero-check on :
+		- nft = nft_ (contracts/virtualPersona/AgentFactoryV3.sol#128)
+AgentFactoryV3.initialize(address,address,address,address,address,address,uint256,address,uint256).vault_ (contracts/virtualPersona/AgentFactoryV3.sol#118) lacks a zero-check on :
+		- _vault = vault_ (contracts/virtualPersona/AgentFactoryV3.sol#132)
+AgentFactoryV3.setVault(address).newVault (contracts/virtualPersona/AgentFactoryV3.sol#346) lacks a zero-check on :
+		- _vault = newVault (contracts/virtualPersona/AgentFactoryV3.sol#347)
+AgentFactoryV3.setImplementations(address,address,address).token (contracts/virtualPersona/AgentFactoryV3.sol#350) lacks a zero-check on :
+		- tokenImplementation = token (contracts/virtualPersona/AgentFactoryV3.sol#351)
+AgentFactoryV3.setImplementations(address,address,address).dao (contracts/virtualPersona/AgentFactoryV3.sol#350) lacks a zero-check on :
+		- daoImplementation = dao (contracts/virtualPersona/AgentFactoryV3.sol#352)
+AgentFactoryV3.setImplementations(address,address,address).veToken (contracts/virtualPersona/AgentFactoryV3.sol#350) lacks a zero-check on :
+		- veTokenImplementation = veToken (contracts/virtualPersona/AgentFactoryV3.sol#353)
+AgentFactoryV3.setUniswapRouter(address).router (contracts/virtualPersona/AgentFactoryV3.sol#360) lacks a zero-check on :
+		- _uniswapRouter = router (contracts/virtualPersona/AgentFactoryV3.sol#361)
+AgentFactoryV3.setTokenAdmin(address).newTokenAdmin (contracts/virtualPersona/AgentFactoryV3.sol#364) lacks a zero-check on :
+		- _tokenAdmin = newTokenAdmin (contracts/virtualPersona/AgentFactoryV3.sol#365)
+AgentFactoryV3.setAssetToken(address).newToken (contracts/virtualPersona/AgentFactoryV3.sol#402) lacks a zero-check on :
+		- assetToken = newToken (contracts/virtualPersona/AgentFactoryV3.sol#403)
+AgentFactoryV3.setDefaultDelegatee(address).newDelegatee (contracts/virtualPersona/AgentFactoryV3.sol#489) lacks a zero-check on :
+		- defaultDelegatee = newDelegatee (contracts/virtualPersona/AgentFactoryV3.sol#490)
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256).tokenImplementation_ (contracts/virtualPersona/AgentFactoryV4.sol#109) lacks a zero-check on :
+		- tokenImplementation = tokenImplementation_ (contracts/virtualPersona/AgentFactoryV4.sol#121)
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256).veTokenImplementation_ (contracts/virtualPersona/AgentFactoryV4.sol#110) lacks a zero-check on :
+		- veTokenImplementation = veTokenImplementation_ (contracts/virtualPersona/AgentFactoryV4.sol#122)
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256).daoImplementation_ (contracts/virtualPersona/AgentFactoryV4.sol#111) lacks a zero-check on :
+		- daoImplementation = daoImplementation_ (contracts/virtualPersona/AgentFactoryV4.sol#123)
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256).assetToken_ (contracts/virtualPersona/AgentFactoryV4.sol#113) lacks a zero-check on :
+		- assetToken = assetToken_ (contracts/virtualPersona/AgentFactoryV4.sol#124)
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256).tbaRegistry_ (contracts/virtualPersona/AgentFactoryV4.sol#112) lacks a zero-check on :
+		- tbaRegistry = tbaRegistry_ (contracts/virtualPersona/AgentFactoryV4.sol#125)
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256).nft_ (contracts/virtualPersona/AgentFactoryV4.sol#114) lacks a zero-check on :
+		- nft = nft_ (contracts/virtualPersona/AgentFactoryV4.sol#126)
+AgentFactoryV4.initialize(address,address,address,address,address,address,uint256,address,uint256).vault_ (contracts/virtualPersona/AgentFactoryV4.sol#116) lacks a zero-check on :
+		- _vault = vault_ (contracts/virtualPersona/AgentFactoryV4.sol#130)
+AgentFactoryV4.setVault(address).newVault (contracts/virtualPersona/AgentFactoryV4.sol#370) lacks a zero-check on :
+		- _vault = newVault (contracts/virtualPersona/AgentFactoryV4.sol#371)
+AgentFactoryV4.setImplementations(address,address,address).token (contracts/virtualPersona/AgentFactoryV4.sol#374) lacks a zero-check on :
+		- tokenImplementation = token (contracts/virtualPersona/AgentFactoryV4.sol#375)
+AgentFactoryV4.setImplementations(address,address,address).dao (contracts/virtualPersona/AgentFactoryV4.sol#374) lacks a zero-check on :
+		- daoImplementation = dao (contracts/virtualPersona/AgentFactoryV4.sol#376)
+AgentFactoryV4.setImplementations(address,address,address).veToken (contracts/virtualPersona/AgentFactoryV4.sol#374) lacks a zero-check on :
+		- veTokenImplementation = veToken (contracts/virtualPersona/AgentFactoryV4.sol#377)
+AgentFactoryV4.setUniswapRouter(address).router (contracts/virtualPersona/AgentFactoryV4.sol#384) lacks a zero-check on :
+		- _uniswapRouter = router (contracts/virtualPersona/AgentFactoryV4.sol#385)
+AgentFactoryV4.setTokenAdmin(address).newTokenAdmin (contracts/virtualPersona/AgentFactoryV4.sol#388) lacks a zero-check on :
+		- _tokenAdmin = newTokenAdmin (contracts/virtualPersona/AgentFactoryV4.sol#389)
+AgentFactoryV4.setAssetToken(address).newToken (contracts/virtualPersona/AgentFactoryV4.sol#426) lacks a zero-check on :
+		- assetToken = newToken (contracts/virtualPersona/AgentFactoryV4.sol#427)
+AgentFactoryV4.setDefaultDelegatee(address).newDelegatee (contracts/virtualPersona/AgentFactoryV4.sol#446) lacks a zero-check on :
+		- defaultDelegatee = newDelegatee (contracts/virtualPersona/AgentFactoryV4.sol#447)
+AgentMigrator.setInitParams(address,address,address,uint256,uint256).tokenAdmin_ (contracts/virtualPersona/AgentMigrator.sol#47) lacks a zero-check on :
+		- _tokenAdmin = tokenAdmin_ (contracts/virtualPersona/AgentMigrator.sol#53)
+AgentMigrator.setInitParams(address,address,address,uint256,uint256).assetToken_ (contracts/virtualPersona/AgentMigrator.sol#48) lacks a zero-check on :
+		- _assetToken = assetToken_ (contracts/virtualPersona/AgentMigrator.sol#54)
+AgentMigrator.setInitParams(address,address,address,uint256,uint256).uniswapRouter_ (contracts/virtualPersona/AgentMigrator.sol#49) lacks a zero-check on :
+		- _uniswapRouter = uniswapRouter_ (contracts/virtualPersona/AgentMigrator.sol#55)
+AgentMigrator.setImplementations(address,address,address).token (contracts/virtualPersona/AgentMigrator.sol#94) lacks a zero-check on :
+		- tokenImplementation = token (contracts/virtualPersona/AgentMigrator.sol#95)
+AgentMigrator.setImplementations(address,address,address).dao (contracts/virtualPersona/AgentMigrator.sol#94) lacks a zero-check on :
+		- daoImplementation = dao (contracts/virtualPersona/AgentMigrator.sol#96)
+AgentMigrator.setImplementations(address,address,address).veToken (contracts/virtualPersona/AgentMigrator.sol#94) lacks a zero-check on :
+		- veTokenImplementation = veToken (contracts/virtualPersona/AgentMigrator.sol#97)
+AgentNftV2.setContributionService(address,address).contributionNft_ (contracts/virtualPersona/AgentNftV2.sol#74) lacks a zero-check on :
+		- _contributionNft = contributionNft_ (contracts/virtualPersona/AgentNftV2.sol#77)
+AgentNftV2.setContributionService(address,address).serviceNft_ (contracts/virtualPersona/AgentNftV2.sol#75) lacks a zero-check on :
+		- _serviceNft = serviceNft_ (contracts/virtualPersona/AgentNftV2.sol#78)
+AgentNftV2.setEloCalculator(address).eloCalculator (contracts/virtualPersona/AgentNftV2.sol#243) lacks a zero-check on :
+		- _eloCalculator = eloCalculator (contracts/virtualPersona/AgentNftV2.sol#244)
+AgentToken.setProjectTaxRecipient(address).projectTaxRecipient_ (contracts/virtualPersona/AgentToken.sol#382) lacks a zero-check on :
+		- projectTaxRecipient = projectTaxRecipient_ (contracts/virtualPersona/AgentToken.sol#383)
+AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._founder (contracts/virtualPersona/AgentVeToken.sol#42) lacks a zero-check on :
+		- founder = _founder (contracts/virtualPersona/AgentVeToken.sol#51)
+AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._assetToken (contracts/virtualPersona/AgentVeToken.sol#43) lacks a zero-check on :
+		- assetToken = _assetToken (contracts/virtualPersona/AgentVeToken.sol#53)
+AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._agentNft (contracts/virtualPersona/AgentVeToken.sol#45) lacks a zero-check on :
+		- agentNft = _agentNft (contracts/virtualPersona/AgentVeToken.sol#54)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+INFO:Detectors:
+AgentInference.prompt(bytes32,uint256[],uint256[],uint8[][]) (contracts/AgentInference.sol#35-60) has external calls inside a loop: agentTba = agentNft.virtualInfo(agentId).tba (contracts/AgentInference.sol#54)
+AgentInference.promptMulti(bytes32[],uint256[],uint256[],uint8[][]) (contracts/AgentInference.sol#62-92) has external calls inside a loop: agentTba = agentNft.virtualInfo(agentId).tba (contracts/AgentInference.sol#85)
+AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250) has external calls inside a loop: validatorCount = nft.validatorCount(virtualId) (contracts/AgentRewardV2.sol#231)
+AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250) has external calls inside a loop: totalProposals = nft.totalProposals(virtualId) (contracts/AgentRewardV2.sol#232)
+AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250) has external calls inside a loop: validator = nft.validatorAt(virtualId,i) (contracts/AgentRewardV2.sol#235)
+AgentRewardV2.getVirtualTokenAddress(IAgentNft,uint256) (contracts/AgentRewardV2.sol#561-567) has external calls inside a loop: stakingAddress = nft.virtualInfo(virtualId).token (contracts/AgentRewardV2.sol#564)
+AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250) has external calls inside a loop: votes = IERC5805(stakingAddress).getVotes(validator) (contracts/AgentRewardV2.sol#239)
+AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250) has external calls inside a loop: participationReward = (validatorRewards * nft.validatorScore(virtualId,validator)) / totalProposals (contracts/AgentRewardV2.sol#243-245)
+AgentRewardV2._distributeContributorRewards(uint256,uint256,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#252-303) has external calls inside a loop: coreTypes = nft.virtualInfo(virtualId).coreTypes (contracts/AgentRewardV2.sol#258)
+AgentRewardV2._distributeContributorRewards(uint256,uint256,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#252-303) has external calls inside a loop: services = nft.getAllServices(virtualId) (contracts/AgentRewardV2.sol#264)
+AgentRewardV2._distributeContributorRewards(uint256,uint256,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#252-303) has external calls inside a loop: impact = serviceNftContract.getImpact(serviceId) (contracts/AgentRewardV2.sol#271)
+AgentRewardV2._distributeContributorRewards(uint256,uint256,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#252-303) has external calls inside a loop: _rewardImpacts[reward.id][serviceNftContract.getCore(serviceId)] += impact (contracts/AgentRewardV2.sol#280)
+AgentRewardV2._distributeContributorRewards(uint256,uint256,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#252-303) has external calls inside a loop: impactAmount = (reward.coreAmount * serviceReward_scope_1.impact) / _rewardImpacts[reward.id][serviceNftContract.getCore(serviceId)] (contracts/AgentRewardV2.sol#293-295)
+AgentRewardV2._distributeContributorRewards(uint256,uint256,RewardSettingsCheckpoints.RewardSettings) (contracts/AgentRewardV2.sol#252-303) has external calls inside a loop: contributionNftContract.getParentId(serviceId) == 0 (contracts/AgentRewardV2.sol#296-298)
+AgentRewardV2._getClaimableStakerRewardsAt(uint256,uint256,address,address) (contracts/AgentRewardV2.sol#308-332) has external calls inside a loop: delegatee = token.getPastDelegates(account,mainReward.blockNumber) (contracts/AgentRewardV2.sol#318)
+AgentRewardV2._getClaimableStakerRewardsAt(uint256,uint256,address,address) (contracts/AgentRewardV2.sol#308-332) has external calls inside a loop: tokens = token.getPastBalanceOf(account,mainReward.blockNumber) (contracts/AgentRewardV2.sol#328)
+AgentRewardV2._getClaimableStakerRewardsAt(uint256,uint256,address,address) (contracts/AgentRewardV2.sol#308-332) has external calls inside a loop: votes = IERC5805(stakingAddress).getPastVotes(delegatee,mainReward.blockNumber) (contracts/AgentRewardV2.sol#329)
+AgentRewardV2.getChildrenRewards(uint256) (contracts/AgentRewardV2.sol#380-390) has external calls inside a loop: children = IContributionNft(contributionNft).getChildren(nftId) (contracts/AgentRewardV2.sol#382)
+AgentRewardV2._claimServiceRewards(uint256) (contracts/AgentRewardV2.sol#452-484) has external calls inside a loop: require(bool,string)(IERC721(contributionNft).ownerOf(nftId) == account,Not NFT owner) (contracts/AgentRewardV2.sol#454)
+AgentRewardV2._claimServiceRewards(uint256) (contracts/AgentRewardV2.sol#452-484) has external calls inside a loop: children = IContributionNft(contributionNft).getChildren(nftId) (contracts/AgentRewardV2.sol#462)
+AgentRewardV3.getLPValue(uint256) (contracts/AgentRewardV3.sol#108-111) has external calls inside a loop: lp = IAgentNft(agentNft).virtualLP(virtualId).pool (contracts/AgentRewardV3.sol#109)
+AgentRewardV3.getLPValue(uint256) (contracts/AgentRewardV3.sol#108-111) has external calls inside a loop: IERC20(rewardToken).balanceOf(lp) (contracts/AgentRewardV3.sol#110)
+AgentRewardV3._distributeAgentReward(uint256,uint256,uint256,RewardSettingsCheckpointsV2.RewardSettings) (contracts/AgentRewardV3.sol#158-178) has external calls inside a loop: totalStaked = nft.totalStaked(virtualId) (contracts/AgentRewardV3.sol#167)
+AgentRewardV3._distributeAgentReward(uint256,uint256,uint256,RewardSettingsCheckpointsV2.RewardSettings) (contracts/AgentRewardV3.sol#158-178) has external calls inside a loop: totalProposals = IAgentDAO(nft.virtualInfo(virtualId).dao).proposalCount() (contracts/AgentRewardV3.sol#171)
+AgentRewardV3.getClaimableStakerRewards(address,uint256) (contracts/AgentRewardV3.sol#193-212) has external calls inside a loop: delegatee = veToken.getPastDelegates(account,reward.blockNumber) (contracts/AgentRewardV3.sol#204)
+AgentRewardV3.getClaimableStakerRewards(address,uint256) (contracts/AgentRewardV3.sol#193-212) has external calls inside a loop: uptime = dao.getPastScore(delegatee,reward.blockNumber) (contracts/AgentRewardV3.sol#205)
+AgentRewardV3.getClaimableStakerRewards(address,uint256) (contracts/AgentRewardV3.sol#193-212) has external calls inside a loop: stakedAmount = veToken.getPastBalanceOf(account,reward.blockNumber) (contracts/AgentRewardV3.sol#206)
+AgentRewardV3.getClaimableValidatorRewards(address,uint256) (contracts/AgentRewardV3.sol#214-232) has external calls inside a loop: uptime = dao.getPastScore(account,reward.blockNumber) (contracts/AgentRewardV3.sol#225)
+AgentRewardV3.getClaimableValidatorRewards(address,uint256) (contracts/AgentRewardV3.sol#214-232) has external calls inside a loop: votes = veToken.getPastVotes(account,reward.blockNumber) (contracts/AgentRewardV3.sol#226)
+AgentRewardV3.getClaimableStakerRewards(address,uint256) (contracts/AgentRewardV3.sol#193-212) has external calls inside a loop: veToken = IAgentVeToken(IAgentNft(agentNft).virtualLP(virtualId).veToken) (contracts/AgentRewardV3.sol#199)
+AgentRewardV3.getClaimableStakerRewards(address,uint256) (contracts/AgentRewardV3.sol#193-212) has external calls inside a loop: dao = IAgentDAO(IAgentNft(agentNft).virtualInfo(virtualId).dao) (contracts/AgentRewardV3.sol#200)
+AgentRewardV3.getClaimableValidatorRewards(address,uint256) (contracts/AgentRewardV3.sol#214-232) has external calls inside a loop: veToken = IVotes(IAgentNft(agentNft).virtualLP(virtualId).veToken) (contracts/AgentRewardV3.sol#220)
+AgentRewardV3.getClaimableValidatorRewards(address,uint256) (contracts/AgentRewardV3.sol#214-232) has external calls inside a loop: dao = IAgentDAO(IAgentNft(agentNft).virtualInfo(virtualId).dao) (contracts/AgentRewardV3.sol#221)
+Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420) has external calls inside a loop: balance = token.balanceOf(acc) (contracts/fun/Bonding.sol#414)
+Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420) has external calls inside a loop: token.burnFrom(acc,balance) (contracts/fun/Bonding.sol#416)
+Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420) has external calls inside a loop: agentToken.transferFrom(pairAddress,acc,balance) (contracts/fun/Bonding.sol#417)
+AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253) has external calls inside a loop: balance = IERC20(taxToken).balanceOf(address(this)) (contracts/tax/AgentTax.sol#204)
+AgentTax._getTaxRecipient(uint256) (contracts/tax/AgentTax.sol#190-198) has external calls inside a loop: info = agentNft.virtualInfo(agentId) (contracts/tax/AgentTax.sol#193)
+AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253) has external calls inside a loop: amountsOut = router.getAmountsOut(amountToSwap,path) (contracts/tax/AgentTax.sol#223)
+AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253) has external calls inside a loop: amounts = router.swapExactTokensForTokens(amountToSwap,minOutput,path,address(this),block.timestamp + 300) (contracts/tax/AgentTax.sol#226-252)
+AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253) has external calls inside a loop: tbaBonus.distributeBonus(agentId,taxRecipient.creator,creatorFee) (contracts/tax/AgentTax.sol#238)
+AgentNftV2.getAllServices(uint256) (contracts/virtualPersona/AgentNftV2.sol#201-210) has external calls inside a loop: services[i] = serviceNft.tokenOfOwnerByIndex(info.tba,i) (contracts/virtualPersona/AgentNftV2.sol#207)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation/#calls-inside-a-loop
+INFO:Detectors:
+Reentrancy in AgentToken._addInitialLiquidity(address) (contracts/virtualPersona/AgentToken.sol#225-263):
+	External calls:
+	- IERC20(pairToken).approve(address(_uniswapRouter),type()(uint256).max) (contracts/virtualPersona/AgentToken.sol#244)
+	- (amountA,amountB,lpTokens) = _uniswapRouter.addLiquidity(address(this),pairToken,balanceOf(address(this)),IERC20(pairToken).balanceOf(address(this)),0,0,address(this),block.timestamp) (contracts/virtualPersona/AgentToken.sol#246-255)
+	State variables written after the call(s):
+	- _autoSwapInProgress = false (contracts/virtualPersona/AgentToken.sol#260)
+Reentrancy in AgentFactoryV2._createNewAgentToken(string,string) (contracts/virtualPersona/AgentFactory.sol#288-299):
+	External calls:
+	- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),_tokenSupplyParams,_tokenTaxParams) (contracts/virtualPersona/AgentFactory.sol#290-295)
+	State variables written after the call(s):
+	- allTradingTokens.push(instance) (contracts/virtualPersona/AgentFactory.sol#297)
+Reentrancy in AgentFactoryV3._createNewAgentToken(string,string,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#298-313):
+	External calls:
+	- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),tokenSupplyParams_,_tokenTaxParams) (contracts/virtualPersona/AgentFactoryV3.sol#304-309)
+	State variables written after the call(s):
+	- allTradingTokens.push(instance) (contracts/virtualPersona/AgentFactoryV3.sol#311)
+Reentrancy in AgentFactoryV4._createNewAgentToken(string,string,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#322-337):
+	External calls:
+	- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),tokenSupplyParams_,_tokenTaxParams) (contracts/virtualPersona/AgentFactoryV4.sol#328-333)
+	State variables written after the call(s):
+	- allTradingTokens.push(instance) (contracts/virtualPersona/AgentFactoryV4.sol#335)
+Reentrancy in AgentFactoryV2._createNewAgentVeToken(string,string,address,address,bool) (contracts/virtualPersona/AgentFactory.sol#301-321):
+	External calls:
+	- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactory.sol#309-317)
+	State variables written after the call(s):
+	- allTokens.push(instance) (contracts/virtualPersona/AgentFactory.sol#319)
+Reentrancy in AgentFactoryV3._createNewAgentVeToken(string,string,address,address,bool) (contracts/virtualPersona/AgentFactoryV3.sol#315-335):
+	External calls:
+	- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactoryV3.sol#323-331)
+	State variables written after the call(s):
+	- allTokens.push(instance) (contracts/virtualPersona/AgentFactoryV3.sol#333)
+Reentrancy in AgentFactoryV4._createNewAgentVeToken(string,string,address,address,bool) (contracts/virtualPersona/AgentFactoryV4.sol#339-359):
+	External calls:
+	- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactoryV4.sol#347-355)
+	State variables written after the call(s):
+	- allTokens.push(instance) (contracts/virtualPersona/AgentFactoryV4.sol#357)
+Reentrancy in AgentFactoryV2._createNewDAO(string,IVotes,uint32,uint256) (contracts/virtualPersona/AgentFactory.sol#275-286):
+	External calls:
+	- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactory.sol#282)
+	State variables written after the call(s):
+	- allDAOs.push(instance) (contracts/virtualPersona/AgentFactory.sol#284)
+Reentrancy in AgentFactoryV3._createNewDAO(string,IVotes,uint32,uint256) (contracts/virtualPersona/AgentFactoryV3.sol#285-296):
+	External calls:
+	- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactoryV3.sol#292)
+	State variables written after the call(s):
+	- allDAOs.push(instance) (contracts/virtualPersona/AgentFactoryV3.sol#294)
+Reentrancy in AgentFactoryV4._createNewDAO(string,IVotes,uint32,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#309-320):
+	External calls:
+	- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactoryV4.sol#316)
+	State variables written after the call(s):
+	- allDAOs.push(instance) (contracts/virtualPersona/AgentFactoryV4.sol#318)
+Reentrancy in AgentToken._swapTax(uint256,uint256) (contracts/virtualPersona/AgentToken.sol#784-824):
+	External calls:
+	- _uniswapRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(swapBalance_,0,path,projectTaxRecipient,block.timestamp + 600) (contracts/virtualPersona/AgentToken.sol#790-823)
+	State variables written after the call(s):
+	- projectTaxPendingSwap -= uint128((projectTaxPendingSwap * swapBalance_) / contractBalance_) (contracts/virtualPersona/AgentToken.sol#815)
+	- projectTaxPendingSwap = 0 (contracts/virtualPersona/AgentToken.sol#817)
+Reentrancy in FGenesis.createGenesis(GenesisCreationParams) (contracts/genesis/FGenesis.sol#76-108):
+	External calls:
+	- require(bool,string)(IERC20(params.virtualToken).transferFrom(msg.sender,params.feeAddr,params.feeAmt),transfer createGenesis fee failed) (contracts/genesis/FGenesis.sol#77-80)
+	State variables written after the call(s):
+	- genesisID ++ (contracts/genesis/FGenesis.sol#84)
+Reentrancy in FGenesis.createGenesis(GenesisCreationParams) (contracts/genesis/FGenesis.sol#76-108):
+	External calls:
+	- require(bool,string)(IERC20(params.virtualToken).transferFrom(msg.sender,params.feeAddr,params.feeAmt),transfer createGenesis fee failed) (contracts/genesis/FGenesis.sol#77-80)
+	- addr = GenesisLib.validateAndDeploy(genesisID,address(this),gParams,params.tbaSalt,params.tbaImpl,params.votePeriod,params.threshold,params.agentFactory,params.virtualToken,params.reserve,params.maxContribution,params.agentTokenTotalSupply,params.agentTokenLpSupply) (contracts/genesis/FGenesis.sol#85-99)
+	- AgentFactoryV3(params.agentFactory).grantRole(BONDING_ROLE,address(addr)) (contracts/genesis/FGenesis.sol#103)
+	State variables written after the call(s):
+	- genesisContracts[genesisID] = addr (contracts/genesis/FGenesis.sol#105)
+Reentrancy in AgentRewardV2.distributeRewards(uint256) (contracts/AgentRewardV2.sol#116-128):
+	External calls:
+	- IERC20(rewardToken).safeTransferFrom(_msgSender(),address(this),amount) (contracts/AgentRewardV2.sol#119)
+	State variables written after the call(s):
+	- _prepareAgentsRewards(agentShares,settings) (contracts/AgentRewardV2.sol#126)
+		- _mainRewards.push(MainReward(SafeCast.toUint32(block.number),amount,agentCount,grandTotalStaked)) (contracts/AgentRewardV2.sol#179)
+	- _prepareAgentsRewards(agentShares,settings) (contracts/AgentRewardV2.sol#126)
+		- rewardId = _nextRewardId ++ (contracts/AgentRewardV2.sol#165)
+	- _prepareAgentsRewards(agentShares,settings) (contracts/AgentRewardV2.sol#126)
+		- _rewards[virtualId].push(Reward({id:rewardId,mainIndex:mainPos,totalStaked:totalStaked,validatorAmount:0,contributorAmount:0,coreAmount:0})) (contracts/AgentRewardV2.sol#167-176)
+	- protocolShares = _distributeProtocolRewards(amount) (contracts/AgentRewardV2.sol#123)
+		- protocolRewards += protocolShares (contracts/AgentRewardV2.sol#141)
+Reentrancy in AgentRewardV3.distributeRewards(uint256,uint256[],bool) (contracts/AgentRewardV3.sol#119-156):
+	External calls:
+	- IERC20(rewardToken).safeTransferFrom(_msgSender(),address(this),amount) (contracts/AgentRewardV3.sol#126)
+	State variables written after the call(s):
+	- _distributeAgentReward(virtualId,rewardIndex,(lpValues[i_scope_0] * balance) / totalLPValues,settings) (contracts/AgentRewardV3.sol#154)
+		- _agentRewards[virtualId].push(AgentReward(agentRewardId,rewardIndex,stakerAmount,amount - stakerAmount,totalProposals,totalStaked)) (contracts/AgentRewardV3.sol#173-175)
+	- _distributeAgentReward(virtualId,rewardIndex,(lpValues[i_scope_0] * balance) / totalLPValues,settings) (contracts/AgentRewardV3.sol#154)
+		- agentRewardId = _nextAgentRewardId ++ (contracts/AgentRewardV3.sol#164)
+	- _rewards.push(Reward(block.number,balance,lpValues,virtualIds)) (contracts/AgentRewardV3.sol#147)
+	- protocolAmount = _distributeProtocolRewards(amount) (contracts/AgentRewardV3.sol#130)
+		- protocolRewards += protocolShares (contracts/AgentRewardV3.sol#183)
+Reentrancy in AgentFactoryV3.initFromBondingCurve(string,string,uint8[],bytes32,address,uint32,uint256,uint256,address) (contracts/virtualPersona/AgentFactoryV3.sol#422-464):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold_) (contracts/virtualPersona/AgentFactoryV3.sol#441)
+	State variables written after the call(s):
+	- _applications[id] = application (contracts/virtualPersona/AgentFactoryV3.sol#460)
+	- id = _nextId ++ (contracts/virtualPersona/AgentFactoryV3.sol#443)
+Reentrancy in AgentFactoryV4.initFromToken(address,uint8[],bytes32,address,uint32,uint256,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#451-503):
+	External calls:
+	- IERC20(tokenAddr).safeTransferFrom(sender,address(this),initialLP) (contracts/virtualPersona/AgentFactoryV4.sol#476)
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactoryV4.sol#478)
+	State variables written after the call(s):
+	- _applicationToken[id] = tokenAddr (contracts/virtualPersona/AgentFactoryV4.sol#482)
+	- _applications[id] = application (contracts/virtualPersona/AgentFactoryV4.sol#499)
+	- id = _nextId ++ (contracts/virtualPersona/AgentFactoryV4.sol#480)
+Reentrancy in AgentTax.initialize(address,address,address,address,address,uint256,uint256,address) (contracts/tax/AgentTax.sol#83-113):
+	External calls:
+	- IERC20(taxToken).forceApprove(router_,type()(uint256).max) (contracts/tax/AgentTax.sol#105)
+	State variables written after the call(s):
+	- agentNft = IAgentNft(nft_) (contracts/tax/AgentTax.sol#106)
+	- creatorFeeRate = 3000 (contracts/tax/AgentTax.sol#109)
+	- feeRate = 100 (contracts/tax/AgentTax.sol#108)
+Reentrancy in BondingTax.initialize(address,address,address,address,address,address,uint256,uint256) (contracts/tax/BondingTax.sol#54-78):
+	External calls:
+	- IERC20(taxToken).forceApprove(router_,type()(uint256).max) (contracts/tax/BondingTax.sol#75)
+	State variables written after the call(s):
+	- _slippage = 100 (contracts/tax/BondingTax.sol#77)
+Reentrancy in AgentToken.initialize(address[3],bytes,bytes,bytes) (contracts/virtualPersona/AgentToken.sol#79-110):
+	External calls:
+	- uniswapV2Pair = _createPair() (contracts/virtualPersona/AgentToken.sol#106)
+		- uniswapV2Pair_ = IUniswapV2Factory(_uniswapRouter.factory()).createPair(address(this),pairToken) (contracts/virtualPersona/AgentToken.sol#197)
+	State variables written after the call(s):
+	- _autoSwapInProgress = true (contracts/virtualPersona/AgentToken.sol#109)
+	- _factory = IAgentFactory(_msgSender()) (contracts/virtualPersona/AgentToken.sol#108)
+Reentrancy in Genesis.onGenesisSuccess(address[],uint256[],address[],uint256[],address) (contracts/genesis/Genesis.sol#205-304):
+	External calls:
+	- IERC20(virtualTokenAddress).approve(agentFactoryAddress,reserveAmount) (contracts/genesis/Genesis.sol#246)
+	- id = IAgentFactoryV3(agentFactoryAddress).initFromBondingCurve(string.concat(genesisName, by Virtuals),genesisTicker,genesisCores,tbaSalt,tbaImplementation,daoVotingPeriod,daoThreshold,reserveAmount,creator) (contracts/genesis/Genesis.sol#249-259)
+	- agentToken = IAgentFactoryV3(agentFactoryAddress).executeBondingCurveApplication(id,agentTokenTotalSupply,agentTokenLpSupply,address(this)) (contracts/genesis/Genesis.sol#261-266)
+	- IERC20(virtualTokenAddress).safeTransfer(refundVirtualsTokenUserAddresses[i_scope_1],refundVirtualsTokenUserAmounts[i_scope_1]) (contracts/genesis/Genesis.sol#290-293)
+	State variables written after the call(s):
+	- claimableAgentTokens[distributeAgentTokenUserAddresses[i_scope_2]] = distributeAgentTokenUserAmounts[i_scope_2] (contracts/genesis/Genesis.sol#299)
+Reentrancy in AgentFactoryV2.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactory.sol#136-177):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactory.sol#154)
+	State variables written after the call(s):
+	- _applications[id] = application (contracts/virtualPersona/AgentFactory.sol#173)
+	- id = _nextId ++ (contracts/virtualPersona/AgentFactory.sol#156)
+Reentrancy in AgentFactoryV3.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactoryV3.sol#139-180):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactoryV3.sol#157)
+	State variables written after the call(s):
+	- _applications[id] = application (contracts/virtualPersona/AgentFactoryV3.sol#176)
+	- id = _nextId ++ (contracts/virtualPersona/AgentFactoryV3.sol#159)
+Reentrancy in AgentFactoryV4.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#137-178):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactoryV4.sol#155)
+	State variables written after the call(s):
+	- _applications[id] = application (contracts/virtualPersona/AgentFactoryV4.sol#174)
+	- id = _nextId ++ (contracts/virtualPersona/AgentFactoryV4.sol#157)
+Reentrancy in AgentFactoryV4.withdraw(uint256) (contracts/virtualPersona/AgentFactoryV4.sol#180-203):
+	External calls:
+	- IERC20(assetToken).safeTransfer(application.proposer,withdrawableAmount) (contracts/virtualPersona/AgentFactoryV4.sol#194)
+	- IERC20(customToken).safeTransfer(application.proposer,IERC20(customToken).balanceOf(address(this))) (contracts/virtualPersona/AgentFactoryV4.sol#198)
+	State variables written after the call(s):
+	- _tokenApplication[customToken] = 0 (contracts/virtualPersona/AgentFactoryV4.sol#200)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+INFO:Detectors:
+Reentrancy in AgentToken._addInitialLiquidity(address) (contracts/virtualPersona/AgentToken.sol#225-263):
+	External calls:
+	- IERC20(pairToken).approve(address(_uniswapRouter),type()(uint256).max) (contracts/virtualPersona/AgentToken.sol#244)
+	- (amountA,amountB,lpTokens) = _uniswapRouter.addLiquidity(address(this),pairToken,balanceOf(address(this)),IERC20(pairToken).balanceOf(address(this)),0,0,address(this),block.timestamp) (contracts/virtualPersona/AgentToken.sol#246-255)
+	Event emitted after the call(s):
+	- InitialLiquidityAdded(amountA,amountB,lpTokens) (contracts/virtualPersona/AgentToken.sol#257)
+Reentrancy in AgentRewardV2._claimServiceRewards(uint256) (contracts/AgentRewardV2.sol#452-484):
+	External calls:
+	- IERC20(rewardToken).safeTransfer(account,total) (contracts/AgentRewardV2.sol#482)
+	Event emitted after the call(s):
+	- ServiceRewardsClaimed(nftId,account,total,totalChildrenAmount) (contracts/AgentRewardV2.sol#483)
+Reentrancy in AgentToken._createPair() (contracts/virtualPersona/AgentToken.sol#193-205):
+	External calls:
+	- uniswapV2Pair_ = IUniswapV2Factory(_uniswapRouter.factory()).createPair(address(this),pairToken) (contracts/virtualPersona/AgentToken.sol#197)
+	Event emitted after the call(s):
+	- LiquidityPoolCreated(uniswapV2Pair_) (contracts/virtualPersona/AgentToken.sol#199)
+Reentrancy in AgentFactoryV3._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#199-266):
+	External calls:
+	- token = _createNewAgentToken(application.name,application.symbol,tokenSupplyParams_) (contracts/virtualPersona/AgentFactoryV3.sol#211)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),tokenSupplyParams_,_tokenTaxParams) (contracts/virtualPersona/AgentFactoryV3.sol#304-309)
+	- IERC20(assetToken).safeTransfer(token,initialAmount) (contracts/virtualPersona/AgentFactoryV3.sol#215)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentFactoryV3.sol#216)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,application.name),string.concat(s,application.symbol),lp,application.proposer,canStake) (contracts/virtualPersona/AgentFactoryV3.sol#219-225)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactoryV3.sol#323-331)
+	- dao = address(_createNewDAO(daoName,IVotes(veToken),application.daoVotingPeriod,application.daoThreshold)) (contracts/virtualPersona/AgentFactoryV3.sol#229-231)
+		- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactoryV3.sol#292)
+	- IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactoryV3.sol#235-244)
+	- tbaAddress = IERC6551Registry(tbaRegistry).createAccount(application.tbaImplementation,application.tbaSalt,chainId,nft,virtualId) (contracts/virtualPersona/AgentFactoryV3.sol#252-258)
+	- IAgentNft(nft).setTBA(virtualId,tbaAddress) (contracts/virtualPersona/AgentFactoryV3.sol#259)
+	- IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentFactoryV3.sol#262)
+	- IAgentVeToken(veToken).stake(IERC20(lp).balanceOf(address(this)),application.proposer,defaultDelegatee) (contracts/virtualPersona/AgentFactoryV3.sol#263)
+	Event emitted after the call(s):
+	- NewPersona(virtualId,token,dao,tbaAddress,veToken,lp) (contracts/virtualPersona/AgentFactoryV3.sol#265)
+Reentrancy in AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290):
+	External calls:
+	- token = _createNewAgentToken(application.name,application.symbol,tokenSupplyParams_) (contracts/virtualPersona/AgentFactoryV4.sol#220)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),tokenSupplyParams_,_tokenTaxParams) (contracts/virtualPersona/AgentFactoryV4.sol#328-333)
+	- IERC20(assetToken).safeTransfer(token,initialAmount) (contracts/virtualPersona/AgentFactoryV4.sol#222)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentFactoryV4.sol#223)
+	- lp = _createPair(token) (contracts/virtualPersona/AgentFactoryV4.sol#226)
+		- uniswapV2Pair_ = factory.createPair(tokenAddr,assetToken) (contracts/virtualPersona/AgentFactoryV4.sol#548)
+	- IERC20(token).forceApprove(_uniswapRouter,type()(uint256).max) (contracts/virtualPersona/AgentFactoryV4.sol#227)
+	- IERC20(assetToken).forceApprove(_uniswapRouter,initialAmount) (contracts/virtualPersona/AgentFactoryV4.sol#228)
+	- IUniswapV2Router02(_uniswapRouter).addLiquidity(token,assetToken,IERC20(token).balanceOf(address(this)),initialAmount,0,0,address(this),block.timestamp) (contracts/virtualPersona/AgentFactoryV4.sol#230-239)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,application.name),string.concat(s,application.symbol),lp,application.proposer,canStake) (contracts/virtualPersona/AgentFactoryV4.sol#243-249)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactoryV4.sol#347-355)
+	- dao = address(_createNewDAO(daoName,IVotes(veToken),application.daoVotingPeriod,application.daoThreshold)) (contracts/virtualPersona/AgentFactoryV4.sol#253-255)
+		- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactoryV4.sol#316)
+	- IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactoryV4.sol#259-268)
+	- tbaAddress = IERC6551Registry(tbaRegistry).createAccount(application.tbaImplementation,application.tbaSalt,chainId,nft,virtualId) (contracts/virtualPersona/AgentFactoryV4.sol#276-282)
+	- IAgentNft(nft).setTBA(virtualId,tbaAddress) (contracts/virtualPersona/AgentFactoryV4.sol#283)
+	- IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentFactoryV4.sol#286)
+	- IAgentVeToken(veToken).stake(IERC20(lp).balanceOf(address(this)),application.proposer,defaultDelegatee) (contracts/virtualPersona/AgentFactoryV4.sol#287)
+	Event emitted after the call(s):
+	- NewPersona(virtualId,token,dao,tbaAddress,veToken,lp) (contracts/virtualPersona/AgentFactoryV4.sol#289)
+Reentrancy in Bonding._openTradingOnUniswap(address) (contracts/fun/Bonding.sol#357-403):
+	External calls:
+	- router.graduate(tokenAddress) (contracts/fun/Bonding.sol#375)
+	- IERC20(router.assetToken()).forceApprove(agentFactory,assetBalance) (contracts/fun/Bonding.sol#377)
+	- id = IAgentFactoryV3(agentFactory).initFromBondingCurve(string.concat(_token.data._name, by Virtuals),_token.data.ticker,_token.cores,_deployParams.tbaSalt,_deployParams.tbaImplementation,_deployParams.daoVotingPeriod,_deployParams.daoThreshold,assetBalance,_token.creator) (contracts/fun/Bonding.sol#378-388)
+	- agentToken = IAgentFactoryV3(agentFactory).executeBondingCurveApplication(id,_token.data.supply / (10 ** token_.decimals()),tokenBalance / (10 ** token_.decimals()),pairAddress) (contracts/fun/Bonding.sol#390-395)
+	- router.approval(pairAddress,agentToken,address(this),IERC20(agentToken).balanceOf(pairAddress)) (contracts/fun/Bonding.sol#398)
+	- token_.burnFrom(pairAddress,tokenBalance) (contracts/fun/Bonding.sol#400)
+	Event emitted after the call(s):
+	- Graduated(tokenAddress,agentToken) (contracts/fun/Bonding.sol#402)
+Reentrancy in AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253):
+	External calls:
+	- amounts = router.swapExactTokensForTokens(amountToSwap,minOutput,path,address(this),block.timestamp + 300) (contracts/tax/AgentTax.sol#226-252)
+	Event emitted after the call(s):
+	- SwapExecuted(agentId,amountToSwap,assetReceived) (contracts/tax/AgentTax.sol#230)
+	- SwapFailed(agentId,amountToSwap) (contracts/tax/AgentTax.sol#250)
+Reentrancy in AgentToken._swapTax(uint256,uint256) (contracts/virtualPersona/AgentToken.sol#784-824):
+	External calls:
+	- _uniswapRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(swapBalance_,0,path,projectTaxRecipient,block.timestamp + 600) (contracts/virtualPersona/AgentToken.sol#790-823)
+	Event emitted after the call(s):
+	- ExternalCallError(5) (contracts/virtualPersona/AgentToken.sol#822)
+Reentrancy in AgentToken._transfer(address,address,uint256,bool) (contracts/virtualPersona/AgentToken.sol#609-627):
+	External calls:
+	- _autoSwap(from,to) (contracts/virtualPersona/AgentToken.sol#616)
+		- _uniswapRouter.swapExactTokensForTokensSupportingFeeOnTransferTokens(swapBalance_,0,path,projectTaxRecipient,block.timestamp + 600) (contracts/virtualPersona/AgentToken.sol#790-823)
+	Event emitted after the call(s):
+	- Transfer(from,to,amountMinusTax) (contracts/virtualPersona/AgentToken.sol#624)
+	- Transfer(from_,address(this),tax) (contracts/virtualPersona/AgentToken.sol#714)
+		- amountMinusTax = _taxProcessing(applyTax,to,from,amount) (contracts/virtualPersona/AgentToken.sol#619)
+Reentrancy in AgentRewardV3.claimStakerRewards(uint256) (contracts/AgentRewardV3.sol#260-273):
+	External calls:
+	- IERC20(rewardToken).safeTransfer(account,totalClaimable) (contracts/AgentRewardV3.sol#270)
+	Event emitted after the call(s):
+	- StakerRewardClaimed(virtualId,account,numRewards,totalClaimable) (contracts/AgentRewardV3.sol#272)
+Reentrancy in AgentRewardV3.claimValidatorRewards(uint256) (contracts/AgentRewardV3.sol#275-288):
+	External calls:
+	- IERC20(rewardToken).safeTransfer(account,totalClaimable) (contracts/AgentRewardV3.sol#285)
+	Event emitted after the call(s):
+	- ValidatorRewardClaimed(virtualId,account,totalClaimable) (contracts/AgentRewardV3.sol#287)
+Reentrancy in FGenesis.createGenesis(GenesisCreationParams) (contracts/genesis/FGenesis.sol#76-108):
+	External calls:
+	- require(bool,string)(IERC20(params.virtualToken).transferFrom(msg.sender,params.feeAddr,params.feeAmt),transfer createGenesis fee failed) (contracts/genesis/FGenesis.sol#77-80)
+	- addr = GenesisLib.validateAndDeploy(genesisID,address(this),gParams,params.tbaSalt,params.tbaImpl,params.votePeriod,params.threshold,params.agentFactory,params.virtualToken,params.reserve,params.maxContribution,params.agentTokenTotalSupply,params.agentTokenLpSupply) (contracts/genesis/FGenesis.sol#85-99)
+	- AgentFactoryV3(params.agentFactory).grantRole(BONDING_ROLE,address(addr)) (contracts/genesis/FGenesis.sol#103)
+	Event emitted after the call(s):
+	- GenesisCreated(genesisID,addr) (contracts/genesis/FGenesis.sol#106)
+Reentrancy in TBABonus.distributeBonus(uint256,address,uint256) (contracts/tax/TBABonus.sol#64-84):
+	External calls:
+	- assetToken.safeTransfer(recipient,bonus) (contracts/tax/TBABonus.sol#81)
+	Event emitted after the call(s):
+	- PaidAgent(agentId,bonus) (contracts/tax/TBABonus.sol#82)
+Reentrancy in AgentRewardV2.distributeRewards(uint256) (contracts/AgentRewardV2.sol#116-128):
+	External calls:
+	- IERC20(rewardToken).safeTransferFrom(_msgSender(),address(this),amount) (contracts/AgentRewardV2.sol#119)
+	Event emitted after the call(s):
+	- NewMainReward(mainPos,amount,agentCount,grandTotalStaked) (contracts/AgentRewardV2.sol#180)
+		- _prepareAgentsRewards(agentShares,settings) (contracts/AgentRewardV2.sol#126)
+Reentrancy in AgentRewardV3.distributeRewards(uint256,uint256[],bool) (contracts/AgentRewardV3.sol#119-156):
+	External calls:
+	- IERC20(rewardToken).safeTransferFrom(_msgSender(),address(this),amount) (contracts/AgentRewardV3.sol#126)
+	Event emitted after the call(s):
+	- NewAgentReward(virtualId,agentRewardId) (contracts/AgentRewardV3.sol#177)
+		- _distributeAgentReward(virtualId,rewardIndex,(lpValues[i_scope_0] * balance) / totalLPValues,settings) (contracts/AgentRewardV3.sol#154)
+	- NewReward(rewardIndex,virtualIds) (contracts/AgentRewardV3.sol#149)
+Reentrancy in AgentFactoryV2.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactory.sol#196-273):
+	External calls:
+	- token = _createNewAgentToken(application.name,application.symbol) (contracts/virtualPersona/AgentFactory.sol#218)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,assetToken),abi.encode(name,symbol),_tokenSupplyParams,_tokenTaxParams) (contracts/virtualPersona/AgentFactory.sol#290-295)
+	- IERC20(assetToken).transfer(token,initialAmount) (contracts/virtualPersona/AgentFactory.sol#222)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentFactory.sol#223)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,application.name),string.concat(s,application.symbol),lp,application.proposer,canStake) (contracts/virtualPersona/AgentFactory.sol#226-232)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(nft),canStake) (contracts/virtualPersona/AgentFactory.sol#309-317)
+	- dao = address(_createNewDAO(daoName,IVotes(veToken),application.daoVotingPeriod,application.daoThreshold)) (contracts/virtualPersona/AgentFactory.sol#236-238)
+		- IAgentDAO(instance).initialize(name,token,nft,daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentFactory.sol#282)
+	- IAgentNft(nft).mint(virtualId,_vault,application.tokenURI,dao,application.proposer,application.cores,lp,token) (contracts/virtualPersona/AgentFactory.sol#242-251)
+	- tbaAddress = IERC6551Registry(tbaRegistry).createAccount(application.tbaImplementation,application.tbaSalt,chainId,nft,virtualId) (contracts/virtualPersona/AgentFactory.sol#259-265)
+	- IAgentNft(nft).setTBA(virtualId,tbaAddress) (contracts/virtualPersona/AgentFactory.sol#266)
+	- IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentFactory.sol#269)
+	- IAgentVeToken(veToken).stake(IERC20(lp).balanceOf(address(this)),application.proposer,application.proposer) (contracts/virtualPersona/AgentFactory.sol#270)
+	Event emitted after the call(s):
+	- NewPersona(virtualId,token,dao,tbaAddress,veToken,lp) (contracts/virtualPersona/AgentFactory.sol#272)
+Reentrancy in AgentFactoryV3.initFromBondingCurve(string,string,uint8[],bytes32,address,uint32,uint256,uint256,address) (contracts/virtualPersona/AgentFactoryV3.sol#422-464):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold_) (contracts/virtualPersona/AgentFactoryV3.sol#441)
+	Event emitted after the call(s):
+	- NewApplication(id) (contracts/virtualPersona/AgentFactoryV3.sol#461)
+Reentrancy in AgentFactoryV4.initFromToken(address,uint8[],bytes32,address,uint32,uint256,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#451-503):
+	External calls:
+	- IERC20(tokenAddr).safeTransferFrom(sender,address(this),initialLP) (contracts/virtualPersona/AgentFactoryV4.sol#476)
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactoryV4.sol#478)
+	Event emitted after the call(s):
+	- NewApplication(id) (contracts/virtualPersona/AgentFactoryV4.sol#500)
+Reentrancy in AgentTax.initialize(address,address,address,address,address,uint256,uint256,address) (contracts/tax/AgentTax.sol#83-113):
+	External calls:
+	- IERC20(taxToken).forceApprove(router_,type()(uint256).max) (contracts/tax/AgentTax.sol#105)
+	Event emitted after the call(s):
+	- SwapParamsUpdated2(address(0),router_,address(0),assetToken_,0,feeRate,0,creatorFeeRate) (contracts/tax/AgentTax.sol#111)
+	- SwapThresholdUpdated(0,minSwapThreshold_,0,maxSwapThreshold_) (contracts/tax/AgentTax.sol#112)
+Reentrancy in AgentMigrator.migrateAgent(uint256,string,string,bool) (contracts/virtualPersona/AgentMigrator.sol#100-136):
+	External calls:
+	- token = _createNewAgentToken(name,symbol) (contracts/virtualPersona/AgentMigrator.sol#108)
+		- IAgentToken(instance).initialize((_tokenAdmin,_uniswapRouter,_assetToken),abi.encode(name,symbol),_tokenSupplyParams,_tokenTaxParams) (contracts/virtualPersona/AgentMigrator.sol#173-178)
+	- IERC20(_assetToken).transferFrom(founder,token,initialAmount) (contracts/virtualPersona/AgentMigrator.sol#110)
+	- IAgentToken(token).addInitialLiquidity(address(this)) (contracts/virtualPersona/AgentMigrator.sol#111)
+	- veToken = _createNewAgentVeToken(string.concat(Staked ,name),string.concat(s,symbol),lp,founder,canStake) (contracts/virtualPersona/AgentMigrator.sol#114-120)
+		- IAgentVeToken(instance).initialize(name,symbol,founder,stakingAsset,block.timestamp + maturityDuration,address(_nft),canStake) (contracts/virtualPersona/AgentMigrator.sol#158-166)
+	- dao = address(_createNewDAO(oldDAO.name(),IVotes(veToken),uint32(oldDAO.votingPeriod()),oldDAO.proposalThreshold())) (contracts/virtualPersona/AgentMigrator.sol#124-126)
+		- IAgentDAO(instance).initialize(name,token,address(_nft),daoThreshold,daoVotingPeriod) (contracts/virtualPersona/AgentMigrator.sol#145)
+	- _nft.migrateVirtual(id,dao,token,lp,veToken) (contracts/virtualPersona/AgentMigrator.sol#128)
+	- IERC20(lp).approve(veToken,type()(uint256).max) (contracts/virtualPersona/AgentMigrator.sol#130)
+	- IAgentVeToken(veToken).stake(IERC20(lp).balanceOf(address(this)),founder,founder) (contracts/virtualPersona/AgentMigrator.sol#131)
+	Event emitted after the call(s):
+	- AgentMigrated(id,dao,token,lp,veToken) (contracts/virtualPersona/AgentMigrator.sol#135)
+Reentrancy in AgentFactoryV2.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactory.sol#136-177):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactory.sol#154)
+	Event emitted after the call(s):
+	- NewApplication(id) (contracts/virtualPersona/AgentFactory.sol#174)
+Reentrancy in AgentFactoryV3.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactoryV3.sol#139-180):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactoryV3.sol#157)
+	Event emitted after the call(s):
+	- NewApplication(id) (contracts/virtualPersona/AgentFactoryV3.sol#177)
+Reentrancy in AgentFactoryV4.proposeAgent(string,string,string,uint8[],bytes32,address,uint32,uint256) (contracts/virtualPersona/AgentFactoryV4.sol#137-178):
+	External calls:
+	- IERC20(assetToken).safeTransferFrom(sender,address(this),applicationThreshold) (contracts/virtualPersona/AgentFactoryV4.sol#155)
+	Event emitted after the call(s):
+	- NewApplication(id) (contracts/virtualPersona/AgentFactoryV4.sol#175)
+Reentrancy in TokenSaver.saveToken(address,address,uint256) (contracts/libs/TokenSaver.sol#20-23):
+	External calls:
+	- IERC20(_token).safeTransfer(_receiver,_amount) (contracts/libs/TokenSaver.sol#21)
+	Event emitted after the call(s):
+	- TokenSaved(_msgSender(),_receiver,_token,_amount) (contracts/libs/TokenSaver.sol#22)
+Reentrancy in Minter.saveToken(address,address,uint256) (contracts/token/Minter.sol#181-184):
+	External calls:
+	- IERC20(_token).safeTransfer(_receiver,_amount) (contracts/token/Minter.sol#182)
+	Event emitted after the call(s):
+	- TokenSaved(_msgSender(),_receiver,_token,_amount) (contracts/token/Minter.sol#183)
+Reentrancy in BondingTax.swapForAsset() (contracts/tax/BondingTax.sol#122-154):
+	External calls:
+	- amounts = router.swapExactTokensForTokens(amount,minOutput,path,treasury,block.timestamp + 300) (contracts/tax/BondingTax.sol#145-153)
+	Event emitted after the call(s):
+	- SwapExecuted(amount,amounts[1]) (contracts/tax/BondingTax.sol#148)
+	- SwapFailed(amount) (contracts/tax/BondingTax.sol#151)
+Reentrancy in AgentTax.updateSwapParams(address,address,uint16,uint16) (contracts/tax/AgentTax.sol#115-145):
+	External calls:
+	- IERC20(taxToken).forceApprove(oldRouter,0) (contracts/tax/AgentTax.sol#132)
+	- IERC20(taxToken).forceApprove(router_,type()(uint256).max) (contracts/tax/AgentTax.sol#133)
+	Event emitted after the call(s):
+	- SwapParamsUpdated2(oldRouter,router_,oldAsset,assetToken_,oldFee,feeRate_,oldCreatorFee,creatorFeeRate) (contracts/tax/AgentTax.sol#135-144)
+Reentrancy in BondingTax.updateSwapParams(address,address,address,uint16) (contracts/tax/BondingTax.sol#80-99):
+	External calls:
+	- IERC20(taxToken).forceApprove(router_,type()(uint256).max) (contracts/tax/BondingTax.sol#95)
+	- IERC20(taxToken).forceApprove(oldRouter,0) (contracts/tax/BondingTax.sol#96)
+	Event emitted after the call(s):
+	- SwapParamsUpdated(oldRouter,router_,oldBondingRouter,bondingRouter_,oldAsset,assetToken_) (contracts/tax/BondingTax.sol#98)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+INFO:Detectors:
+Bonding.sell(uint256,address) (contracts/fun/Bonding.sol#281-316) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(tokenInfo[tokenAddress].trading,Token not trading) (contracts/fun/Bonding.sol#282)
+	- duration > 86400 (contracts/fun/Bonding.sol#311)
+	- duration > 86400 (contracts/fun/Bonding.sol#299)
+	- duration > 86400 (contracts/fun/Bonding.sol#300-302)
+Bonding.buy(uint256,address) (contracts/fun/Bonding.sol#318-355) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(tokenInfo[tokenAddress].trading,Token not trading) (contracts/fun/Bonding.sol#319)
+	- duration > 86400 (contracts/fun/Bonding.sol#346)
+	- newReserveA <= gradThreshold && tokenInfo[tokenAddress].trading (contracts/fun/Bonding.sol#350)
+	- duration > 86400 (contracts/fun/Bonding.sol#336)
+	- duration > 86400 (contracts/fun/Bonding.sol#337)
+Bonding.unwrapToken(address,address[]) (contracts/fun/Bonding.sol#405-420) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(info.tradingOnUniswap,Token is not graduated yet) (contracts/fun/Bonding.sol#407)
+FPair.mint(uint256,uint256) (contracts/fun/FPair.sol#45-53) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_pool.lastUpdated == 0,Already minted) (contracts/fun/FPair.sol#46)
+Genesis._validateTime(uint256,uint256) (contracts/genesis/Genesis.sol#129-132) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(_startTime > block.timestamp,ERR_START_TIME_FUTURE) (contracts/genesis/Genesis.sol#130)
+Genesis.isEnded() (contracts/genesis/Genesis.sol#349-351) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp >= endTime (contracts/genesis/Genesis.sol#350)
+Genesis.isStarted() (contracts/genesis/Genesis.sol#353-355) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp >= startTime (contracts/genesis/Genesis.sol#354)
+AgentTax._swapForAsset(uint256,uint256,uint256) (contracts/tax/AgentTax.sol#200-253) uses timestamp for comparisons
+	Dangerous comparisons:
+	- creatorFee > 0 (contracts/tax/AgentTax.sol#235)
+	- feeAmount > 0 (contracts/tax/AgentTax.sol#242)
+AgentToken._addInitialLiquidity(address) (contracts/virtualPersona/AgentToken.sol#225-263) uses timestamp for comparisons
+	Dangerous comparisons:
+	- fundedDate != 0 (contracts/virtualPersona/AgentToken.sol#228)
+AgentToken._pretaxValidationAndLimits(address,address,uint256) (contracts/virtualPersona/AgentToken.sol#638-671) uses timestamp for comparisons
+	Dangerous comparisons:
+	- to_ == uniswapV2Pair && from_ != address(this) && fundedDate == 0 (contracts/virtualPersona/AgentToken.sol#652)
+AgentVeToken.withdraw(uint256) (contracts/virtualPersona/AgentVeToken.sol#95-107) uses timestamp for comparisons
+	Dangerous comparisons:
+	- require(bool,string)(block.timestamp >= matureAt,Not mature yet) (contracts/virtualPersona/AgentVeToken.sol#100)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+FixedPointMathLib.mulDivDown(uint256,uint256,uint256) (contracts/libs/FixedPointMathLib.sol#36-47) uses assembly
+	- INLINE ASM (contracts/libs/FixedPointMathLib.sol#38-46)
+FixedPointMathLib.mulDivUp(uint256,uint256,uint256) (contracts/libs/FixedPointMathLib.sol#49-61) uses assembly
+	- INLINE ASM (contracts/libs/FixedPointMathLib.sol#51-60)
+FixedPointMathLib.rpow(uint256,uint256,uint256) (contracts/libs/FixedPointMathLib.sol#63-146) uses assembly
+	- INLINE ASM (contracts/libs/FixedPointMathLib.sol#65-145)
+FixedPointMathLib.sqrt(uint256) (contracts/libs/FixedPointMathLib.sol#152-215) uses assembly
+	- INLINE ASM (contracts/libs/FixedPointMathLib.sol#154-214)
+FixedPointMathLib.unsafeMod(uint256,uint256) (contracts/libs/FixedPointMathLib.sol#217-224) uses assembly
+	- INLINE ASM (contracts/libs/FixedPointMathLib.sol#219-223)
+FixedPointMathLib.unsafeDiv(uint256,uint256) (contracts/libs/FixedPointMathLib.sol#226-233) uses assembly
+	- INLINE ASM (contracts/libs/FixedPointMathLib.sol#228-232)
+FixedPointMathLib.unsafeDivUp(uint256,uint256) (contracts/libs/FixedPointMathLib.sol#235-242) uses assembly
+	- INLINE ASM (contracts/libs/FixedPointMathLib.sol#237-241)
+Airdrop.airdrop(IERC20,address[],uint256[],uint256) (contracts/token/Airdrop.sol#13-83) uses assembly
+	- INLINE ASM (contracts/token/Airdrop.sol#24-82)
+AgentFactoryV2.executeApplication(uint256,bool) (contracts/virtualPersona/AgentFactory.sol#196-273) uses assembly
+	- INLINE ASM (contracts/virtualPersona/AgentFactory.sol#256-258)
+AgentFactoryV3._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV3.sol#199-266) uses assembly
+	- INLINE ASM (contracts/virtualPersona/AgentFactoryV3.sol#249-251)
+AgentFactoryV4._executeApplication(uint256,bool,bytes) (contracts/virtualPersona/AgentFactoryV4.sol#205-290) uses assembly
+	- INLINE ASM (contracts/virtualPersona/AgentFactoryV4.sol#273-275)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+INFO:Detectors:
+AgentRewardV2._distributeValidatorRewards(uint256,uint256,uint48,uint256) (contracts/AgentRewardV2.sol#223-250) has costly operations inside a loop:
+	- validatorPoolRewards += validatorRewards - participationReward (contracts/AgentRewardV2.sol#248)
+AgentRewardV2.noReentrant() (contracts/AgentRewardV2.sol#63-68) has costly operations inside a loop:
+	- locked = true (contracts/AgentRewardV2.sol#65)
+AgentRewardV2.noReentrant() (contracts/AgentRewardV2.sol#63-68) has costly operations inside a loop:
+	- locked = false (contracts/AgentRewardV2.sol#67)
+AgentRewardV3._distributeAgentReward(uint256,uint256,uint256,RewardSettingsCheckpointsV2.RewardSettings) (contracts/AgentRewardV3.sol#158-178) has costly operations inside a loop:
+	- agentRewardId = _nextAgentRewardId ++ (contracts/AgentRewardV3.sol#164)
+Genesis.onGenesisFailed(uint256[]) (contracts/genesis/Genesis.sol#324-347) has costly operations inside a loop:
+	- refundUserCountForFailed ++ (contracts/genesis/Genesis.sol#333)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#costly-operations-inside-a-loop
+INFO:Detectors:
+AgentFactoryV2._msgData() (contracts/virtualPersona/AgentFactory.sol#404-406) is never used and should be removed
+AgentFactoryV3._msgData() (contracts/virtualPersona/AgentFactoryV3.sol#418-420) is never used and should be removed
+AgentFactoryV4._msgData() (contracts/virtualPersona/AgentFactoryV4.sol#442-444) is never used and should be removed
+AgentNftV2._getPastValidatorScore(uint256,address,uint256) (contracts/virtualPersona/AgentNftV2.sol#147-155) is never used and should be removed
+AgentNftV2._validatorScoreOf(uint256,address) (contracts/virtualPersona/AgentNftV2.sol#141-145) is never used and should be removed
+ContributionNft._increaseBalance(address,uint128) (contracts/contribution/ContributionNft.sol#134-139) is never used and should be removed
+FERC20._burn(address,uint256) (contracts/fun/FERC20.sol#131-134) is never used and should be removed
+ServiceNft._increaseBalance(address,uint128) (contracts/contribution/ServiceNft.sol#161-166) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+INFO:Detectors:
+Version constraint ^0.8.13 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- VerbatimInvalidDeduplication
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- StorageWriteRemovalBeforeConditionalTermination
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- InlineAssemblyMemorySideEffects
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation.
+It is used by:
+	- ^0.8.13 (contracts/libs/Elo.sol#2)
+Version constraint >=0.8.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching.
+It is used by:
+	- >=0.8.0 (contracts/libs/FixedPointMathLib.sol#2)
+Version constraint >=0.5.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- DirtyBytesArrayToStorage
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow
+	- privateCanBeOverridden
+	- SignedArrayStorageCopy
+	- ABIEncoderV2StorageArrayWithMultiSlotElement
+	- DynamicConstructorArgumentsClippedABIV2
+	- UninitializedFunctionPointerInConstructor
+	- IncorrectEventSignatureInLibraries
+	- ABIEncoderV2PackedStorage.
+It is used by:
+	- >=0.5.0 (contracts/pool/IUniswapV2Factory.sol#1)
+	- >=0.5.0 (contracts/pool/IUniswapV2Pair.sol#1)
+Version constraint >=0.6.2 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching
+	- EmptyByteArrayCopy
+	- DynamicArrayCleanup
+	- MissingEscapingInFormatting
+	- ArraySliceDynamicallyEncodedBaseType
+	- ImplicitConstructorCallvalueCheck
+	- TupleAssignmentMultiStackSlotComponents
+	- MemoryArrayCreationOverflow.
+It is used by:
+	- >=0.6.2 (contracts/pool/IUniswapV2Router01.sol#1)
+	- >=0.6.2 (contracts/pool/IUniswapV2Router02.sol#1)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Low level call in AgentToken.withdrawETH(uint256) (contracts/virtualPersona/AgentToken.sol#868-873):
+	- (success,None) = _msgSender().call{value: amount_}() (contracts/virtualPersona/AgentToken.sol#869)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+INFO:Detectors:
+Parameter Bonding.launch(string,string,uint8[],string,string,string[4],uint256)._name (contracts/fun/Bonding.sol#179) is not in mixedCase
+Parameter Bonding.launch(string,string,uint8[],string,string,string[4],uint256)._ticker (contracts/fun/Bonding.sol#180) is not in mixedCase
+Parameter Bonding.launchFor(string,string,uint8[],string,string,string[4],uint256,address)._name (contracts/fun/Bonding.sol#191) is not in mixedCase
+Parameter Bonding.launchFor(string,string,uint8[],string,string,string[4],uint256,address)._ticker (contracts/fun/Bonding.sol#192) is not in mixedCase
+Parameter FERC20.updateMaxTx(uint256)._maxTx (contracts/fun/FERC20.sol#121) is not in mixedCase
+Constant FERC20._decimals (contracts/fun/FERC20.sol#8) is not in UPPER_CASE_WITH_UNDERSCORES
+Parameter FPair.approval(address,address,uint256)._user (contracts/fun/FPair.sol#71) is not in mixedCase
+Parameter FPair.approval(address,address,uint256)._token (contracts/fun/FPair.sol#71) is not in mixedCase
+Function GovernorCountingSimple.COUNTING_MODE() (contracts/governance/GovernorCountingSimple.sol#35-37) is not in mixedCase
+Contract veVirtualToken (contracts/governance/veVirtualToken.sol#9-50) is not in CapWords
+Parameter TokenSaver.saveToken(address,address,uint256)._token (contracts/libs/TokenSaver.sol#20) is not in mixedCase
+Parameter TokenSaver.saveToken(address,address,uint256)._receiver (contracts/libs/TokenSaver.sol#20) is not in mixedCase
+Parameter TokenSaver.saveToken(address,address,uint256)._amount (contracts/libs/TokenSaver.sol#20) is not in mixedCase
+Function IUniswapV2Pair.DOMAIN_SEPARATOR() (contracts/pool/IUniswapV2Pair.sol#18) is not in mixedCase
+Function IUniswapV2Pair.PERMIT_TYPEHASH() (contracts/pool/IUniswapV2Pair.sol#19) is not in mixedCase
+Function IUniswapV2Pair.MINIMUM_LIQUIDITY() (contracts/pool/IUniswapV2Pair.sol#36) is not in mixedCase
+Function IUniswapV2Router01.WETH() (contracts/pool/IUniswapV2Router01.sol#5) is not in mixedCase
+Parameter Airdrop.airdrop(IERC20,address[],uint256[],uint256)._token (contracts/token/Airdrop.sol#14) is not in mixedCase
+Parameter Airdrop.airdrop(IERC20,address[],uint256[],uint256)._recipients (contracts/token/Airdrop.sol#15) is not in mixedCase
+Parameter Airdrop.airdrop(IERC20,address[],uint256[],uint256)._amounts (contracts/token/Airdrop.sol#16) is not in mixedCase
+Parameter Airdrop.airdrop(IERC20,address[],uint256[],uint256)._total (contracts/token/Airdrop.sol#17) is not in mixedCase
+Parameter Minter.setIPShare(uint256)._ipShare (contracts/token/Minter.sol#94) is not in mixedCase
+Parameter Minter.setIPShareOverride(uint256,uint256)._ipShare (contracts/token/Minter.sol#99) is not in mixedCase
+Parameter Minter.setIPVault(address)._ipVault (contracts/token/Minter.sol#104) is not in mixedCase
+Parameter Minter.setAgentFactory(address)._factory (contracts/token/Minter.sol#108) is not in mixedCase
+Parameter Minter.setImpactMultiplier(uint256)._multiplier (contracts/token/Minter.sol#112) is not in mixedCase
+Parameter Minter.saveToken(address,address,uint256)._token (contracts/token/Minter.sol#181) is not in mixedCase
+Parameter Minter.saveToken(address,address,uint256)._receiver (contracts/token/Minter.sol#181) is not in mixedCase
+Parameter Minter.saveToken(address,address,uint256)._amount (contracts/token/Minter.sol#181) is not in mixedCase
+Parameter VirtualToken.mint(address,uint256)._to (contracts/token/Virtual.sol#17) is not in mixedCase
+Parameter VirtualToken.mint(address,uint256)._amount (contracts/token/Virtual.sol#17) is not in mixedCase
+Parameter AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._name (contracts/virtualPersona/AgentVeToken.sol#40) is not in mixedCase
+Parameter AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._symbol (contracts/virtualPersona/AgentVeToken.sol#41) is not in mixedCase
+Parameter AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._founder (contracts/virtualPersona/AgentVeToken.sol#42) is not in mixedCase
+Parameter AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._assetToken (contracts/virtualPersona/AgentVeToken.sol#43) is not in mixedCase
+Parameter AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._matureAt (contracts/virtualPersona/AgentVeToken.sol#44) is not in mixedCase
+Parameter AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._agentNft (contracts/virtualPersona/AgentVeToken.sol#45) is not in mixedCase
+Parameter AgentVeToken.initialize(string,string,address,address,uint256,address,bool)._canStake (contracts/virtualPersona/AgentVeToken.sol#46) is not in mixedCase
+Parameter AgentVeToken.setCanStake(bool)._canStake (contracts/virtualPersona/AgentVeToken.sol#84) is not in mixedCase
+Parameter AgentVeToken.setMatureAt(uint256)._matureAt (contracts/virtualPersona/AgentVeToken.sol#89) is not in mixedCase
+Function CoreRegistry.__CoreRegistry_init() (contracts/virtualPersona/CoreRegistry.sol#12-17) is not in mixedCase
+Function GovernorCountingSimpleUpgradeable.__GovernorCountingSimple_init() (contracts/virtualPersona/GovernorCountingSimpleUpgradeable.sol#31) is not in mixedCase
+Function GovernorCountingSimpleUpgradeable.COUNTING_MODE() (contracts/virtualPersona/GovernorCountingSimpleUpgradeable.sol#37-39) is not in mixedCase
+Function ValidatorRegistry.__ValidatorRegistry_init(function(uint256,address) returns(uint256),function(uint256) returns(uint256),function(uint256,address,uint256) returns(uint256)) (contracts/virtualPersona/ValidatorRegistry.sol#16-24) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Detectors:
+FixedPointMathLib.sqrt(uint256) (contracts/libs/FixedPointMathLib.sol#152-215) uses literals with too many digits:
+	- ! y_sqrt_asm_0 < 0x10000000000000000000000000000000000 (contracts/libs/FixedPointMathLib.sol#164-167)
+FixedPointMathLib.sqrt(uint256) (contracts/libs/FixedPointMathLib.sol#152-215) uses literals with too many digits:
+	- ! y_sqrt_asm_0 < 0x1000000000000000000 (contracts/libs/FixedPointMathLib.sol#168-171)
+FixedPointMathLib.sqrt(uint256) (contracts/libs/FixedPointMathLib.sol#152-215) uses literals with too many digits:
+	- ! y_sqrt_asm_0 < 0x10000000000 (contracts/libs/FixedPointMathLib.sol#172-175)
+FixedPointMathLib.sqrt(uint256) (contracts/libs/FixedPointMathLib.sol#152-215) uses literals with too many digits:
+	- ! y_sqrt_asm_0 < 0x1000000 (contracts/libs/FixedPointMathLib.sol#176-179)
+VirtualToken.constructor(uint256,address) (contracts/token/Virtual.sol#10-15) uses literals with too many digits:
+	- ERC20Capped(1000000000 * 10 ** 18) (contracts/token/Virtual.sol#13)
+AgentToken.slitherConstructorConstantVariables() (contracts/virtualPersona/AgentToken.sol#14-1063) uses literals with too many digits:
+	- ROUND_DEC = 100000000000 (contracts/virtualPersona/AgentToken.sol#20)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#too-many-digits
+INFO:Detectors:
+ServiceNft._nextTokenId (contracts/contribution/ServiceNft.sol#25) is never used in ServiceNft (contracts/contribution/ServiceNft.sol#17-175)
+VirtualGenesisDAO._quorum (contracts/governance/VirtualGenesisDAO.sol#27) is never used in VirtualGenesisDAO (contracts/governance/VirtualGenesisDAO.sol#14-137)
+AgentTax._agentTba (contracts/tax/AgentTax.sol#50) is never used in AgentTax (contracts/tax/AgentTax.sol#13-290)
+AgentFactoryV2._minter (contracts/virtualPersona/AgentFactory.sol#92) is never used in AgentFactoryV2 (contracts/virtualPersona/AgentFactory.sol#19-407)
+AgentFactoryV2._tokenMultiplier (contracts/virtualPersona/AgentFactory.sol#99) is never used in AgentFactoryV2 (contracts/virtualPersona/AgentFactory.sol#19-407)
+AgentFactoryV3._minter (contracts/virtualPersona/AgentFactoryV3.sol#92) is never used in AgentFactoryV3 (contracts/virtualPersona/AgentFactoryV3.sol#19-492)
+AgentFactoryV3._tokenMultiplier (contracts/virtualPersona/AgentFactoryV3.sol#99) is never used in AgentFactoryV3 (contracts/virtualPersona/AgentFactoryV3.sol#19-492)
+AgentToken.ROUND_DEC (contracts/virtualPersona/AgentToken.sol#20) is never used in AgentToken (contracts/virtualPersona/AgentToken.sol#14-1063)
+AgentToken.CALL_GAS_LIMIT (contracts/virtualPersona/AgentToken.sol#21) is never used in AgentToken (contracts/virtualPersona/AgentToken.sol#14-1063)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-state-variable
+INFO:Detectors:
+AgentFactoryV2._minter (contracts/virtualPersona/AgentFactory.sol#92) should be constant 
+AgentFactoryV2._tokenMultiplier (contracts/virtualPersona/AgentFactory.sol#99) should be constant 
+AgentFactoryV2.defaultDelegatee (contracts/virtualPersona/AgentFactory.sol#94) should be constant 
+AgentFactoryV2.gov (contracts/virtualPersona/AgentFactory.sol#64) should be constant 
+AgentFactoryV3._minter (contracts/virtualPersona/AgentFactoryV3.sol#92) should be constant 
+AgentFactoryV3._tokenMultiplier (contracts/virtualPersona/AgentFactoryV3.sol#99) should be constant 
+AgentFactoryV3.gov (contracts/virtualPersona/AgentFactoryV3.sol#64) should be constant 
+ServiceNft._nextTokenId (contracts/contribution/ServiceNft.sol#25) should be constant 
+VirtualGenesisDAO._quorum (contracts/governance/VirtualGenesisDAO.sol#27) should be constant 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-constant
+INFO:Detectors:
+AeroAdaptor.factory (contracts/pool/AeroAdaptor.sol#33) should be immutable 
+AeroAdaptor.router (contracts/pool/AeroAdaptor.sol#30) should be immutable 
+AeroAdaptor.tokenIn (contracts/pool/AeroAdaptor.sol#31) should be immutable 
+AeroAdaptor.tokenOut (contracts/pool/AeroAdaptor.sol#32) should be immutable 
+AgentMigrator._nft (contracts/virtualPersona/AgentMigrator.sol#16) should be immutable 
+FERC20._totalSupply (contracts/fun/FERC20.sol#10) should be immutable 
+FPair.router (contracts/fun/FPair.sol#13) should be immutable 
+FPair.tokenA (contracts/fun/FPair.sol#14) should be immutable 
+FPair.tokenB (contracts/fun/FPair.sol#15) should be immutable 
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#state-variables-that-could-be-declared-immutable
+INFO:Slither:. analyzed (166 contracts with 93 detectors), 424 result(s) found

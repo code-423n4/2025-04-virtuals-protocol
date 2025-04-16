@@ -1,8 +1,9 @@
 # Virtuals Protocol audit details
+
 - Total Prize Pool: $60,000 in USDT
   - HM awards: $47,800 in USDT
     - If no valid Highs or Mediums are found, the HM pool is $0
-  - QA awards: $2,000 in USDT 
+  - QA awards: $2,000 in USDT
   - Judge awards: $5,800 in USDT
   - Validator awards: $3,900 in USDT
   - Scout awards: $500 in USDT
@@ -12,7 +13,8 @@
 
 **Note re: risk level upgrades/downgrades**
 
-Two important notes about judging phase risk adjustments: 
+Two important notes about judging phase risk adjustments:
+
 - High- or Medium-risk submissions downgraded to Low-risk (QA) will be ineligible for awards.
 - Upgrading a Low-risk finding from a QA report to a Medium- or High-risk finding is not supported.
 
@@ -22,210 +24,90 @@ As such, wardens are encouraged to select the appropriate risk level carefully d
 
 The 4naly3er report can be found [here](https://github.com/code-423n4/2025-02-virtuals-protocol/blob/main/4naly3er-report.md).
 
+The Slither report can be found [here](https://github.com/code-423n4/2025-02-virtuals-protocol/blob/main/slither.txt).
+
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
 Many protocol contracts have some form of Admin or role-related execution functions. All of these higher access functions are separate multi-sig wallets such as Fireblocks, that require at least 2 of 3 approval to run
 
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
 # Overview
 
-[ ⭐️ SPONSORS: add info here ]
+| Contract | Purpose | Access Control | Upgradable |
+| ------ | ------ | ------ | ------ |
+| veVirtualToken | This is a non-transferrable voting token to be used to vote on Virtual Protocol DAO and Virtual Genesis DAO  | Ownable | N |
+| VirtualProtocolDAO | Regular DAO to maintain the VIRTUAL ecosystem | - | N |
+| VirtualGenesisDAO | Used to vote for instantiation of a VIRTUAL. This DAO allows early execution of proposal as soon as quorum (10k votes) is reached. | - | N |
+| AgentFactory | Handles the application & instantiation of a new VIRTUAL. References to TBA registry, VIRTUAL DAO/Token implementation and Persona NFT vault contracts are stored here. | Roles : DEFAULT_ADMIN_ROLE, WITHDRAW_ROLE | Y |
+| AgentNft | This is the main registry for Persona, Core and Validator. Used to generate ICV wallet address.  | Roles: DEFAULT_ADMIN_ROLE, VALIDATOR_ADMIN_ROLE, MINTER_ROLE | Y |
+| ContributionNft | Each contribution will mint a new ContributionNft. Anyone can propose a new contribution at the VIRTUAL DAO and mint token using the proposal Id.  | - | Y |
+| ServiceNft | Accepted contribution will mint a ServiceNft, restricted to only VIRTUAL DAO can mint a ServiceNft. User can query the latest service NFT for a VIRTUAL CORE. | - | Y |
+| AgentToken | This is implementation contract for VIRTUAL staking. AgentFactory will clone this during VIRTUAL instantiation. Staked token is non-transferable. | - | N |
+| AgentDAO | This is implementation contract for VIRTUAL specific DAO. AgentFactory will clone this during VIRTUAL instantiation. It holds the maturity score for each core service. | - | N |
+| AgentReward | This is reward distribution center. | Roles: GOV_ROLE, TOKEN_SAVER_ROLE | Y |
+| TimeLockStaking | Allows user to stake their VIRTUAL in exchange for sVIRTUAL | Roles: GOV_ROLE, TOKEN_SAVER_ROLE | N |
+| Virtual | VIRTUAL token | Ownable | N |
+| Airdrop | Airdrop token to holders | - | N |
+
+## Main Activities
+
+### VIRTUAL Genesis
+
+1. Submit a new application at **AgentFactory**
+ a. It will transfer VIRTUAL to AgentFactory
+2. Propose at **VirtualGenesisDAO** (action = ```VirtualFactory.executeApplication``` )
+3. Start voting at **VirtualGenesisDAO**
+4. Execute proposal at  **VirtualGenesisDAO**  , it will do following:
+ a. Clone **AgentToken**
+ b. Clone **AgentDAO**
+ c. Mint **AgentNft**
+ d. Stake VIRTUAL -> $PERSONA (depending on the symbol sent to application)
+ e. Create **TBA** with **AgentNft**
+
+### Submit Contribution
+
+1. Create proposal at **AgentDAO** (action = ServiceNft.mint)
+2. Mint **ContributionNft** , it will authenticate by checking whether sender is the proposal's proposer.
+
+### Upgrading Core
+
+1. Validator vote for contribution proposal at **AgentDAO**
+2. Execute proposal at **AgentDAO**, it will mint a **ServiceNft**, and trigger following actions:
+ a. Update maturity score
+ b. Update VIRTUAL core service id.
+
+### Distribute Reward
+
+1. On daily basis, protocol backend will conclude daily profits into a single amount.
+2. Protocol backend calls **AgentReward**.distributeRewards , triggering following:
+ a. Transfer VIRTUAL into **AgentReward**
+ b. Account & update claimable amounts for: Protocol, Stakers, Validators, Dataset Contributors, Model Contributors
+
+### Claim Reward
+
+1. Protocol calls **AgentReward**.withdrawProtocolRewards
+2. Stakers, Validators, Dataset Contributors, Model Contributors calls **AgentReward**.claimAllRewards
+
+### Staking VIRTUAL
+
+1. Call **AgentToken**.stake , pass in the validator that you would like to delegate your voting power to. It will take in sVIRTUAL and mint $_PERSONA_ to you.
+2. Call **AgentToken**.withdraw to withdraw , will burn your $_PERSONA_ and return sVIRTUAL to you.
 
 ## Links
 
-- **Previous audits:** https://whitepaper.virtuals.io/info-hub/important-links-and-resources/security-audits
-  - ✅ SCOUTS: If there are multiple report links, please format them in a list.
-- **Documentation:** https://whitepaper.virtuals.io/
-- **Website:** https://app.virtuals.io/
-- **X/Twitter:** https://x.com/virtuals_io
-- **Discord:** discord.gg/virtualsio
+- **Previous audits:**
+  - <https://whitepaper.virtuals.io/info-hub/important-links-and-resources/security-audits>
+- **Documentation:** <https://whitepaper.virtuals.io/>
+- **Website:** <https://app.virtuals.io/>
+- **X/Twitter:** <https://x.com/virtuals_io>
+- **Discord:** <https://discord.gg/virtualsio>
 
 ---
 
 # Scope
 
-[ ✅ SCOUTS: add scoping and technical details here ]
+_See [scope.txt](https://github.com/code-423n4/2025-02-virtuals-protocol/blob/main/scope.txt)_
 
 ### Files in scope
-- ✅ This should be completed using the `metrics.md` file
-- ✅ Last row of the table should be Total: SLOC
-- ✅ SCOUTS: Have the sponsor review and and confirm in text the details in the section titled "Scoping Q amp; A"
-
-*For sponsors that don't use the scoping tool: list all files in scope in the table below (along with hyperlinks) -- and feel free to add notes to emphasize areas of focus.*
-
-| Contract | SLOC | Purpose | Libraries used |  
-| ----------- | ----------- | ----------- | ----------- |
-| [contracts/folder/sample.sol](https://github.com/code-423n4/repo-name/blob/contracts/folder/sample.sol) | 123 | This contract does XYZ | [`@openzeppelin/*`](https://openzeppelin.com/contracts/) |
-
-### Files out of scope
-✅ SCOUTS: List files/directories out of scope
-
-## Scoping Q &amp; A
-
-### General questions
-### Are there any ERC20's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-Specific tokens (please specify)
- VIRTUAL Creating new agent tokens
-
-### Are there any ERC777's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-### Are there any ERC721's in scope?: Yes
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-Creating new ERC721 tokens as proof of agentic work
-
-### Are there any ERC1155's in scope?: No
-
-✅ SCOUTS: If the answer above 👆 is "Yes", please add the tokens below 👇 to the table. Otherwise, update the column with "None".
-
-
-
-✅ SCOUTS: Once done populating the table below, please remove all the Q/A data above.
-
-| Question                                | Answer                       |
-| --------------------------------------- | ---------------------------- |
-| ERC20 used by the protocol              |       🖊️             |
-| Test coverage                           | ✅ SCOUTS: Please populate this after running the test coverage command                          |
-| ERC721 used  by the protocol            |            🖊️              |
-| ERC777 used by the protocol             |           🖊️                |
-| ERC1155 used by the protocol            |              🖊️            |
-| Chains the protocol will be deployed on | Base |
-
-### ERC20 token behaviors in scope
-
-| Question                                                                                                                                                   | Answer |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| [Missing return values](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#missing-return-values)                                                      |    |
-| [Fee on transfer](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#fee-on-transfer)                                                                  |   |
-| [Balance changes outside of transfers](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#balance-modifications-outside-of-transfers-rebasingairdrops) |    |
-| [Upgradeability](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#upgradable-tokens)                                                                 |    |
-| [Flash minting](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#flash-mintable-tokens)                                                              |    |
-| [Pausability](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#pausable-tokens)                                                                      |    |
-| [Approval race protections](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#approval-race-protections)                                              |    |
-| [Revert on approval to zero address](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#revert-on-approval-to-zero-address)                            |    |
-| [Revert on zero value approvals](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#revert-on-zero-value-approvals)                                    |    |
-| [Revert on zero value transfers](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#revert-on-zero-value-transfers)                                    |    |
-| [Revert on transfer to the zero address](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#revert-on-transfer-to-the-zero-address)                    |    |
-| [Revert on large approvals and/or transfers](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#revert-on-large-approvals--transfers)                  |    |
-| [Doesn't revert on failure](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#no-revert-on-failure)                                                   |    |
-| [Multiple token addresses](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#revert-on-zero-value-transfers)                                          |    |
-| [Low decimals ( < 6)](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#low-decimals)                                                                 |    |
-| [High decimals ( > 18)](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#high-decimals)                                                              |    |
-| [Blocklists](https://github.com/d-xo/weird-erc20?tab=readme-ov-file#tokens-with-blocklists)                                                                |    |
-
-### External integrations (e.g., Uniswap) behavior in scope:
-
-
-| Question                                                  | Answer |
-| --------------------------------------------------------- | ------ |
-| Enabling/disabling fees (e.g. Blur disables/enables fees) | Yes   |
-| Pausability (e.g. Uniswap pool gets paused)               |  No   |
-| Upgradeability (e.g. Uniswap gets upgraded)               |   Yes  |
-
-
-### EIP compliance checklist
-N/A
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-| Question                                | Answer                       |
-| --------------------------------------- | ---------------------------- |
-| src/Token.sol                           | ERC20, ERC721                |
-| src/NFT.sol                             | ERC721                       |
-
-
-# Additional context
-
-## Main invariants
-
-N/A
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
-## Attack ideas (where to focus for bugs)
-Bonding pool
-
-Is there a way for users to pull liquidity from the bonding pool
-Any risk of loss of funds
-Access control related
-
-Are all privileged actions guarded by access controls
-
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
-## All trusted roles in the protocol
-
-Admin - controls fees and other higher-order functions 
-Executor - Runs execution functions like fee/tax distribution 
-Deployer - Deployer for contracts
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-| Role                                | Description                       |
-| --------------------------------------- | ---------------------------- |
-| Owner                          | Has superpowers                |
-| Administrator                             | Can change fees                       |
-
-## Describe any novel or unique curve logic or mathematical models implemented in the contracts:
-
-Simple bonding curve with a y = kx 
-
-✅ SCOUTS: Please format the response above 👆 so its not a wall of text and its readable.
-
-## Running tests
-
-npm i
-npx hardhat test
-
-✅ SCOUTS: Please format the response above 👆 using the template below👇
-
-```bash
-git clone https://github.com/code-423n4/2023-08-arbitrum
-git submodule update --init --recursive
-cd governance
-foundryup
-make install
-make build
-make sc-election-test
-```
-To run code coverage
-```bash
-make coverage
-```
-To run gas benchmarks
-```bash
-make gas
-```
-
-✅ SCOUTS: Add a screenshot of your terminal showing the gas report
-✅ SCOUTS: Add a screenshot of your terminal showing the test coverage
-
-## Miscellaneous
-Employees of Virtuals and employees' family members are ineligible to participate in this audit.
-
-Code4rena's rules cannot be overridden by the contents of this README. In case of doubt, please check with C4 staff.
-
-
-
-
-
-# Scope
-
-*See [scope.txt](https://github.com/code-423n4/2025-02-virtuals-protocol/blob/main/scope.txt)*
-
-### Files in scope
-
 
 | File   | Logic Contracts | Interfaces | nSLOC | Purpose | Libraries used |
 | ------ | --------------- | ---------- | ----- | -----   | ------------ |
@@ -300,7 +182,7 @@ Code4rena's rules cannot be overridden by the contents of this README. In case o
 
 ### Files out of scope
 
-*See [out_of_scope.txt](https://github.com/code-423n4/2025-02-virtuals-protocol/blob/main/out_of_scope.txt)*
+_See [out_of_scope.txt](https://github.com/code-423n4/2025-02-virtuals-protocol/blob/main/out_of_scope.txt)_
 
 | File         |
 | ------------ |
@@ -321,3 +203,77 @@ Code4rena's rules cannot be overridden by the contents of this README. In case o
 | ./contracts/token/Minter.sol |
 | Totals: 15 |
 
+## Scoping Q &amp; A
+
+### General questions
+
+| Question                                | Answer                       |
+| --------------------------------------- | ---------------------------- |
+| ERC20 used by the protocol              |      VIRTUAL Creating new agent tokens            |
+| ERC721 used  by the protocol            |         Creating new ERC721 tokens as proof of agentic work           |
+| ERC777 used by the protocol             |         None           |
+| ERC1155 used by the protocol            |        None      |
+| Chains the protocol will be deployed on | Base |
+
+### External integrations (e.g., Uniswap) behavior in scope
+
+| Question                                                  | Answer |
+| --------------------------------------------------------- | ------ |
+| Enabling/disabling fees (e.g. Blur disables/enables fees) | Yes   |
+| Pausability (e.g. Uniswap pool gets paused)               |  No   |
+| Upgradeability (e.g. Uniswap gets upgraded)               |   Yes  |
+
+### EIP compliance checklist
+
+N/A
+
+# Additional context
+
+## Main invariants
+
+N/A
+
+## Attack ideas (where to focus for bugs)
+
+Bonding pool
+
+Is there a way for users to pull liquidity from the bonding pool
+
+Any risk of loss of funds
+
+Access control related
+
+Are all privileged actions guarded by access controls
+
+## All trusted roles in the protocol
+
+| Role                                | Description                       |
+| --------------------------------------- | ---------------------------- |
+| Admin                          | controls fees and other higher-order functions              |
+| Executor                             | Runs execution functions like fee/tax distribution                     |
+| Deployer                             | Deployer for contracts                   |
+
+## Describe any novel or unique curve logic or mathematical models implemented in the contracts
+
+Simple bonding curve with a `y = kx`
+
+## Running tests
+
+```bash
+git clone --recurse https://github.com/code-423n4/2025-04-virtuals-protocol.git
+cd 2025-04-virtuals-protocol
+yarn
+npx hardhat test
+```
+
+To run code coverage
+
+```bash
+npx hardhat coverage
+```
+
+## Miscellaneous
+
+Employees of Virtuals and employees' family members are ineligible to participate in this audit.
+
+Code4rena's rules cannot be overridden by the contents of this README. In case of doubt, please check with C4 staff.
