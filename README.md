@@ -14,7 +14,6 @@
 ### ❗️ Important notes
 1. A coded, runnable PoC is **required** for all High/Medium submissions to this audit. 
    - Exception: PoC is optional (though recommended) for wardens with signal ≥ 0.68
-   - It is assumed the POC will use foundry cheat codes to satisfy preconditions
    - The audit repo includes a basic template to run the test suite.
    - Your submission will be marked as Insufficient if the POC is not runnable and working.
 2. Since this audit includes live/deployed code, **all submissions will be treated as sensitive:**
