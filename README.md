@@ -9,16 +9,24 @@
   - Scout awards: $500 in USDT
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
 - Starts April 17, 2025 20:00 UTC
-- Ends May XX, 2025 20:00 UTC
+- Ends May 7, 2025 20:00 UTC
 
-**Note re: risk level upgrades/downgrades**
-
-Two important notes about judging phase risk adjustments:
-
-- High- or Medium-risk submissions downgraded to Low-risk (QA) will be ineligible for awards.
-- Upgrading a Low-risk finding from a QA report to a Medium- or High-risk finding is not supported.
-
-As such, wardens are encouraged to select the appropriate risk level carefully during the submission phase.
+### ❗️ Important notes
+1. A coded, runnable PoC is **required** for all High/Medium submissions to this audit. 
+   - Exception: PoC is optional (though recommended) for wardens with signal ≥ 0.68
+   - It is assumed the POC will use foundry cheat codes to satisfy preconditions
+   - The audit repo includes a basic template to run the test suite.
+   - Your submission will be marked as Insufficient if the POC is not runnable and working.
+2. Since this audit includes live/deployed code, **all submissions will be treated as sensitive:**
+    - Wardens are encouraged to use the [sensitive disclosure process](https://docs.code4rena.com/roles/wardens/submission-guidelines#how-to-submit-zero-day-or-otherwise-highly-sensitive-bugs) for High-risk submissions affecting live code, to ensure timely disclosure of such vulnerabilities to the sponsor and guarantee payout in the case where [a sponsor patches a live critical during the audit](https://docs.code4rena.com/awarding/incentive-model-and-awards#the-live-criticals-exception).
+    - Submissions will be hidden from *all* wardens (SR and non-SR alike) by default, to ensure that no sensitive issues are erroneously shared. 
+    - If the submissions include findings affecting live code, there will be no post-judging QA phase. This ensures that awards can be distributed in a timely fashion, without compromising the security of the project. (Senior members of C4 staff will review the judges’ decisions per usual.)
+    - By default, submissions will not be made public until the report is published.
+    - **Exception:** if the sponsor indicates that no submissions affect live code, then we’ll make submissions visible to all authenticated wardens, and open PJQA to SR wardens per the usual C4 process.
+3. Judging phase risk adjustments:
+    - High- or Medium-risk submissions downgraded to Low-risk (QA) will be ineligible for awards.
+    - Upgrading a Low-risk finding from a QA report to a Medium- or High-risk finding is not supported.
+    - As such, wardens are encouraged to select the appropriate risk level carefully during the submission phase.
 
 ## Automated Findings / Publicly Known Issues
 
