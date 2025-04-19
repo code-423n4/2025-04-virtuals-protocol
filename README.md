@@ -13,6 +13,7 @@
 
 ### ❗️ Important notes
 1. A coded, runnable PoC is **required** for all High/Medium submissions to this audit. 
+   - An example file was provided and can be run using `npx hardhat test test/poc.js`
    - Exception: PoC is optional (though recommended) for wardens with signal ≥ 0.68
    - The audit repo includes a basic template to run the test suite.
    - Your submission will be marked as Insufficient if the POC is not runnable and working.
