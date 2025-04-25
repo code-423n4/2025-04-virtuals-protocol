@@ -29,6 +29,8 @@ The 4naly3er report can be found [here](https://github.com/code-423n4/2025-02-vi
 
 The Slither report can be found [here](https://github.com/code-423n4/2025-02-virtuals-protocol/blob/main/slither.txt).
 
+Since the Virtuals Protocol repo is currently public, any open PRs or issues that were created prior to the audit launch (April 17, 2025 20:00 UTC) are considered known issues.
+
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
 Many protocol contracts have some form of Admin or role-related execution functions. All of these higher access functions are separate multi-sig wallets such as Fireblocks, that require at least 2 of 3 approval to run
