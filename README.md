@@ -13,7 +13,7 @@
 
 ### ❗️ Important notes
 1. Since this audit includes live/deployed code, **all submissions will be treated as sensitive:**
-    - Wardens are encouraged to use the [sensitive disclosure process](https://docs.code4rena.com/competitions/submission-guidelines#how-to-submit-zero-day-or-otherwise-highly-sensitive-bugs) for High-risk submissions affecting live code, to ensure timely disclosure of such vulnerabilities to the sponsor and guarantee payout in the case where [a sponsor patches a live critical during the audit](https://docs.code4rena.com/awarding#the-live-criticals-exception).
+    - Wardens are encouraged to submit High-risk submissions affecting live code promptly, to ensure timely disclosure of such vulnerabilities to the sponsor and guarantee payout in the case where [a sponsor patches a live critical during the audit](https://docs.code4rena.com/awarding/incentive-model-and-awards#the-live-criticals-exception). 
     - Submissions will be hidden from *all* wardens (SR and non-SR alike) by default, to ensure that no sensitive issues are erroneously shared. 
     - If the submissions include findings affecting live code, there will be no post-judging QA phase. This ensures that awards can be distributed in a timely fashion, without compromising the security of the project. (Senior members of C4 staff will review the judges’ decisions per usual.)
     - By default, submissions will not be made public until the report is published.
