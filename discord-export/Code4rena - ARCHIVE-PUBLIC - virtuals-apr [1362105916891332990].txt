@@ -1,0 +1,1712 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-PUBLIC / virtuals-apr
+==============================================================
+
+[04/16/2025 16:43] cloudellie
+⏳New audit coming. Details dropping 🪂 soon! 
+
+Please no questions or comments in this channel for now.
+
+{Reactions}
+❤️ (9) 🇬🇧 (2) 💵 (5) 💃🏻 (3) c4ship (4) 4739_Skeletor 🇲🇦 
+
+[04/17/2025 05:58] anime.consumer
+nsloc and language ..?
+
+
+[04/17/2025 09:12] kyosi2963
+It is written under the title - 'EVM', 'Solidity'
+
+{Reactions}
+this (3) 
+
+[04/17/2025 11:20] george786.
+nSloc?
+
+
+[04/17/2025 12:24] cloudellie
+This info will be visible in the audit repo at launch.
+
+
+[04/17/2025 12:40] thebrittfactor (pinned)
+👋 Hello and welcome to the $60,000 in USDT Virtuals Protocol audit channel!
+
+📆 Audit opens Thursday, 17 April 2025 (20:00 UTC) and runs through Wednesday, 07 May 2025 (20:00 UTC) (20 days).
+
+❗ **Important notes:**
+Since this audit includes live/deployed code, **all submissions will be treated as sensitive:**
+- Wardens are encouraged to submit High-risk submissions affecting live code promptly, to ensure timely disclosure of such vulnerabilities to the sponsor and guarantee payout in the case where [a sponsor patches a live critical during the audit](https://docs.code4rena.com/awarding/incentive-model-and-awards#the-live-criticals-exception).
+    - Submissions will be hidden from *all* wardens (SR and non-SR alike) by default, to ensure that no sensitive issues are erroneously shared. 
+   - If the submissions include findings affecting live code, there will be no post-judging QA phase. This ensures that awards can be distributed in a timely fashion, without compromising the security of the project. (Senior members of C4 staff will review the judges’ decisions per usual.)
+   - By default, submissions will not be made public until the report is published.
+   - **Exception:** if the sponsor indicates that no submissions affect live code, then we’ll make submissions visible to all authenticated wardens, and open PJQA to SR wardens per the usual C4 process.
+
+{Reactions}
+👀 (2) 
+
+[04/17/2025 12:40] thebrittfactor
+🤖 **Documentation bot assistance:** For general questions about the codebase, give our documentation bot a try, by tagging `@Docs Wolf` in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.  *Note: Docs Wolf will be available the day after launch.*
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this audit, consider enabling notifications for this channel. 🐺 ⏰
+
+*Note: the sponsor team will be added to this channel once we have them in the C4 discord. At this time, please hold any sponsor specific questions.*
+
+Audit Page: https://code4rena.com/audits/2025-04-virtuals-protocol
+
+
+[04/17/2025 12:41] thebrittfactor
+Pinned a message.
+
+
+[04/17/2025 20:02] thebrittfactor
+ℹ️ **A couple notes:**
+- We're aware that the audit repo is missing an `.env.example` file and are working to add that ASAP. 
+- `@Docs Wolf` should be available tomorrow. 
+
+We'll provide updates once the items above are available.
+
+{Reactions}
+c4ship (2) 
+
+[04/17/2025 20:05] dunateiio
+Here we go 💂‍♂️
+
+
+[04/17/2025 20:15] cryptor9119
+Why is the contest asking for foundry tests when the test suite is written in hardhat? And where is the basic template to run these tests?
+
+{Reactions}
+💀 thisisfine 
+
+[04/17/2025 20:25] cloudellie
+This question is answered directly above - please scroll up. Template should be in the repo in the next 24h.
+
+
+[04/17/2025 20:34] cryptor9119
+Are you referring to the missing env.example file? That is just an example for environmental variable inputs. Not a template for testing. What am I missing?
+
+
+[04/17/2025 20:42] bytes032
+the basic template will be provided tomorrow
+
+
+[04/17/2025 20:48] thebrittfactor
+Apologies for the confusion.
+ℹ️  Reference to foundry tests have been removed from the readme.
+
+{Reactions}
+thankyou (3) 
+
+[04/17/2025 21:27] 0xhiros
+The test fails - I've used `npx hardhat test`.
+Did i miss any config?
+
+
+[04/17/2025 21:37] ykuio
+Have the code changed since last audits?
+
+
+[04/17/2025 21:39] shui1
+Hey just to confirm
+/contracts/token/Minter.sol
+
+is Out of scope ?
+
+
+[04/17/2025 21:41] unclejeff4407
+yes
+
+
+[04/18/2025 02:26] zmj4107
+when i run npx hardhat test, there are quite a lot of Setup Error
+
+
+[04/18/2025 02:26] zmj4107
+=== Setup Error ===
+Error message: invalid address (argument="address", value=null, code=INVALID_ARGUMENT, version=6.9.2) (argument="feeAddr", value=null, code=INVALID_ARGUMENT, version=6.9.2)
+Error details: TypeError: invalid address (argument="address", value=null, code=INVALID_ARGUMENT, version=6.9.2) (argument="feeAddr", value=null, code=INVALID_ARGUMENT, version=6.9.2)
+
+
+[04/18/2025 02:30] lihwy
+same error herre
+
+
+[04/18/2025 03:21] samuselderg
+Hey Wardens! The DocBot is now live, thanks for your patience!
+
+🤖 Documentation bot assistance: For general questions about the codebase, give our documentation bot a try, by tagging @Docs Wolf in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.
+
+
+[04/18/2025 03:33] nuuopdaem
+@CloudEllie  Hello, ` Wardens are encouraged to use the sensitive disclosure process ` means all the submissions have to be made using these steps  https://docs.code4rena.com/competitions/submission-guidelines#how-to-submit-zero-day-or-otherwise-highly-sensitive-bugs  , right ? Just to confirm .
+
+{Embed}
+https://docs.code4rena.com/competitions/submission-guidelines
+Submission guidelines | Code4rena
+Best practices and recommendations for submitting to Code4rena competitions.
+
+
+[04/18/2025 03:45] _hera123
+My errors like the followings
+
+
+[04/18/2025 03:45] _hera123
+AgentDAO
+    1) should auto early execution when forVotes == totalSupply
+    2) should not allow early execution when forVotes < totalSupply although met quorum
+
+  Bonding
+    3) should allow application execution by proposer
+    4) should be able to launch memecoin
+    5) should be able to graduate
+
+  Contribution
+    6) should be able to mint a new contribution NFT
+    7) should mint agent token for successful model contribution
+....
+
+
+[04/18/2025 03:45] _hera123
+So may bug in this project, why?
+
+
+[04/18/2025 03:47] _hera123
+||npx hardhat test|| doent work.
+
+
+[04/18/2025 06:10] nbody
+Gm everyone! i get the same Testing errors
+
+
+[04/18/2025 06:17] ubaid_ch
+Can we use foundry for testing
+
+
+[04/18/2025 06:17] ._ysd
+After cloning the repo and running npx hardhat test I am getting this : 
+Error HH8: There's one or more errors in your config file:
+
+  * Invalid account: #0 for network: base - Expected string, received undefined
+  * Invalid account: #0 for network: base_fire - Expected string, received undefined
+  * Invalid account: #0 for network: base_sepolia - Expected string, received undefined
+  * Invalid account: #0 for network: base_sepolia_fire - Expected string, received undefined
+  * Invalid account: #0 for network: polygon - Expected string, received undefined
+  * Invalid account: #0 for network: mumbai - Expected string, received undefined
+  * Invalid account: #0 for network: goerli - Expected string, received undefined
+
+To learn more about Hardhat's configuration, please go to https://hardhat.org/config/
+
+For more info go to https://hardhat.org/HH8 or run Hardhat with --show-stack-traces
+(node:9144) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Does anyone encountered same issue and knows how to fix it ?
+
+
+[04/18/2025 06:46] hail_d_lord
+@0xYogi  In hardhat.config.js
+
+**Comment out from :**
+
+module.exports = {
+...
+...
+} // tilll complete end
+
+**And Paste below instead :**
+
+```module.exports = {
+  solidity: {
+    version: "0.8.26",
+    settings: {
+      evmVersion: "shanghai",
+      viaIR: true,  
+    },
+  },
+};
+```
+
+{Reactions}
+👍 (2) 
+
+[04/18/2025 07:28] ubaid_ch
+.
+
+
+[04/18/2025 07:30] c_moose
+you **need** to use foundry for PoCs. Check the very first message
+
+
+[04/18/2025 07:58] ykuio
+that was changed
+
+
+[04/18/2025 08:07] hail_d_lord
+Can we have the list of all the deployed contract addresses ?
+https://whitepaper.virtuals.io/info-hub/important-links-and-resources/contract-address
+
+the above link has just 3 addresses that too 2 out of them are irrelevant !
+
+
+[04/18/2025 08:54] cloudellie
+Not *all* submissions -- only High-risk issues that affect live code. Mediums/QA should be submitted normally.
+
+
+[04/18/2025 09:30] thebrittfactor
+Apologies for missing this. The foundry bullet has been removed for the message to align with the Readme.
+
+{Reactions}
+✅ (3) 
+
+[04/18/2025 10:27] ubaid_ch
+So we cannot use foundry
+
+
+[04/18/2025 10:28] ubaid_ch
+This project lacks netspec implementation
+
+{Reactions}
+this (2) 
+
+[04/18/2025 10:29] ubaid_ch
+And can we get diagram of the project
+
+
+[04/18/2025 10:51] 0xspryon
+Hi, are the project sponsors available for questioning?
+if yes, whom should I tag for private thread questions?
+
+
+[04/18/2025 10:54] cloudellie
+They're not currently available, but we'll update if that changes.
+
+{Reactions}
+💀 (4) 👍 
+
+[04/18/2025 13:38] aua_oo7
+Can we use foundry for poc
+
+
+[04/18/2025 15:05] viraz4331
+is there a specific reason for it ?
+
+
+[04/18/2025 15:07] thebrittfactor
+We'll be sure to update once we have more details.
+
+{Reactions}
+👍 (2) 
+
+[04/18/2025 15:09] viraz4331
+is @Docs Wolf available now ?
+
+
+[04/18/2025 15:13] thebrittfactor
+Yep! Should work in a private thread 😊
+
+
+[04/18/2025 16:38] unclejeff4407
+does anyone else have this issue? I got it after executing `forge install openzeppelin/openzeppelin-contracts-upgradeable` then `forge build`
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/image-BA47B.png
+
+
+[04/18/2025 17:13] dunateiio
+me too
+
+
+[04/18/2025 17:18] jerry_dev0042
+I see AgentFactory, AgentFactoryV3, and AgentFactoryV4. Which version should I use, or do I need to review all of them?
+
+
+[04/18/2025 17:19] hail_d_lord
+All of them are in scope !
+
+
+[04/18/2025 18:46] felconz_73339
+
+
+{Stickers}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/783789203842269214-3E8B6.json
+
+
+[04/18/2025 18:46] felconz_73339
+Very exhausted
+
+{Reactions}
+empathy (4) 
+
+[04/18/2025 19:25] felconz_73339
+Multiple inheritance conflicts,  particularly in _contextSuffixLength from ContextUpgradeable and Context, as well as return type mismatches in _countVote. Do we fix this? Or do we manually review?
+
+
+[04/18/2025 19:31] io10xxx
+that env.example would be pretty useful rn
+
+{Reactions}
+🙏 (2) 💯 (2) 
+
+[04/18/2025 19:38] jerry_dev0042
+When will the env.example file be available?
+
+
+[04/18/2025 19:42] thebrittfactor
+We've reached out to the sponsors to determine when it'd be available. We'll update as soon as we have details.
+
+{Reactions}
+👍 (3) 
+
+[04/18/2025 22:07] dunateiio
+https://tenor.com/view/office-space-office-status-tired-asleep-gif-14480468
+
+{Embed}
+https://tenor.com/view/office-space-office-status-tired-asleep-gif-14480468
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/office-space-office-4CB37.png
+
+{Reactions}
+😆 (2) 
+
+[04/19/2025 06:08] viraz4331
+are these the only deployed contracts https://whitepaper.virtuals.io/info-hub/important-links-and-resources/contract-address ?
+
+
+[04/19/2025 07:15] sagetony224
+Please is anyone getting these errors while running the test code
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_2025-04-19_at_08.14.40-2EE7A.png
+
+{Reactions}
+😆 
+
+[04/19/2025 07:16] sagetony224
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_2025-04-19_at_08.15.42-BB0BF.png
+
+{Reactions}
+😆 
+
+[04/19/2025 07:37] ivanfitro
+Which kind of ERC20 will be used as assetToken in Bonding.sol?
+
+
+[04/19/2025 07:59] ivanfitro
+yes all the test fail
+
+
+[04/19/2025 08:02] zer0om
+I solved this with :  ```networks: {
+    hardhat: {
+      allowUnlimitedContractSize: true,
+    },
+  },```
+
+
+[04/19/2025 08:03] ivanfitro
+in hardhat.config?
+
+
+[04/19/2025 08:03] zer0om
+Yes
+
+{Reactions}
+👍 
+
+[04/19/2025 08:14] ivanfitro
+in my case the test works but all fail
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/image-3F156.png
+
+
+[04/19/2025 08:18] zer0om
+Yeah, my fix only solve some of the many errors of this codebase
+
+
+[04/19/2025 12:00] lihwy
+:hard: need to solve it
+
+
+[04/19/2025 12:01] thebrittfactor
+ℹ️ The `.env.example` file and also a `poc.js` file has been added to the [readme](https://github.com/code-423n4/2025-04-virtuals-protocol).
+
+{Reactions}
+👍 (2) 
+
+[04/19/2025 12:01] lihwy
+please fix the test first
+
+{Reactions}
+⬆️ (5) 
+
+[04/19/2025 13:30] nour99
+are the required PoC is the new approach or it's just for this competition ?
+
+
+[04/19/2025 16:25] _hera123
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/image-9A174.png
+
+
+[04/19/2025 16:26] _hera123
+There are still so many errors.
+
+
+[04/19/2025 17:33] io10xxx
+also some errors might be related to the hardhat version being used. i found that using version 2.22.17 works well
+
+
+[04/19/2025 18:21] dunateiio
+configure the .env, it will pass about 50 test
+
+
+[04/20/2025 02:33] favour1011
+Could you please provide a sample of what the .env should contain.
+
+
+[04/20/2025 02:36] dunateiio
+did you already download it from the repo?
+
+
+[04/20/2025 02:37] favour1011
+Yes. And all test are failing like the picture above .
+
+
+[04/20/2025 02:38] dunateiio
+you just can run `npx hardhat node`, and it will give you test accounts, use it to configure the the .env
+
+
+[04/20/2025 02:41] favour1011
+Okay I will try that. Thanks.
+
+
+[04/20/2025 03:36] pro_king1
+@EightySix https://github.com/code-423n4/2025-04-virtuals-protocol/blob/main/_env.example this is env.example
+
+
+[04/20/2025 03:55] pro_king1
+There are many problems with tests and configurations.🫣  Wasted around two hours and still didn't solve the problem to run tests correctly
+
+
+[04/20/2025 05:27] dunateiio
+bro we been bleeding for 2 days 😂
+
+{Reactions}
+😄 (3) 
+
+[04/20/2025 05:28] pro_king1
+https://tenor.com/view/tobey-maguire-sad-wah-wahh-cry-gif-15729067800335956216
+
+{Embed}
+https://tenor.com/view/tobey-maguire-sad-wah-wahh-cry-gif-15729067800335956216
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/tobey-maguire-sad-F196E.png
+
+
+[04/20/2025 05:34] dunateiio
+I reached the technical support on their discord server, and after 12 hours they told me they raised it to the team, and they already in a weekend so I think I'm gonna wait for 1 more day for a response
+
+{Reactions}
+👍 (2) 
+
+[04/20/2025 07:51] ihtishamsudo
+test suite is disgusting!
+
+{Reactions}
+ohno (2) 🔥 (2) this 
+
+[04/20/2025 10:57] ihtishamsudo
+anyone managed to fix the test suite?
+
+
+[04/20/2025 14:07] arai6329
+Hello guys, WITHDRAW_ROLE its EOA address?
+
+
+[04/20/2025 17:57] favour1011
+Thanks a lot.
+
+{Reactions}
+👍 
+
+[04/20/2025 21:03] sagetony224
+Please has anyone fix it
+
+
+[04/21/2025 09:01] dunateiio
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Waiting-Skull-meme-10-F359A.png
+
+{Reactions}
+😁 (2) 
+
+[04/21/2025 10:12] viraz4331
+@thebrittfactor | C4 can you check please
+
+
+[04/21/2025 10:30] 0xg03.14
+@thebrittfactor | C4 since many wardens failing to setup the test suit by any chance can you remove this poc rule for this comp..?
+
+{Reactions}
+👍 (4) 
+
+[04/21/2025 12:51] shahid_10_
+@thebrittfactor | C4  @CloudEllie  how can we ask some question to sponsors?
+
+
+[04/21/2025 13:40] cloudellie
+They aren't currently in the Discord, but we'll update here if that changes.
+
+
+[04/21/2025 13:47] unclejeff4407
+any idea why they're not?
+
+
+[04/21/2025 16:47] thebrittfactor (pinned)
+ℹ️ Wardens - please give a warm welcome to the Virtuals team, @e3_virtuals, who will be available for questions either here in the channel or via a PRIVATE thread.
+
+
+[04/21/2025 16:53] 0xdemonnn
+hi @e3_virtuals , welcome. Can help us to setup the test?
+
+
+[04/21/2025 16:57] 0xg03.14
+@thebrittfactor | C4  @e3_virtuals  i found a bug but due to set up issues im unable to write the poc for it.  it might be a high/medium. what should i do now. please help
+
+
+[04/21/2025 17:09] thebrittfactor
+Let's see if the sponsors can get the testing suite addressed. We'd need a PoC as they're mandatory for wardens who have a signal <0.68.
+
+{Reactions}
+👍 
+
+[04/21/2025 17:14] atharv181
+@e3_virtuals Could you please check the scope once? For some files, all versions seem to be in scope — eg AgentFactory.sol, AgentFactoryV3.sol, and AgentFactoryV4.sol. Mock files are also in scope
+
+
+[04/21/2025 17:42] 0xg03.14
+duplicates are eligible for rewards if the bug is in not yet deployed code right..?
+
+
+[04/21/2025 18:44] thebrittfactor
+Correct, as long as the primary submission is not deemed a live critical and the duplicate also has `valid`/`sufficient` labels. Here are more details on the [live criticals exception](https://docs.code4rena.com/awarding#the-live-criticals-exception), as well as [what constitutes valid reports](https://docs.code4rena.com/competitions/judging-criteria#what-constitutes-a-valid-and-sufficient-quality-report).
+
+{Reactions}
+👍 
+
+[04/21/2025 20:24] 0xhiros
+Who are the sponsers?
+
+
+[04/21/2025 20:30] thebrittfactor
+https://discord.com/channels/810916927919620096/1362105916891332990/1363919034579550461
+
+
+[04/21/2025 20:46] stakog
+Unless the warden have a signal 0.68 or higher, right?
+
+
+[04/21/2025 20:56] thebrittfactor
+Correct (and clarified), but they're recommended 😉
+
+{Reactions}
+👍 
+
+[04/21/2025 21:19] shui1
+which contracts are the supposed live contracts ?
+the contest page does not specify
+or we treat all the HIGH issues as live code and report them with the special rules ?
+
+{Reactions}
+🦾 
+
+[04/21/2025 21:21] unpluggedtj
+Yeah a git diff would help
+
+
+[04/21/2025 22:26] io10xxx
+anyone getting ```Error: Transaction reverted: trying to deploy a contract whose code is too large``` when trying to deploy the bonding contract ? @e3_virtuals  can you advise please
+
+
+[04/21/2025 22:29] dunateiio
+@io10⛓ I think you should try this one (add it to package.json)
+
+
+[04/21/2025 23:11] io10xxx
+Thank you , will try it out
+
+
+[04/21/2025 23:12] io10xxx
+Do you mean the hardhat config ?
+
+
+[04/21/2025 23:14] dunateiio
+are you using hardhat to run the transaction, right?
+
+
+[04/21/2025 23:15] io10xxx
+Yupp
+
+
+[04/21/2025 23:17] dunateiio
+yeah yeah I'm sorry, add it in the hardhat config file
+
+{Reactions}
+🫡 
+
+[04/22/2025 05:01] 0xg03.14
+@e3_virtuals  this would be helpful
+
+
+[04/22/2025 05:57] pro_king1
+If mandatory PoC rule  is removed , it will be great or other wise fix the tests.
+
+
+[04/22/2025 07:09] dunateiio
+with that zero support I bet that the  judging phase would be something even more hilarious
+
+
+[04/22/2025 08:47] cloudellie
+Pinned a message.
+
+
+[04/22/2025 10:05] nuuopdaem
+This is vague, how do we know which contracts are deployed ? 
+And what happens if someone submit a finding that is a high but he underestimated it and thought it is a medium and submitted as normal or vice-versa ? Can you give more details please ?
+
+
+[04/22/2025 12:03] _hera123
+@e3_virtuals  how can i test this project? Plz give me some advice!
+
+
+[04/22/2025 12:07] _hera123
+@e3_virtuals  How can I remove or reduce so much errors?
+
+
+[04/22/2025 13:02] thebrittfactor
+If you believe your issue is high-risk, it's best to err on the side of caution and submit via the [live criticals process](https://docs.code4rena.com/awarding#the-live-criticals-exception) while we're determining which contracts are deployed.
+
+
+[04/22/2025 15:11] 0xhiros
+Could you provide deployed addresses to avoid writing deployment steps in PoCs?
+
+
+[04/22/2025 20:42] mroopver
+My eyes are bleeding from these failing tests. I didn’t sign up for this suffering
+
+
+[04/22/2025 20:43] 0xroccomania
+It is what it is
+
+
+[04/22/2025 21:40] lhoussaineph2001
+How can i know my signal ??
+
+
+[04/22/2025 22:11] dunateiio
+https://code4rena.com/account
+
+
+[04/22/2025 22:27] lhoussaineph2001
+Thank you
+
+{Reactions}
+❤️ 
+
+[04/22/2025 23:04] unpluggedtj
+Can someone explain me what is the use-case of `coreIds` in the prompt function in `AgentInference.sol`?
+P.S:- doc wolf was no help
+
+
+[04/22/2025 23:53] raone_0xdev
+You can have a look in `virtualPersona/CoreRegistry.sol` file. Hope it clarify.
+
+{Reactions}
+👍 
+
+[04/22/2025 23:54] unpluggedtj
+Thanks!, got it, I was confusing it with system cores 💀
+
+{Reactions}
+👍 
+
+[04/23/2025 02:42] dunateiio
+@e3_virtuals man, react to this msg if you are in danger
+
+{Reactions}
+😂 (7) 
+
+[04/23/2025 05:05] stranger8732
+Has anyone gotten the tests to run?
+
+
+[04/23/2025 05:16] pro_king1
+https://tenor.com/view/nich-bad-nft-gif-23770085
+
+{Embed}
+https://tenor.com/view/nich-bad-nft-gif-23770085
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/nich-bad-nft-DA4CC.png
+
+{Reactions}
+😁 (3) 
+
+[04/23/2025 06:47] viraz4331
+@e3_virtuals can you share the deployed contract addresses so we can check this
+
+
+[04/23/2025 06:47] viraz4331
+I see only these https://whitepaper.virtuals.io/info-hub/important-links-and-resources/contract-address is this link correct ?
+
+
+[04/23/2025 06:56] viraz4331
+also is there any eta regarding update on the testing setup?
+as we need it for poc's
+
+
+[04/23/2025 08:20] ihtishamsudo
+i guess the protocol was still not ready for an audit but managed to launch anyway!
+
+{Reactions}
+➕ (7) 
+
+[04/23/2025 09:23] nodesemesta
+Hi,  @e3_virtuals can you confirm where the AgentReward.sol is? It’s mentioned in README.md but not present in the repo.
+
+
+[04/23/2025 12:48] pro_king1
+@e3_virtuals  are there other docs beside of this https://whitepaper.virtuals.io ?
+
+{Embed}
+https://whitepaper.virtuals.io/
+About Virtuals Protocol | Virtuals Protocol Whitepaper
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/image-687D4
+
+
+[04/23/2025 13:39] bid0840
+SOLID STATEMENT
+
+
+[04/23/2025 13:45] bid0840
+There is no mention of agentreward.sol
+
+{Reactions}
+🫡 
+
+[04/23/2025 14:36] s1dc0des
+Gm
+
+
+[04/23/2025 15:01] thebrittfactor (pinned)
+ℹ️ Wardens - as the test suite failures are still prominent, we are removing the mandatory PoC requirement for the Virtuals Protocol audit. The [readme](https://github.com/code-423n4/2025-04-virtuals-protocol) and [audit details](https://discord.com/channels/810916927919620096/1362105916891332990/1362407394382184671) have been updated.
+
+{Reactions}
+🔥 (13) chefskiss (5) 😂 (2) 
+
+[04/23/2025 15:18] 0xg03.14
+Can you please let us know about deployed contracts please
+
+
+[04/23/2025 15:40] pro_king1
+But if they can fix it will be good for PoC and for confirmation of finding it will  help.
+
+{Reactions}
+✅ (2) 
+
+[04/23/2025 15:56] viraz4331
+@thebrittfactor | C4
+
+
+[04/23/2025 20:18] ksk2345
+You can get some pointers from .openzeppelin/base.sol which is in the github repo.
+I was able to get some key ones as listed below from basescan . org , Hope this helps, until we get any reply from the sponsors.
+
+0xBF8C24CAFa62Bdd5f5cB9773Ac64f5D489dF44C5  ./contracts/contribution/ContributionNft.sol  
+0x8871C219257b0F17A9A20f3c09626161B1a0674B  ./contracts/contribution/ServiceNft.sol  
+0xF66DeA7b3e897cD44A5a231c61B6B4423d613259  ./contracts/fun/Bonding.sol    
+0x42f4f5A3389CA0BeD694dE339f4d432aCdDb1Ea9  ./contracts/genesis/FGenesis.sol  
+0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b  ./contracts/token/Virtual.sol  
+0x71B8EFC8BCaD65a5D9386D07f2Dff57ab4EAf533  ./contracts/virtualPersona/AgentFactoryV3.sol      
+0xeb8A7B0184373550DCAa79156812F5d33e998C1E  ./contracts/virtualPersona/AgentFactoryV4.sol     
+0x50725af160260a316b2673C71C8c21469f6732c0  ./contracts/virtualPersona/AgentNftV2.sol
+
+{Reactions}
+👍 
+
+[04/23/2025 22:22] msk0333
+@CloudEllie  why sponsors are not responding ? its getting annoying now ‼️
+
+
+[04/23/2025 22:28] mrbowtiedoriole
+They have a bunch of agents listed on their site as well as live Genesis Launches. You can look at recent transactions and plug the hash into Tenderly to see what addresses it interacts with
+
+
+[04/24/2025 05:44] cloudellie
+They have been replying to questions as they’re able.
+
+
+[04/24/2025 06:07] viraz4331
+@CloudEllie can you please get it confirmed from the sponsors so we can submit accordingly
+
+
+[04/24/2025 10:56] unclejeff4407
+Did they reply to any questions so far?
+
+
+[04/24/2025 11:28] cloudellie
+Yes they have.
+
+
+[04/24/2025 11:34] cloudellie
+As you can probably imagine, there are quite a few private threads, so they started with those and will try to reply to questions in the main channel today. I believe they are also working on the test suite.
+
+
+[04/24/2025 15:29] viraz4331
+could you please ask about the deployed contract info too
+
+{Reactions}
+👍 ✅ 
+
+[04/24/2025 20:09] dunateiio
+I hope code4rena require a test coverage if the sponsor require a POC, this would save a lotttt of time if they didn't prepare the tests
+
+{Reactions}
+👍 (3) 
+
+[04/25/2025 07:45] hail_d_lord
+Hey, are the sponsors active ?
+whom to tag ?
+
+
+[04/25/2025 07:46] dunateiio
+no, but try @e3_virtuals
+
+{Reactions}
+🤝 
+
+[04/25/2025 10:34] malm0d
+Hey I just jumped onto this audit, just to confirm we're using hardhat for this?
+
+
+[04/25/2025 10:58] dunateiio
+yeah, but the test cases aren't working at all (deprecated)
+
+{Reactions}
+✅ 
+
+[04/25/2025 19:50] thebrittfactor
+ℹ️ Wardens - the following amendment was added to the Virtuals [readme](https://github.com/code-423n4/2025-04-virtuals-protocol/blob/main/README.md):
+> Since the Virtuals Protocol repo is currently public, any open PRs or issues that were created prior to the audit launch (April 17, 2025 20:00 UTC) are considered known issues.
+
+{Reactions}
+👀 (6) 
+
+[04/26/2025 01:58] viraz4331
+what is the repo we need to minitor for this ?
+
+
+[04/26/2025 01:59] dunateiio
+https://github.com/Virtual-Protocol/protocol-contracts
+
+{Reactions}
+👍 
+
+[04/26/2025 12:35] dunateiio
+give an example
+
+
+[04/26/2025 12:38] dunateiio
+@hail_the_lord
+
+
+[04/26/2025 13:12] io10xxx
+You should probably delete this
+
+
+[04/26/2025 13:13] dunateiio
+lmao
+
+
+[04/26/2025 13:13] dunateiio
+wtf 😂😂
+
+
+[04/26/2025 13:13] hail_d_lord
+shit I thought it was a bug !
+but I was not sure 😂
+
+
+[04/26/2025 13:14] io10xxx
+Bro it’s not even a bug lol
+
+
+[04/26/2025 13:15] io10xxx
+But it can give people ideas
+
+
+[04/26/2025 13:15] hail_d_lord
+ideas as in ?
+
+
+[04/26/2025 13:15] io10xxx
+Ideas on where to look
+
+
+[04/26/2025 13:17] hail_d_lord
+@DunateIIo what specific thing did it say in documentation 
+I did not find any relevance to the code !
+
+
+[04/26/2025 13:18] dunateiio
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-26_16-18-10-6C44B.png
+
+
+[04/26/2025 13:19] hail_d_lord
+@DunateIIo delete it
+
+
+[04/26/2025 13:19] dunateiio
+I don't know why are you saying It's only callable by agentDAO
+
+
+[04/26/2025 13:20] dunateiio
+??
+
+
+[04/26/2025 13:21] hail_d_lord
+never mind I need to spend more time I guess
+
+
+[04/26/2025 13:21] hail_d_lord
+I am unable to connect dots rn I guess..
+
+
+[04/26/2025 13:22] io10xxx
+To be fair at least you’re not like me spending 2 hours looking at agentrewardv2 when it’s not in scope lol
+
+{Reactions}
+😂 (3) 
+
+[04/26/2025 13:23] hail_d_lord
+srlsly ? fuck 😂
+
+
+[04/26/2025 13:23] dunateiio
+lmao, I spent 4 on the whole ./dev shit
+
+{Reactions}
+😂 
+
+[04/26/2025 13:24] io10xxx
+I just thought it surely had to be in scope until I checked 😂😂
+
+{Reactions}
+😂 (2) 
+
+[04/26/2025 13:25] hail_d_lord
+I am looking at the documentation after @DunateIIo told to look
+untill now I thought it was just some unimportant short text.
+
+while I thought documentation is the url given by them, which does not help even 1% tbh
+
+
+[04/26/2025 13:27] dunateiio
+this one too, I don't know why they didn't list it in the readme
+https://dev.virtuals.io/
+
+
+[04/26/2025 13:30] hail_d_lord
+@DunateIIo you mind I send you Dm's, if confused ! cuzz I badly am after reading docs 😂
+be my sudo sponsor !
+
+
+[04/26/2025 13:30] dunateiio
+sure!
+
+{Reactions}
+👍 
+
+[04/26/2025 14:06] unpluggedtj
+Just wanna confirm this once, `veToken` is the voting token used for governance.
+
+
+[04/26/2025 14:08] dunateiio
+yup, btw:
+ve = voting escrow
+
+{Reactions}
+👍 
+
+[04/26/2025 14:23] unpluggedtj
+Thanks there was a `VOTING_TOKEN` env missing in the sample env, leading to broken tests
+
+
+[04/26/2025 14:39] dunateiio
+(no offense) my grandma gave me more comments on Facebook than the comments in this codebase
+
+{Reactions}
+😂 (9) 
+
+[04/26/2025 14:41] unpluggedtj
+I had to download a notes app cause the whitespace in vs code was not enough 💀
+
+{Reactions}
+😂 (6) 
+
+[04/28/2025 00:33] unpluggedtj
+If some kind soul has written a basic PoC, I would request to share 'em in exchange of my kind wishes.
+
+
+[04/28/2025 11:48] viraz4331
+the tests have not been fixed so I think the poc is still optional
+
+
+[04/28/2025 11:48] dunateiio
+yup It's optional
+
+
+[04/28/2025 11:49] dunateiio
+I think he is going to report something deployed
+
+
+[04/28/2025 11:49] viraz4331
+Hi, has there been an update regarding the deployed contracts info
+
+
+[04/28/2025 13:50] thebrittfactor
+Not yet - @e3_virtuals, can you please confirm?
+
+
+[04/28/2025 15:40] bugsfinder0x
+Hello everyone.
+I just started the audit, but it seems that the tests are not working at all. Looking at past comments, I saw that the tests are deprecated. Am I wrong?
+Where is it possible to see how contracts interact? There is a workflow or something?
+
+
+[04/28/2025 15:42] dunateiio
+try to check the documentation, but It's confusing too and looks like they updated the code without maintaining anything else
+
+
+[04/28/2025 15:44] cloudellie
+@🐺Wardens in order to speed up the triage and judging for this audit, and to provide the Virtuals project team with a better experience, we are going to transition to [live judging](https://discord.com/channels/810916927919620096/810929015509483554/1366425937658511390) on **Wednesday, April 30.** (time TBD)
+
+This will have one major, immediate upside for wardens: instead of the current [sensitive disclosure process](https://docs.code4rena.com/competitions/submission-guidelines#how-to-submit-zero-day-or-otherwise-highly-sensitive-bugs), you'll be able to simply submit these findings via the usual submission form. 
+
+**Starting Wednesday:**
+- You will have a 2-hour window to edit or withdraw new submissions; after that, it will be locked in for judging.
+- The judge and sponsor will have access to your submission after the 2-hour editing window elapses. 
+- All of your submissions to date will be locked in.
+
+Exact time is TBD, but we'll update this post once it's firm.
+
+{Reactions}
+🔥 (13) code4rena (5) 
+
+[04/28/2025 15:44] bugsfinder0x
+I was looking at the docs but i still don't understand which is the right flow.
+I mean i just started some test and it looks like nothing is corresponding
+
+
+[04/28/2025 15:57] mauro2857
+So the submission phase ends on april 30 or may 7? didn't get it
+
+
+[04/28/2025 16:00] 0xrochimaru
+Check the c4 updates. It'll make more sense 😅
+
+
+[04/28/2025 16:00] cloudellie
+The submission deadline is still May 7.
+
+
+[04/28/2025 21:40] unpluggedtj
+Yeah but I don't wanna make assumptions about issues, signal takes a hit.
+
+{Reactions}
+🔥 
+
+[04/29/2025 04:50] viraz4331
+yeah but since the tests are broken so we can't submit poc's
+
+
+[04/29/2025 04:51] viraz4331
+@CloudEllie the poc is optional for everyone right ? due to broken tests
+
+
+[04/29/2025 05:38] cloudellie
+Pinned a message.
+
+
+[04/29/2025 05:39] cloudellie
+That’s correct. I’ve pinned the relevant post to this channel: https://discord.com/channels/810916927919620096/1362105916891332990/1364617272265543710
+
+{Reactions}
+👍 (2) thankyou 
+
+[04/29/2025 19:04] thebrittfactor (pinned)
+❗ **Live judging starts Wednesday, 30 April 2025 13:00 - important notes for participants**
+
+ℹ️ Wardens - if you're participating in this audit, please be aware that starting Wednesday, 30 April 2025 13:00, live judging rules will take effect: 
+
+1. All submissions already entered will not be able to be edited or withdrawn. Please finish any drafts in progress before that time.
+2. The "live criticals" submission process is changing. Effective immediately, you can simply submit any High-risk issues affecting live code via the normal submission form, and they will be triaged by the judge and sponsor.
+
+
+[04/29/2025 19:05] cloudellie
+@🐺Wardens please read ^
+
+{Reactions}
+👍 (10) 
+
+[04/29/2025 19:05] cloudellie
+Pinned a message.
+
+
+[04/30/2025 08:18] saikumar279
+Is there a code walkthrough available?
+
+
+[04/30/2025 08:33] lhoussaineph2001
+what about duplication of submissions ?
+
+
+[04/30/2025 08:36] lhoussaineph2001
+useful tool guys : https://deepwiki.com/code-423n4/2025-04-virtuals-protocol
+
+{Embed}
+https://deepwiki.com/code-423n4/2025-04-virtuals-protocol
+code-423n4/2025-04-virtuals-protocol | DeepWiki
+The Virtuals Protocol is a decentralized system for creating, governing, and managing autonomous agent entities known as VIRTUALs. This document provides a technical overview of the protocol's core co
+
+{Reactions}
+👍 (2) 
+
+[04/30/2025 09:36] lhoussaineph2001
+are available for reward in live contract?
+
+
+[04/30/2025 12:31] thebrittfactor
+The [live criticals exception](https://docs.code4rena.com/awarding#the-live-criticals-exception) will still stand: 
+> In order to ensure fairness and to incentivize prompt reporting of such issues, findings meeting these criteria will be the only ones in the duplicate set eligible for payout from the competitive audit pool.
+
+
+[04/30/2025 12:31] thebrittfactor
+There is no code walkthrough for this one!
+
+
+[04/30/2025 12:32] dunateiio
+@thebrittfactor | C4 does that mean there is no duplicates prize share in the live contracts criticals, am i right?
+
+{Reactions}
+👍 
+
+[04/30/2025 13:15] cloudellie (pinned)
+@🐺Wardens - this audit (Virtuals Protocol) has been switched into Live Judging mode.
+1. **Existing submissions are now locked in.** No changes can be made.
+2. The [readme](https://github.com/code-423n4/2025-04-virtuals-protocol) has been updated for the new process. 
+3. **Please submit all issues, including live criticals, via the normal submission form.**
+
+{Reactions}
+hi5 (4) 👍 (9) 🔥 (3) 🎉 (2) 
+
+[04/30/2025 13:15] cloudellie
+Pinned a message.
+
+
+[04/30/2025 13:16] bid0840
+Let's cook
+
+
+[04/30/2025 14:58] dunateiio
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-56-53-FADFA.png
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-56-43-BBFCC.png
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-56-14-BB2B9.png
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-55-50-7177F.png
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-55-34-1BD7D.png
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-55-16-6CE41.png
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-55-02-7EA78.png
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-04-30_17-53-51-32B07.png
+
+{Reactions}
+🤔 😂 (2) 
+
+[04/30/2025 14:58] dunateiio
+@CloudEllie @thebrittfactor | C4 is there a bounty to answer this question or what?
+
+
+[04/30/2025 15:00] dunateiio
+you just defined rules based on an unknown
+
+
+[04/30/2025 15:04] thebrittfactor
+I have re-flagged for the sponsors to review. However, if helpful, all submissions should be now submitted via the normal submission form.
+
+
+[04/30/2025 21:56] io10xxx
+where is the virtualFactory contract ?
+
+
+[04/30/2025 22:51] unpluggedtj
+It should be agentFactory, must be a readme mistake
+
+
+[05/01/2025 12:18] shui1
+I believe that the rewards contracts should be in scope since the readme mention them two times
+as main activies
+
+Distribute Reward
+On daily basis, protocol backend will conclude daily profits into a single amount.
+Protocol backend calls AgentReward.distributeRewards , triggering following:
+a. Transfer VIRTUAL into AgentReward
+b. Account & update claimable amounts for: Protocol, Stakers, Validators, Dataset Contributors, Model Contributors
+
+Claim Reward
+Protocol calls AgentReward.withdrawProtocolRewards
+Stakers, Validators, Dataset Contributors, Model Contributors calls AgentReward.claimAllRewards
+
+
+[05/01/2025 12:24] unclejeff4407
+Who knows what they want at this point xd
+
+
+[05/01/2025 12:25] dunateiio
+lmao, I have some doubts they aren't going to respond for the judges too
+
+{Reactions}
+😂 (4) 
+
+[05/01/2025 16:38] viraz4331
+hey @thebrittfactor | C4 
+I am unable to view my submitted findings, is that by default with live judging ?
+
+
+[05/01/2025 23:16] ayechan1000
+so is everyone just using forge now? and does submitting invalid bugs (non intentional) take hits on ur signal? my teams bug in bitvault-apr was judged invalid with no reasons given
+
+
+[05/02/2025 05:27] gold90__
+have you got answer?
+
+
+[05/02/2025 09:02] dunateiio
+$VIRTUAL
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/Screenshot_From_2025-05-02_12-01-47-49507.png
+
+{Reactions}
+👍 
+
+[05/02/2025 09:21] gold90__
+so asset token is only VIRTUAL token now?
+
+
+[05/03/2025 11:55] singularity0x00
+Hey I am new to c4 how can I contact the sponsors ?
+
+
+[05/03/2025 11:56] dunateiio
+they usually communicating in the contest channel like here, but the sponsors in this contest aren't active at all since the start
+
+
+[05/03/2025 11:57] singularity0x00
+Damn
+
+
+[05/04/2025 09:35] lhoussaineph2001
+After judging  can you see if the bug valid or no until the final result are publish? for this context
+
+
+[05/04/2025 10:09] dunateiio
+yeah
+
+
+[05/04/2025 12:02] lhoussaineph2001
+is that require SR role or not sir ?
+
+
+[05/04/2025 12:11] unique0x0
+No, it doesn't
+
+{Reactions}
+👍 
+
+[05/04/2025 19:53] lhoussaineph2001
+I have some findings and I didn't submit theme at this time so is that okay sence this is a competition or I need to submit those fast as I can because may will not be reward if they are in live contract and duplicate
+
+
+[05/04/2025 21:52] kartoonjoy
+They just need to be submitted before the close of the audit.
+
+{Reactions}
+👍 
+
+[05/05/2025 01:48] 0x04bytes
+the submission downgraded from H/M to low is ineligible for awards. does it also affect the signal or not? @kartoonjoy | C4🎇🎇
+
+
+[05/05/2025 12:05] kartoonjoy
+Not currently.
+
+https://docs.code4rena.com/roles/signal#high-medium-submissions-downgraded-to-qa
+
+
+[05/05/2025 13:43] unpluggedtj
+What is a `taxToken`?
+
+
+[05/05/2025 13:44] unpluggedtj
+Is it AgentToken?
+
+
+[05/05/2025 13:53] dunateiio
+nope, as my current understanding, any transfers of AgentToken can be TAXed with taxToken
+
+
+[05/05/2025 16:12] unpluggedtj
+Then what is taxToken 😅
+
+
+[05/05/2025 16:50] lhoussaineph2001
+What about escalation?
+
+
+[05/05/2025 16:51] kartoonjoy
+Can you say more, please?
+
+
+[05/05/2025 16:54] lhoussaineph2001
+I currently submit an issue and now my finding is closed sence it pass more than 2h witch mean the judging process begging so if there's misunderstanding in judge side and decided to make it invalid so is there's anyway to talk and provide more info about the bug or what I should do
+
+
+[05/05/2025 16:56] kartoonjoy
+No, there wouldnt be an opportunity to deliberate the judge's decision. Once you are an SR warden, you'd have an opportunity to provide fact based comments during the PJQA phase of the audit.
+
+
+[05/05/2025 16:57] lhoussaineph2001
+So it's possible but require SR role? Unlike other platform
+
+
+[05/05/2025 17:00] kartoonjoy
+I cant speak to other platforms but for C4, you'll need to be an SR warden to escalate
+
+<https://docs.code4rena.com/roles/sr-wardens>
+
+
+[05/05/2025 17:01] lhoussaineph2001
+Got it thanks
+
+{Reactions}
+hi5 
+
+[05/05/2025 17:38] damokles062
+Sorry if this is a stupid question - with the live judging, what would be a reasonable expectation for how long it'd take to see a response on my findings?  Still new to this, and this was actually my first audit
+
+
+[05/05/2025 17:57] thebrittfactor
+Since we shifted to Live Judging about mid-way through the audit, there's a fair amount of submissions the judge is working through. It could be a week or so before all submissions are triaged, depending on the amount of submissions received.
+
+{Reactions}
+👍 
+
+[05/05/2025 17:57] damokles062
+Thank you for clarifying
+
+{Reactions}
+hi5 
+
+[05/06/2025 05:33] shabaazansari
+Thanks for the clarification
+
+
+[05/07/2025 13:33] unpluggedtj
+Wolf docs ain't working, anyone facing similar issue?
+
+
+[05/07/2025 13:42] dunateiio
+Started a thread.
+
+
+[05/07/2025 13:47] samuselderg
+I think some of the docs that it ingests changed and are no longer compatible, redeploying it now but i will let you know when its working again
+
+{Reactions}
+thankyou (3) 👍 
+
+[05/07/2025 14:12] samuselderg
+Looks like we are back in action, feel free to resume asking the wolf questions 🙏
+
+{Reactions}
+👍 thankyou hi5 (2) 
+
+[05/07/2025 14:12] dunateiio
+https://tenor.com/view/wolf-dance-wolf-dance-wolf-danceing-danceing-wolf-gif-7632852274072373483
+
+{Embed}
+https://tenor.com/view/wolf-dance-wolf-dance-wolf-danceing-danceing-wolf-gif-7632852274072373483
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/wolf-dance-959E5.png
+
+
+[05/07/2025 20:02] C4
+**🚨 AUDIT ALERT**
+
+@🐺Wardens The **Virtuals Protocol** audit is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: The sponsor team and judge will review the findings over the next couple of weeks.
+
+{Reactions}
+👍 
+
+[05/07/2025 20:04] io10xxx
+Goodluck everyone !
+
+
+[05/07/2025 20:15] unclejeff4407
+@thebrittfactor | C4 we don't get an email notification for submittions anymore? I've submitted a finding for this contest 30 mins before it ended and I didn't get any email
+
+
+[05/07/2025 20:15] matin6517
+How many issues have been submitted?
+
+
+[05/07/2025 20:20] thebrittfactor
+Correct, we no longer send email notifications. You should be able to view your submissions under the `Your Findings` tab (located to the right of Details) on the [audit page](https://code4rena.com/audits/2025-04-virtuals-protocol).
+
+
+[05/07/2025 20:21] dunateiio
+@thebrittfactor | C4 why I can't view the reports page? will it remain private?
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/image-A3A77.png
+
+
+[05/07/2025 20:25] thebrittfactor
+Since this audit includes live/deployed code, all submissions will be treated as sensitive, per the [readme](https://discord.com/channels/810916927919620096/1362105916891332990/1362407401700982985) and [audit announcement](https://discord.com/channels/810916927919620096/1362105916891332990/1362407394382184671).
+
+
+[05/07/2025 20:25] dunateiio
+oh, great, thx
+
+
+[05/07/2025 20:41] unclejeff4407
+as the contest has ended there is no `your findings` tab, only `view dashboard` which gives this
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - virtuals-apr [1362105916891332990].txt_Files/image-609C2.png
+
+
+[05/07/2025 23:50] giovignone
+I have 2 vulnerabilities I'd like to submit for the contest, is there any way to still do this?
+
+
+[05/08/2025 01:04] thebrittfactor
+Unfortunately, the audit closed ~05/07/2025 20:00 and [late submissions](https://docs.code4rena.com/competitions/submission-guidelines#late-submissions) are not accepted.
+
+
+[05/08/2025 08:20] io10xxx
+So is there no way we can see any reports at all? Even on non deployed contracts ? I kinda need that for learning purposes. Is there anything you can do ?
+
+
+[05/08/2025 12:41] thebrittfactor
+Submissions will be made public once the report is public, or once the sponsors confirm there are no sensitive issues affecting live code.
+
+{Reactions}
+❤️ (3) 
+
+[05/08/2025 18:20] e.a.8306
+hi , I made my first submission, what do we need to do now. How will we learn whether our report is under evaluation or in queue?
+
+
+[05/08/2025 18:35] thebrittfactor
+Issues are being reviewed by the judge and sponsors. Since this audit has live code, submissions can be reviewed once the report is published. [This section](https://docs.code4rena.com/competitions#how-competitive-audits-work) of our docs has more details on the audit process.
+
+{Reactions}
+👍🏻 
+
+[05/08/2025 20:21] e.a.8306
+thanks
+
+{Reactions}
+hi5 
+
+[05/10/2025 23:21] unclejeff4407
+Any idea how many reports were submitted?
+
+{Reactions}
+👀 (12) 
+
+[05/14/2025 09:13] viraz4331
+hi,
+when will the finding results be public any estimate ?
+
+
+[05/19/2025 05:01] viraz4331
+@Jay | C4 ^ any update ?
+
+{Reactions}
+👀 (8) 
+
+[05/19/2025 14:25] thebrittfactor
+Timing is currently unknown, as sponsors are reviewing the findings to determine if any are affecting live code. We'll be sure to update as soon as we have one.
+
+{Reactions}
+👍 (16) ✅ (10) 😵‍💫 (28) ⌛ (21) 🔭 (16) 👀 (20) ⌚ (18) 🤷‍♂️ (16) 🔒 (11) 😩 (16) 👽 (12) 🕊️ (10) 💀 (14) 😭 (18) 🥲 (14) ☕ (10) 🙏 (9) 🚑 (11) 🙌 (9) 🥱 (13) 
+
+[07/23/2025 23:19] cloudellie
+🤑 🎉  Awards for **Virtuals Protocol**:
+
+$18,634.31 USDT » @YouCrossTheLineAlfie
+$4,945.06 USDT » @oakcobalt
+$2,825.42 USDT » @Fitro
+$1,585.10 USDT » @BowTiedOriole
+$1,271.11 USDT » @Matin
+$1,233.85 USDT » @Zeroom
+$1,154.07 USDT » @Pelz
+$947.37 USDT » @Sparrow
+$854.69 USDT » @mbuba666
+$805.21 USDT » @PCProdigy
+$692.92 USDT » @testnate
+$648.29 USDT » @NHristov
+$648.21 USDT » @Alex Zhang
+$648.21 USDT » @gkrastenov
+$648.21 USDT » @0xcodeX
+$568.50 USDT » @djshanwang
+$523.51 USDT » @Jludvim
+$508.08 USDT » @axelot
+$477.70 USDT » @io10⛓
+$477.51 USDT » @bjoe
+$416.56 USDT » @levi_104
+$386.06 USDT » EPSec (@0x539.eth | Chain Defenders and @petarP1998)
+$381.67 USDT » @MaxZuvex
+$367.40 USDT » @PCProdigy
+$367.32 USDT » @kanra
+$367.32 USDT » @Dave
+$367.32 USDT » @Nexarion
+$364.91 USDT » @sergei2340
+$301.22 USDT » @RaOne
+$299.88 USDT » @gmh
+$273.92 USDT » @JimDarkeEE
+$273.92 USDT » @L E G E N D
+$264.93 USDT » @0x1982us
+$264.63 USDT » @greg
+$248.51 USDT » @LeoGold
+$239.14 USDT » @𝚌𝚑𝚞𝚙𝚒𝚗𝚎𝚡𝚡
+$234.16 USDT » @aiota
+$230.73 USDT » @hecker
+$218.37 USDT » @PotEater
+$217.27 USDT » PolarizedLight (@ChaseTheLight and @Auditor-Nate)
+$210.61 USDT » @zubyoz
+$203.81 USDT » @BlackAdam
+$203.73 USDT » @natachi
+$203.73 USDT » @Egbe
+$182.96 USDT » @holtzzx
+$159.31 USDT » @0xterrah
+$159.23 USDT » @rayss
+$132.98 USDT » @odessos42
+$118.37 USDT » @vemus
+$112.34 USDT » bareli
+$105.34 USDT » @hyer
+$103.19 USDT » @0xSlowbug
+$103.19 USDT » @adam-idarrha
+$97.73 USDT » harsh123
+$90.99 USDT » @ks__xxxxx
+$90.99 USDT » @4ny0n3
+$90.99 USDT » @dustykid
+$90.99 USDT » @Raihan
+$78.67 USDT » @Olugbenga
+$63.26 USDT » @Unique
+$61.20 USDT » @Damola0x
+$61.12 USDT » @kodyvim
+$51.11 USDT » @shui
+$47.53 USDT » @joicygiore
+$35.70 USDT » @Rorschach
+$35.49 USDT » @0x04bytes
+$35.41 USDT » @Pro King🤴🏻
+$35.33 USDT » @vasilishte
+$35.33 USDT » @EightySix
+$35.33 USDT » @Maze
+$35.33 USDT » @felconz
+$35.33 USDT » @jonatan
+$35.33 USDT » BestBugBusters (@lilendian, @ayechanst and @Blind_nabler)
+
+{Reactions}
+🎉 (7) clapping (5) c4wins (4) c4ship (2) 
+
+[07/23/2025 23:19] cloudellie
+$33.96 USDT » @anchabadze
+$30.65 USDT » @DanielTan
+$30.39 USDT » @debo
+$28.01 USDT » @0x60scs
+$27.65 USDT » @Pr00f
+$27.30 USDT » @patitonar
+$27.30 USDT » @newspace
+$27.30 USDT » @0xShitgem
+$23.73 USDT » @Astroboy🚀
+$21.27 USDT » @Silverwind
+$21.27 USDT » @cerweb10
+$21.27 USDT » @CompetSlayer
+$21.27 USDT » @X-Tray
+$21.27 USDT » @MyFranchise
+$16.12 USDT » @Kelvin
+$14.35 USDT » @soloking
+$14.35 USDT » @Augustine
+$9.46 USDT » @CoheeY
+$9.38 USDT » @Damboy
+$9.38 USDT » @hail_the_lord
+$9.38 USDT » @mizila firox
+$9.38 USDT » @0xhiros
+$6.74 USDT » bytesguard (@Viraz and @thisvishalsingh)
+$6.66 USDT » @Topmark
+$6.66 USDT » @DanielTan
+$0.08 USDT » SeveritySquad (@shealtielanz and @Player_1)
+$0.08 USDT » @FrontRunner
+$0.08 USDT » @James
+$0.08 USDT » @Kwesi
+$0.08 USDT » @8Dazo
+$0.08 USDT » @Ejineroz
+$0.08 USDT » @Mihail Vichev
+$0.08 USDT » @0xbc000
+$0.08 USDT » @B1n4ry
+$0.08 USDT » @LaQuica
+$0.08 USDT » @ThanatO$
+
+🏁 Findings summary
+--------------------------------------—
+6 High risk findings
+26 Med risk findings
+1376 wardens participated
+
+Top Hunter: @YouCrossTheLineAlfie
+Top Gatherer: @YouCrossTheLineAlfie
+Top QA report: @Sparrow
+
+Awards will be distributed on Ethereum within the next week. Congratulations all!  💸 💸 💸
+
+⚠️ Awardees, be sure to [complete your tax reporting info](https://docs.code4rena.com/awarding/incentive-model-and-awards/awarding-process#tax-information-for-code4rena-contributors-wardens-judges-etc) if you haven't already. This must be completed within 30 days (i.e. by Friday, 22 August 2025) to receive your award distribution for this audit.
+
+{Reactions}
+c4wins (17) c4ship (6) c4marketing (3) 
+
+[10/01/2025 16:15] C4
+ℹ️ This channel is pending archive.   As a result, any private threads will be permanently deleted 10/10/2025 16:09. Please make sure to grab anything you might need before then.
+
+
+[10/09/2025 20:00] C4
+ℹ️ Reminder: this channel will be deleted after 24 hours.
+
+
+==============================================================
+Exported 298 message(s)
+==============================================================
